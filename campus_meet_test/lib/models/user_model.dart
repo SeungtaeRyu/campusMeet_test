@@ -6,6 +6,7 @@ class User {
   final String gender;
   final String profileImage;
   final String birthday;
+  final String introduction;
 
   User.fromMap(
       Map<String, dynamic> map,
@@ -15,7 +16,8 @@ class User {
         age = map['age'],
         gender = map['gender'],
         profileImage = map['profileImage'],
-        birthday = map['birthday'];
+        birthday = map['birthday'],
+        introduction = map['introduction'];
 
   @override
   String toString() => "User<$name:$university>";

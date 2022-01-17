@@ -1,5 +1,6 @@
 import 'package:campus_meet_test/models/user_model.dart';
 import 'package:campus_meet_test/widgets/profile_picture_widget.dart';
+import 'package:campus_meet_test/widgets/render_user_profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -17,7 +18,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
     'age': 30,
     'gender': 'female',
     'profileImage': 'user1_profile.jpg',
-    'birthday': '1993년 5월 16일'
+    'birthday': '1993년 5월 16일',
+    'introduction': '상큼발랄'
   });
 
   @override
@@ -25,6 +27,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     return ListView(
       children: <Widget>[
         ProfilePicture(user: user),
+        RenderUserProfileInfo(user: user),
       ],
     );
   }
