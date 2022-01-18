@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black)),
         actions: [
-          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: null),
+          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: (){}),
           IconButton(icon: Icon(Icons.notifications_none_outlined, color: Colors.black),
               onPressed: (){
                 Navigator.push(
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => NoticeScreen()),
                 );
               }),
-          IconButton(icon: Icon(Icons.navigate_next, color: Colors.black), onPressed: null),
+          IconButton(icon: Icon(Icons.navigate_next, color: Colors.black), onPressed: (){}),
         ],
       ),
       body: Container(

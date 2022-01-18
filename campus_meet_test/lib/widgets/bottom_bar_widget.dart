@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
@@ -15,15 +16,15 @@ class BottomBar extends StatelessWidget {
           indicatorColor: Colors.transparent,
           tabs: <Widget>[
             Tab(
-              icon: Icon(Icons.home_outlined, size: 24),
+              icon: Icon(CustomIcons.home, size: 24),
               child: Text('홈', style: TextStyle(fontSize: 9)),
             ),
             Tab(
-              icon: Icon(Icons.calendar_today_outlined, size: 18),
+              icon: Icon(CustomIcons.my_meeting, size: 24),
               child: Text('나의 미팅', style: TextStyle(fontSize: 9)),
             ),
             Tab(
-              icon: Icon(Icons.person_outline_rounded, size: 24),
+              icon: Icon(CustomIcons.my_page, size: 24),
               child: Text('마이페이지', style: TextStyle(fontSize: 9)),
             ),
           ],

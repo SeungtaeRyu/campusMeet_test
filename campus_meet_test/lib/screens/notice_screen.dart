@@ -46,11 +46,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
       'date': '8월 18일',
     }),
   ];
-  Icon abcd = Icon(
-    Icons.home,
-    color: Colors.red,
-    size: 60.0,
-  );
 
   @override
   Widget build(BuildContext context) {
