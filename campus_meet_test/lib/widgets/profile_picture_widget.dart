@@ -115,8 +115,52 @@ class _ProfilePictureState extends State<ProfilePicture> {
   Future getImage(ImageSource imageSource) async {
     PickedFile image = await ImagePicker().getImage(source: imageSource);
 
-    setState(() {
-      _image = File(image.path);
-    });
+    if(image.path != null) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            content: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.width * 0.8,
+              child: Center(
+                child: CircleAvatar(
+                  backgroundColor: Colors.pink,
+                  radius: 120,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.pink,
+                    backgroundImage:
+                    FileImage(File(image.path)),
+                    radius: 116,
+                  ),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("취소")),
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                    setState(() {
+                      _image = File(image.path);
+                    });
+                  },
+                  child: Text("적용"))
+            ],
+          );
+        },
+      );
+    }
+    else {
+      Navigator.pop(context);
+    }
   }
 }
