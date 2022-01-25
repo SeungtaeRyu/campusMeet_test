@@ -113,9 +113,8 @@ class _ProfilePictureState extends State<ProfilePicture> {
   }
 
   Future getImage(ImageSource imageSource) async {
-    PickedFile image = await ImagePicker().getImage(source: imageSource);
-
-    if(image.path != null) {
+    final image = await ImagePicker().pickImage(source: imageSource);
+    if(image?.path != null) {
       showDialog(
         barrierDismissible: false,
         context: context,
@@ -134,7 +133,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   child: CircleAvatar(
                     backgroundColor: Colors.pink,
                     backgroundImage:
-                    FileImage(File(image.path)),
+                    FileImage(File(image!.path)),
                     radius: 116,
                   ),
                 ),
@@ -150,7 +149,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   onPressed: (){
                     Navigator.pop(context);
                     setState(() {
-                      _image = File(image.path);
+                      _image = File(image!.path);
                     });
                   },
                   child: Text("적용"))
@@ -160,7 +159,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
       );
     }
     else {
-      Navigator.pop(context);
     }
   }
 }
