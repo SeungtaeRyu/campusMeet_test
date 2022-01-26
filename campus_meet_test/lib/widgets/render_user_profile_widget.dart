@@ -77,7 +77,7 @@ class RenderUserProfileInfo extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                border: Border(bottom: BorderSide(color: Colors.grey.shade300))), // 컨테이너 밑줄 지정
             alignment: Alignment.centerLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +111,7 @@ class RenderUserProfileInfo extends StatelessWidget {
   }
   _renderArrowIcon() {
     return IconButton(
-      padding: EdgeInsets.zero, // 패딩 설정
+      padding: EdgeInsets.zero, // 아이콘 패딩 설정
       constraints: BoxConstraints(), // constraints
       onPressed: () {},
       icon: Icon(

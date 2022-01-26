@@ -9,7 +9,7 @@ class BottomBar extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Container(
-        height: 60,
+        height: MediaQuery.of(context).size.width * 0.2,
         child: const TabBar(
           labelColor: Colors.pink,
           unselectedLabelColor: Colors.black,
