@@ -1,7 +1,8 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/screens/writing_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'meeting_post_filter.dart';
+import 'meeting_post_filter_screen.dart';
 import 'notice_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -124,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // filter component
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MeetingFilterPage()),
+                      MaterialPageRoute(builder: (context) => MeetingFilterScreen()),
                     );
                   },
                 ),
@@ -226,9 +227,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
+      // 글작성 페이지 이동
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pink,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => WritingScreen()),
+          );
+        },
         tooltip: 'go write!',
         child: const Icon(Icons.add),
       ),

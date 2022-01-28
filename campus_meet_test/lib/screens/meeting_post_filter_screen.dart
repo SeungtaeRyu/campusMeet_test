@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MeetingFilterPage extends StatefulWidget {
-  const MeetingFilterPage({Key? key}) : super(key: key);
+class MeetingFilterScreen extends StatefulWidget {
+  const MeetingFilterScreen({Key? key}) : super(key: key);
 
   @override
-  State<MeetingFilterPage> createState() => _MeetingFilterPageState();
+  State<MeetingFilterScreen> createState() => _MeetingFilterScreenState();
 }
 
-class _MeetingFilterPageState extends State<MeetingFilterPage> {
+class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
   double numMember = 2;
   TextEditingController studuntIDController1 = TextEditingController();
   TextEditingController studuntIDController2 = TextEditingController();
@@ -101,7 +101,7 @@ class _MeetingFilterPageState extends State<MeetingFilterPage> {
                             border: Border(
                                 bottom: BorderSide(color: Colors.grey.shade300))),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Container(
                               padding: EdgeInsets.only(bottom: 10),
@@ -110,11 +110,6 @@ class _MeetingFilterPageState extends State<MeetingFilterPage> {
                             // 지역필터 버튼 구현해야함! API도 쓸수도?
                             Container(
                               child: Text("button"),
-                            ),
-                            Container(
-                              child: Row(
-                                children: <Widget>[],
-                              ),
                             ),
                           ],
                         ),
@@ -147,7 +142,7 @@ class _MeetingFilterPageState extends State<MeetingFilterPage> {
                                         labelText: '제한 없음',
                                       ),
                                     ),
-                                  ),
+                                    ),
                                   Text("  ~  "),
                                   Expanded(
                                     child: TextFormField(
@@ -217,7 +212,6 @@ class _MeetingFilterPageState extends State<MeetingFilterPage> {
               ),
             ),
 
-
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               // width: MediaQuery.of(context).size.width,
@@ -251,7 +245,6 @@ class _MeetingFilterPageState extends State<MeetingFilterPage> {
                 ],
               ),
             ),
-
 
           ],
         ),

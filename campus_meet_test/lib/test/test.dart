@@ -1,60 +1,84 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(MaterialApp(
+    title: 'Returning Data',
+    home: HomeScreen(),
+  ));
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Flutter Code Sample';
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Returning Data Demo'),
+      ),
+      body: Center(child: SelectionButton()),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
+class SelectionButton extends StatelessWidget {
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () {
+        _navigateAndDisplaySelection(context);
+      },
+      child: Text('Pick an option, any option!'),
+    );
+  }
+
+  // SelectionScreen을 띄우고 navigator.pop으로부터 결과를 기다리는 메서드
+  _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push는 Future를 반환합니다. Future는 선택 창에서
+    // Navigator.pop이 호출된 이후 완료될 것입니다.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SelectionScreen()),
+    );
+
+    // 선택 창으로부터 결과 값을 받은 후, 이전에 있던 snackbar는 숨기고 새로운 결과 값을
+    // 보여줍니다.
+    Scaffold.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("$result")));
+  }
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-      final String text = _controller.text.toLowerCase();
-      _controller.value = _controller.value.copyWith(
-        text: text,
-        selection:
-        TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class SelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(6),
-        child: TextFormField(
-          controller: _controller,
-          decoration: const InputDecoration(border: OutlineInputBorder()),
+      appBar: AppBar(
+        title: Text('Pick an option'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                onPressed: () {
+                  // 창을 닫고 결과로 "Yep!"을 반환합니다.
+                  Navigator.pop(context, 'Yep!');
+                },
+                child: Text('Yep!'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                onPressed: () {
+                  // 창을 닫고 결과로 "Nope!"을 반환합니다.
+                  Navigator.pop(context, 'Nope.');
+                },
+                child: Text('Nope.'),
+              ),
+            )
+          ],
         ),
       ),
     );
