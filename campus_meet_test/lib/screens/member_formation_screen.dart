@@ -32,6 +32,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
     false,
   ];
   List<int> selectedUserIndex = [];
+  List<int> nullData = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, nullData);
               }),
           backgroundColor: Colors.white,
           toolbarHeight: MediaQuery.of(context).size.width * 0.1,
@@ -108,23 +109,39 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                   : Container(
                       height: 100,
                       child: ListView.builder(
-                          itemCount: selectedUserIndex.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        itemCount: selectedUserIndex.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.pink,
+                                  radius: 25,
+                                  child: Align(
+                                    alignment: Alignment.topRight,
                                     child: CircleAvatar(
-                                      backgroundColor: Colors.pink,
-                                      radius: 25,
+                                      backgroundColor: Colors.blue,
+                                      radius: 8,
+                                      child: InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            select[selectedUserIndex[index]] = false;
+                                            selectedUserIndex.remove(selectedUserIndex[index]);
+                                          });
+                                        },
+                                        child: Icon(Icons.close, size: 14,),
+                                      ),
                                     ),
                                   ),
-                                  Text("이름 ${selectedUserIndex[index]} "),
-                                ],
-                              );
-                          }),
+                                ),
+                              ),
+                              Text("이름 ${selectedUserIndex[index]} "),
+                            ],
+                          );
+                        },
+                      ),
                     ),
             ),
 
@@ -149,12 +166,12 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              if(!select[index]){
+                              if (!select[index]) {
+                                select[index] = !select[index];
                                 selectedUserIndex.add(index);
-                                select[index] = !select[index];
                               } else {
-                                selectedUserIndex.remove(index);
                                 select[index] = !select[index];
+                                selectedUserIndex.remove(index);
                               }
                             });
                           },

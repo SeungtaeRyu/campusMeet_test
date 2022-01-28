@@ -9,6 +9,7 @@ class WritingScreen extends StatefulWidget {
 }
 
 class _WritingScreenState extends State<WritingScreen> {
+  List<int> result = [];
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class _WritingScreenState extends State<WritingScreen> {
           ],
         ),
         body: Container(
+          color: Colors.white,
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             children: <Widget>[
@@ -118,40 +120,112 @@ class _WritingScreenState extends State<WritingScreen> {
                       child: Text("참가자"),
                     ),
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.pink,
-                              backgroundImage:
-                              AssetImage("images/user1_profile.jpg"),
-                              child: Text("나",style: TextStyle(color: Colors.white),),
-                            ),
-                          ),
-
-                          Container(
-                            child: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.grey,
-                              child: CircleAvatar(
-                                radius: 23,
-                                backgroundColor: Colors.white,
-                                child: IconButton(
-                                  icon: Icon(Icons.add, color: Colors.grey),
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () async {
-                                    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MemberFomationScreen()));
-                                  },
+                      height: 50,
+                      child: ListView.builder(
+                        itemCount: result.length + 2,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          if(index == 0) {
+                              return Container(
+                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.pink,
+                                  backgroundImage:
+                                      AssetImage("images/user1_profile.jpg"),
+                                  child: Text(
+                                    "나",
+                                    style: TextStyle(color: Colors.white, fontSize: 12),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
+                              );
+                          } else if (index < result.length + 1) {
+                              return Container(
+                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.pink,
+                                  radius: 25,
+                                  child: Text("이름 ${result[index-1]}",style: TextStyle(color: Colors.white, fontSize: 12),),
+                                ),
+                              );
+                          } else {
+                              return Container(
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Colors.grey,
+                                  child: CircleAvatar(
+                                    radius: 23,
+                                    backgroundColor: Colors.white,
+                                    child: IconButton(
+                                      icon: Icon(Icons.add, color: Colors.grey),
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () async {
+                                        final data = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MemberFomationScreen()));
+                                        setState(() {
+                                          result = data;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                          }
+
+
+                        },
                       ),
-                    )
+                    ),
+
+                    // Container(
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     children: <Widget>[
+                    //       Container(
+                    //         padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    //         child: CircleAvatar(
+                    //           radius: 25,
+                    //           backgroundColor: Colors.pink,
+                    //           backgroundImage:
+                    //               AssetImage("images/user1_profile.jpg"),
+                    //           child: Text(
+                    //             "나",
+                    //             style: TextStyle(color: Colors.white),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         child: CircleAvatar(
+                    //           radius: 25,
+                    //           backgroundColor: Colors.grey,
+                    //           child: CircleAvatar(
+                    //             radius: 23,
+                    //             backgroundColor: Colors.white,
+                    //             child: IconButton(
+                    //               icon: Icon(Icons.add, color: Colors.grey),
+                    //               padding: EdgeInsets.zero,
+                    //               onPressed: () async {
+                    //                 final data = await Navigator.push(
+                    //                     context,
+                    //                     MaterialPageRoute(
+                    //                         builder: (context) =>
+                    //                             MemberFomationScreen()));
+                    //                 setState(() {
+                    //                   result = data;
+                    //                 });
+                    //               },
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
+
+
                   ],
                 ),
               ),
@@ -177,7 +251,6 @@ class _WritingScreenState extends State<WritingScreen> {
                     ),
 
                     // 키워드 나열할 곳!
-
                   ],
                 ),
               ),
