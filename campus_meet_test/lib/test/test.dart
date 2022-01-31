@@ -14,11 +14,15 @@ class SettingUnivPage extends StatefulWidget {
 class _State extends State<SettingUnivPage> {
   TextEditingController univController = TextEditingController();
   List<String> univ = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대", "용인대2"];
+  List<String> search_univ = [];
+  List<String> search_univ_result = [];
 
   @override
   Widget build(BuildContext context) {
-    final List<String> search_univ = [];
     Color color = Color(0xffff375c);
+
+    print(search_univ_result);
+    print(search_univ_result.length);
     return MaterialApp(
       title: 'Fetch Data Example',
       home: Scaffold(
@@ -74,19 +78,29 @@ class _State extends State<SettingUnivPage> {
                               child: FlatButton(
                                 onPressed: () {
                                   // print(univController.text);
+                                  search_univ_result = [];
+                                  search_univ = [];
+                                  if(univController.text == "") {
 
-                                  univ.forEach((value) {
-                                    if (value
-                                        .contains(univController.text)) {
-                                      search_univ.add(value);
-                                    }
-                                  });
-                                  // print(search_univ);
-                                  for (int i = 0;
-                                  i < search_univ.length;
-                                  i++) {
-                                    print(search_univ[i]);
+                                  } else {
+                                    univ.forEach((value) {
+                                      if (value
+                                          .contains(univController.text)) {
+                                        search_univ.add(value);
+                                      }
+                                    });
                                   }
+
+                                  setState(() {
+                                    search_univ_result = search_univ;
+                                  });
+
+                                  // print(search_univ);
+                                  // for (int i = 0;
+                                  // i < search_univ.length;
+                                  // i++) {
+                                  //   print(search_univ[i]);
+                                  // }
                                 },
                                 child: Text(
                                   '검색',
@@ -98,17 +112,19 @@ class _State extends State<SettingUnivPage> {
                           ],
                         ),
                         //saerch_univ 를 한줄씩 보여줘
-                        // Container(
-                        //   padding: EdgeInsets.only(bottom: 200),
-                        //   child: ListView.builder(
-                        //     itemCount: search_univ.length,
-                        //     itemBuilder: (context, index) {
-                        //       return ListTile(
-                        //         title: Text(search_univ[index]),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                        Container(
+                          height: 200,
+                          // padding: EdgeInsets.only(bottom: 200),
+                          child: ListView.builder(
+                            itemCount: search_univ_result.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child:Text(search_univ_result[index]),
+
+                              );
+                            },
+                          ),
+                        ),
                         Container(
                           padding: EdgeInsets.only(bottom: 20),
                           child: Container(

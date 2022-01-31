@@ -24,12 +24,11 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
     "수진"
   ]; // 추후 친구목록 DB.length 로 수정
   List<bool> selected = []; // 친구 추가 아이콘 true/false
-  List<String> selectedFriendName = []; // 친구 추가 아이콘 true인 친구 list
+  List<String> selectedFriendName = []; // 친구 추가 아이콘 true인 친구 list, Navigator.pop에 담을 데이터
 
   List<String> nullData = [];
   final TextEditingController _search = TextEditingController();
   String _searchText = "";
-  List<String> _searchResult = [];
 
   _MemberFomationScreenState() {
     _search.addListener(() {
@@ -80,7 +79,6 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
                 children: <Widget>[
-                  // 검색 기능 어케 추가 ???
                   Container(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: TextFormField(
@@ -136,7 +134,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                                   child: Align(
                                     alignment: Alignment.topRight,
                                     child: CircleAvatar(
-                                      backgroundColor: Colors.blue,
+                                      backgroundColor: Colors.pink,
                                       radius: 8,
                                       child: InkWell(
                                         onTap: () {
@@ -151,6 +149,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                                         child: Icon(
                                           Icons.close,
                                           size: 14,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),

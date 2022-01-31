@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/screens/member_formation_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,169 @@ class WritingScreen extends StatefulWidget {
 }
 
 class _WritingScreenState extends State<WritingScreen> {
-  List<String> result = [];
+  List<String> memberData = []; // 멤버결성창에서 리턴될 데이터
+  String addressData = ""; // 지역선택창에서 리턴될 데이터
+  List<Address> addresses = [
+    Address.fromMap(
+      {
+        'id': 1,
+        'firstAddress': '서울',
+        'secondAddress': '강남구',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 2,
+        'firstAddress': '서울',
+        'secondAddress': '강동구',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 3,
+        'firstAddress': '서울',
+        'secondAddress': '강북구',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 4,
+        'firstAddress': '서울',
+        'secondAddress': '강서구',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 5,
+        'firstAddress': '서울',
+        'secondAddress': '관악구',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 6,
+        'firstAddress': '경기',
+        'secondAddress': '가평군',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 7,
+        'firstAddress': '경기',
+        'secondAddress': '구리시',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 8,
+        'firstAddress': '경기',
+        'secondAddress': '김포시',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 9,
+        'firstAddress': '경기',
+        'secondAddress': '파주시',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 10,
+        'firstAddress': '경기',
+        'secondAddress': '평택시',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 11,
+        'firstAddress': '경기',
+        'secondAddress': '평택시2',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 12,
+        'firstAddress': '경기',
+        'secondAddress': '평택시3',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 13,
+        'firstAddress': '경기',
+        'secondAddress': '평택시4',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 14,
+        'firstAddress': '경남',
+        'secondAddress': '거제시',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 15,
+        'firstAddress': '경남',
+        'secondAddress': '거제시2',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 16,
+        'firstAddress': '경남',
+        'secondAddress': '거제시3',
+      },
+    ),
+    Address.fromMap(
+      {
+        'id': 17,
+        'firstAddress': '경남',
+        'secondAddress': '거제시4',
+      },
+    ),
+  ];
+  List<String> firstAddress = [];
+  List<String> filteredFirstAddress = [];
+  List<bool> selectedFirstAddress = [];
+  List<bool> selectSecondAddress = [];
+
+  List<String> secondAddress = [];
+  List<bool> selectedSecondAddress = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (int i = 0; i < addresses.length; i++) {
+      firstAddress.add(addresses[i].firstAddress);
+    }
+    filteredFirstAddress = firstAddress.toSet().toList();
+    for (int i = 0; i < filteredFirstAddress.length; i++) {
+      if (i == 0) {
+        selectedFirstAddress.add(true);
+      } else {
+        selectedFirstAddress.add(false);
+      }
+    }
+
+    // secondAddress 초기화
+    for (int i = 0; i < addresses.length; i++) {
+      if (addresses[i].firstAddress ==
+          filteredFirstAddress[selectedFirstAddress.indexOf(true)]) {
+        secondAddress.add(addresses[i].secondAddress);
+      }
+    }
+    // selectedSecondAddress 초기화
+    for (int i = 0; i < secondAddress.length; i++) {
+      if (i == 0) {
+        selectedSecondAddress.add(true);
+      } else {
+        selectedSecondAddress.add(false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,39 +231,321 @@ class _WritingScreenState extends State<WritingScreen> {
 
               // 지역
               Container(
+                alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
                         bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
+                      padding: EdgeInsets.only(bottom: 5),
                       child: Text("지역"),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          // 텍스트필드를 쓸 게 아닌데 ?? 뭐 쓰지 ??
-                          child: TextFormField(
-                            // controller: studuntIDController1,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              // contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              // border: OutlineInputBorder(),
-                              // labelText: '제한 없음',
-                              hintText: '지역 선택',
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: TextButton(
+                            // TextButton inner padding 삭제하는방법!!
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  addressData == "" ? "지역 선택" : addressData,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25.0)),
+                                ),
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) {
+                                  return StatefulBuilder(builder:
+                                      (BuildContext context,
+                                          StateSetter mystate) {
+                                    return SingleChildScrollView(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                1.5,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 10, 0, 10),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: Colors
+                                                              .grey.shade300))),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    // color: Colors.pink,
+                                                    alignment: Alignment.center,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    child: Text(
+                                                      "시/도",
+                                                      style: TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    // color: Colors.blue,
+                                                    padding: EdgeInsets.only(
+                                                        left: 30),
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    child: Text(
+                                                      "시/구/군",
+                                                      style: TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.only(
+                                                        top: 10),
+                                                    alignment: Alignment.center,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.3,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        border: Border(
+                                                            bottom: BorderSide(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300),
+                                                            right: BorderSide(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300))),
+                                                    child: renderFirstAddress(
+                                                        mystate),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.3,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                              bottom: BorderSide(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade300))),
+                                                      child:
+                                                          renderSecondAddress(
+                                                              mystate),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.25,
+                                              padding: EdgeInsets.fromLTRB(
+                                                  20, 0, 20, 20),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.1,
+                                                      child: OutlinedButton(
+                                                        child: Text(
+                                                          "닫기",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.pink,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        style: OutlinedButton
+                                                            .styleFrom(
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                                side: BorderSide(
+                                                                    color: Colors
+                                                                        .pink)),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          right: 15)),
+                                                  Expanded(
+                                                    child: Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.1,
+                                                      child: OutlinedButton(
+                                                        child: Text(
+                                                          "확인",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.pink,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        style: OutlinedButton
+                                                            .styleFrom(
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                                side: BorderSide(
+                                                                    color: Colors
+                                                                        .pink)),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            addressData =
+                                                                "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
+                                                            // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
+                                                            // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
+                                                          });
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                },
+                              );
+                            },
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.keyboard_arrow_down_outlined),
-                          onPressed: () {},
-                        ),
                       ],
-                    )
+                    ),
+
+                    // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
+                    // 여기가 선택된 지역 보여주는 곳인데 flexible한 사이즈 할당이 안되는중
+                    // Container(
+                    //   child: addressData.length == 0
+                    //       ? SizedBox.shrink()
+                    //       : Container(
+                    //     height: 40,
+                    //     padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    //     child: ListView.builder(
+                    //       itemCount: addressData.length,
+                    //       scrollDirection: Axis.horizontal,
+                    //       itemBuilder: (BuildContext context, int index) {
+                    //         return Row(
+                    //           children: [
+                    //             Container(
+                    //               height: 30,
+                    //               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    //               decoration: BoxDecoration(
+                    //                 color: Colors.grey.shade300,
+                    //                 borderRadius: BorderRadius.circular(20)
+                    //               ),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Container(
+                    //                     alignment: Alignment.center,
+                    //                     child: Text(addressData[index],style: TextStyle(fontSize: 14, height: 1)),
+                    //                   ),
+                    //                   Container(
+                    //                     alignment: Alignment.center,
+                    //                     child: InkWell(
+                    //                       child: Container(
+                    //                           alignment: Alignment.center,
+                    //                           padding: EdgeInsets.zero,
+                    //                           child: Text(" X", style: TextStyle(fontSize: 14,height: 1))),
+                    //                       onTap: (){
+                    //                         // setState(() {
+                    //                         //   addressData.remove(addressData[index]);
+                    //                         // });
+                    //                       },
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //             Padding(padding: EdgeInsets.only(right: 10)),
+                    //           ],
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -122,110 +567,66 @@ class _WritingScreenState extends State<WritingScreen> {
                     Container(
                       height: 50,
                       child: ListView.builder(
-                        itemCount: result.length + 2,
+                        itemCount: memberData.length + 2,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          if(index == 0) {
-                              return Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.pink,
-                                  backgroundImage:
-                                      AssetImage("images/user1_profile.jpg"),
-                                  child: Text(
-                                    "나",
-                                    style: TextStyle(color: Colors.white, fontSize: 12),
-                                  ),
+                          if (index == 0) {
+                            return Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.pink,
+                                backgroundImage:
+                                    AssetImage("images/user1_profile.jpg"),
+                                child: Text(
+                                  "나",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
                                 ),
-                              );
-                          } else if (index < result.length + 1) {
-                              return Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.pink,
-                                  radius: 25,
-                                  child: Text("${result[index-1]}",style: TextStyle(color: Colors.white, fontSize: 12),),
+                              ),
+                            );
+                          } else if (index < memberData.length + 1) {
+                            return Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.pink,
+                                radius: 25,
+                                child: Text(
+                                  "${memberData[index - 1]}",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
                                 ),
-                              );
+                              ),
+                            );
                           } else {
-                              return Container(
+                            return Container(
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey,
                                 child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Colors.grey,
-                                  child: CircleAvatar(
-                                    radius: 23,
-                                    backgroundColor: Colors.white,
-                                    child: IconButton(
-                                      icon: Icon(Icons.add, color: Colors.grey),
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () async {
-                                        final data = await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    MemberFomationScreen()));
-                                        setState(() {
-                                          result = data;
-                                        });
-                                      },
-                                    ),
+                                  radius: 23,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                    icon: Icon(Icons.add, color: Colors.grey),
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () async {
+                                      final data = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MemberFomationScreen()));
+                                      setState(() {
+                                        memberData = data;
+                                      });
+                                    },
                                   ),
                                 ),
-                              );
+                              ),
+                            );
                           }
-
-
                         },
                       ),
                     ),
-
-                    // Container(
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: <Widget>[
-                    //       Container(
-                    //         padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    //         child: CircleAvatar(
-                    //           radius: 25,
-                    //           backgroundColor: Colors.pink,
-                    //           backgroundImage:
-                    //               AssetImage("images/user1_profile.jpg"),
-                    //           child: Text(
-                    //             "나",
-                    //             style: TextStyle(color: Colors.white),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         child: CircleAvatar(
-                    //           radius: 25,
-                    //           backgroundColor: Colors.grey,
-                    //           child: CircleAvatar(
-                    //             radius: 23,
-                    //             backgroundColor: Colors.white,
-                    //             child: IconButton(
-                    //               icon: Icon(Icons.add, color: Colors.grey),
-                    //               padding: EdgeInsets.zero,
-                    //               onPressed: () async {
-                    //                 final data = await Navigator.push(
-                    //                     context,
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             MemberFomationScreen()));
-                    //                 setState(() {
-                    //                   result = data;
-                    //                 });
-                    //               },
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // )
-
-
                   ],
                 ),
               ),
@@ -233,24 +634,21 @@ class _WritingScreenState extends State<WritingScreen> {
               // 키워드
               Container(
                 padding: EdgeInsets.only(top: 10),
-                color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.only(bottom: 10),
                       child: Text("키워드"),
                     ),
                     Container(
-                      padding: EdgeInsets.only(bottom: 2),
-                      child: Text("미팅 상대에게 멤버들의 특징이나 장점으로 어필해보세요!"),
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: Text("미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!"),
                     ),
                     Container(
                       padding: EdgeInsets.only(bottom: 10),
-                      child: Text("(최대 7개까지 선택 가능)"),
+                      child: Text("(최대 7개까지 선택가능)"),
                     ),
-
-                    // 키워드 나열할 곳!
                   ],
                 ),
               ),
@@ -258,6 +656,108 @@ class _WritingScreenState extends State<WritingScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  renderFirstAddress(StateSetter mystate) {
+    return ListView.builder(
+      itemCount: filteredFirstAddress.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor:
+                selectedFirstAddress[index] ? Colors.pink : Colors.white,
+            child: InkWell(
+              onTap: () {
+                // selectedFirstAddress 새로 담을 변수 설정
+                List<bool> result = [];
+                for (int i = 0; i < filteredFirstAddress.length; i++) {
+                  if (i == index) {
+                    result.add(true);
+                  } else {
+                    result.add(false);
+                  }
+                }
+
+                // secondAddress 초기화
+                secondAddress = [];
+                for (int i = 0; i < addresses.length; i++) {
+                  if (addresses[i].firstAddress ==
+                      filteredFirstAddress[result.indexOf(true)]) {
+                    secondAddress.add(addresses[i].secondAddress);
+                  }
+                }
+
+                // selectedSecondAddress 초기화
+                selectedSecondAddress = [];
+                for (int i = 0; i < secondAddress.length; i++) {
+                  if (i == 0) {
+                    selectedSecondAddress.add(true);
+                  } else {
+                    selectedSecondAddress.add(false);
+                  }
+                }
+
+                mystate(() {
+                  selectedFirstAddress = result;
+                });
+              },
+              child: Text(
+                filteredFirstAddress[index],
+                style: TextStyle(
+                    color: selectedFirstAddress[index]
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 14),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  renderSecondAddress(StateSetter mystate) {
+    return ListView.builder(
+      itemCount: secondAddress.length, // 첫번째선택된주소의 개수
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          padding: EdgeInsets.only(left: 30),
+          alignment: Alignment.centerLeft,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+              // backgroundColor: Colors.pink
+            ),
+            child: Text(
+              secondAddress[index],
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+                fontWeight: selectedSecondAddress[index]
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
+            onPressed: () {
+              // selectedSecondAddress 초기화
+              List<bool> result = [];
+              for (int i = 0; i < secondAddress.length; i++) {
+                if (i == index) {
+                  result.add(true);
+                } else {
+                  result.add(false);
+                }
+              }
+              mystate(() {
+                selectedSecondAddress = result;
+              });
+            },
+          ),
+        );
+      },
     );
   }
 }
