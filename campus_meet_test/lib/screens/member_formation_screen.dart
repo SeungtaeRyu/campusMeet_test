@@ -8,34 +8,46 @@ class MemberFomationScreen extends StatefulWidget {
 }
 
 class _MemberFomationScreenState extends State<MemberFomationScreen> {
-  // 추후 친구목록 DB.length 로 수정
-  List<bool> select = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ];
-  List<int> selectedUserIndex = [];
-  List<int> nullData = [];
+  List<String> friendName = [
+    "도진",
+    "해수",
+    "해수2",
+    "해수3",
+    "해수4",
+    "승태",
+    "현재",
+    "준우",
+    "한비",
+    "경민",
+    "경진",
+    "현민",
+    "수진"
+  ]; // 추후 친구목록 DB.length 로 수정
+  List<bool> selected = []; // 친구 추가 아이콘 true/false
+  List<String> selectedFriendName = []; // 친구 추가 아이콘 true인 친구 list
+
+  List<String> nullData = [];
+  final TextEditingController _search = TextEditingController();
+  String _searchText = "";
+  List<String> _searchResult = [];
+
+  _MemberFomationScreenState() {
+    _search.addListener(() {
+      setState(() {
+        _searchText = _search.text;
+      });
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < friendName.length; i++) {
+      selected.add(false);
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -53,7 +65,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context, selectedUserIndex);
+                  Navigator.pop(context, selectedFriendName);
                 },
                 child: Text(
                   "완료",
@@ -73,6 +85,8 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: TextFormField(
                       cursorColor: Colors.grey,
+                      keyboardType: TextInputType.name,
+                      controller: _search,
                       decoration: InputDecoration(
                         hintText: "이름을 입력하세요...",
                         fillColor: Colors.white,
@@ -104,12 +118,12 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
             ),
 
             Container(
-              child: select.indexOf(true) == -1
+              child: selected.indexOf(true) == -1
                   ? SizedBox.shrink()
                   : Container(
                       height: 100,
                       child: ListView.builder(
-                        itemCount: selectedUserIndex.length,
+                        itemCount: selectedFriendName.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
@@ -125,19 +139,25 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                                       backgroundColor: Colors.blue,
                                       radius: 8,
                                       child: InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           setState(() {
-                                            select[selectedUserIndex[index]] = false;
-                                            selectedUserIndex.remove(selectedUserIndex[index]);
+                                            selected[friendName.indexOf(
+                                                selectedFriendName[
+                                                    index])] = false;
+                                            selectedFriendName.remove(
+                                                selectedFriendName[index]);
                                           });
                                         },
-                                        child: Icon(Icons.close, size: 14,),
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 14,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                              Text("이름 ${selectedUserIndex[index]} "),
+                              Text("${selectedFriendName[index]} "),
                             ],
                           );
                         },
@@ -149,8 +169,8 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
 
             // 친구 목록 렌더링 컬럼 > 로우 > 이미지, 이름, 아이콘버튼
             Expanded(
-              child: ListView.builder(
-                itemCount: 20, // 추후 친구목록 DB.length 로 수정
+              child: _search.text.length != 0 ? buildSearchList() : ListView.builder(
+                itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
                 itemBuilder: (BuildContext context, int index) {
                   return Row(
                     children: [
@@ -161,21 +181,21 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                           radius: 25,
                         ),
                       ),
-                      Text("이름 ${index} "),
+                      Text("${friendName[index]}"),
                       Expanded(child: Container()),
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              if (!select[index]) {
-                                select[index] = !select[index];
-                                selectedUserIndex.add(index);
+                              if (!selected[index]) {
+                                selected[index] = !selected[index];
+                                selectedFriendName.add(friendName[index]);
                               } else {
-                                select[index] = !select[index];
-                                selectedUserIndex.remove(index);
+                                selected[index] = !selected[index];
+                                selectedFriendName.remove(friendName[index]);
                               }
                             });
                           },
-                          icon: select[index]
+                          icon: selected[index]
                               ? Icon(
                                   Icons.check_circle_rounded,
                                   color: Colors.pink,
@@ -189,6 +209,52 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  buildSearchList() {
+    List<String> searchResults = [];
+    for (String d in friendName) {
+      if (d.contains(_searchText)) {
+        searchResults.add(d);
+      }
+    }
+
+    return ListView.builder(
+      itemCount: searchResults.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Row(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: CircleAvatar(
+                backgroundColor: Colors.pink,
+                radius: 25,
+              ),
+            ),
+            Text("${searchResults[index]}"),
+            Expanded(child: Container()),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (!selected[friendName.indexOf(searchResults[index])]) {
+                      selected[friendName.indexOf(searchResults[index])] = !selected[friendName.indexOf(searchResults[index])];
+                      selectedFriendName.add(friendName[friendName.indexOf(searchResults[index])]);
+                    } else {
+                      selected[friendName.indexOf(searchResults[index])] = !selected[friendName.indexOf(searchResults[index])];
+                      selectedFriendName.remove(friendName[friendName.indexOf(searchResults[index])]);
+                    }
+                  });
+                },
+                icon: selected[friendName.indexOf(searchResults[index])]
+                    ? Icon(
+                  Icons.check_circle_rounded,
+                  color: Colors.pink,
+                )
+                    : Icon(Icons.circle_outlined)),
+          ],
+        );
+      },
     );
   }
 }

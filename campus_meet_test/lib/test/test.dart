@@ -1,84 +1,139 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    title: 'Returning Data',
-    home: HomeScreen(),
-  ));
+  runApp(SettingUnivPage());
 }
 
-class HomeScreen extends StatelessWidget {
+class SettingUnivPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Returning Data Demo'),
-      ),
-      body: Center(child: SelectionButton()),
-    );
-  }
+  State<StatefulWidget> createState() => new _State();
 }
 
-class SelectionButton extends StatelessWidget {
+
+class _State extends State<SettingUnivPage> {
+  TextEditingController univController = TextEditingController();
+  List<String> univ = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대", "용인대2"];
+
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: () {
-        _navigateAndDisplaySelection(context);
-      },
-      child: Text('Pick an option, any option!'),
-    );
-  }
+    final List<String> search_univ = [];
+    Color color = Color(0xffff375c);
+    return MaterialApp(
+      title: 'Fetch Data Example',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('학교선택'),
+          backgroundColor: color,
+        ),
+        body: Form(
+          autovalidateMode: AutovalidateMode.always,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                            width: 380,
+                            height: 150,
+                            alignment: Alignment(-1.0, 0.0),
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              '현재 재학중인 학교를 알려주세요👀',
+                              //textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 25),
+                            )),
+                        // Row(
+                        // children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 280,
+                              padding: EdgeInsets.all(10),
+                              child: TextFormField(
+                                controller: univController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: '학교이름',
+                                ),
+                              ),
+                            ),
+                            Container(
+                              // 회원가입 조건 하나라도 누락 시 색 죽은색/ 조건 무두 완료시 빨
+                              height: 50,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffff375c),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: FlatButton(
+                                onPressed: () {
+                                  // print(univController.text);
 
-  // SelectionScreen을 띄우고 navigator.pop으로부터 결과를 기다리는 메서드
-  _navigateAndDisplaySelection(BuildContext context) async {
-    // Navigator.push는 Future를 반환합니다. Future는 선택 창에서
-    // Navigator.pop이 호출된 이후 완료될 것입니다.
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SelectionScreen()),
-    );
+                                  univ.forEach((value) {
+                                    if (value
+                                        .contains(univController.text)) {
+                                      search_univ.add(value);
+                                    }
+                                  });
+                                  // print(search_univ);
+                                  for (int i = 0;
+                                  i < search_univ.length;
+                                  i++) {
+                                    print(search_univ[i]);
+                                  }
+                                },
+                                child: Text(
+                                  '검색',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        //saerch_univ 를 한줄씩 보여줘
+                        // Container(
+                        //   padding: EdgeInsets.only(bottom: 200),
+                        //   child: ListView.builder(
+                        //     itemCount: search_univ.length,
+                        //     itemBuilder: (context, index) {
+                        //       return ListTile(
+                        //         title: Text(search_univ[index]),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
+                        Container(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Container(
+                            // padding: EdgeInsets.only(bottom: 10),
+                            height: 50,
+                            width: 250,
+                            decoration: BoxDecoration(
+                                color: Color(0xffff375c),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: FlatButton(
+                              onPressed: () {},
+                              child: Text(
+                                '다음',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                              ),
+                            ),
+                          ),
+                        ),
 
-    // 선택 창으로부터 결과 값을 받은 후, 이전에 있던 snackbar는 숨기고 새로운 결과 값을
-    // 보여줍니다.
-    Scaffold.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text("$result")));
-  }
-}
-
-class SelectionScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pick an option'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                onPressed: () {
-                  // 창을 닫고 결과로 "Yep!"을 반환합니다.
-                  Navigator.pop(context, 'Yep!');
-                },
-                child: Text('Yep!'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                onPressed: () {
-                  // 창을 닫고 결과로 "Nope!"을 반환합니다.
-                  Navigator.pop(context, 'Nope.');
-                },
-                child: Text('Nope.'),
-              ),
-            )
-          ],
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
         ),
       ),
     );

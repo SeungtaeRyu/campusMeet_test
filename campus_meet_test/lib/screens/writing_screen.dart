@@ -9,7 +9,7 @@ class WritingScreen extends StatefulWidget {
 }
 
 class _WritingScreenState extends State<WritingScreen> {
-  List<int> result = [];
+  List<String> result = [];
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class _WritingScreenState extends State<WritingScreen> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.pink,
                                   radius: 25,
-                                  child: Text("이름 ${result[index-1]}",style: TextStyle(color: Colors.white, fontSize: 12),),
+                                  child: Text("${result[index-1]}",style: TextStyle(color: Colors.white, fontSize: 12),),
                                 ),
                               );
                           } else {
