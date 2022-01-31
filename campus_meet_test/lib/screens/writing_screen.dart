@@ -193,10 +193,17 @@ class _WritingScreenState extends State<WritingScreen> {
 
           // actions 버튼 패딩 어쩔꺼?
           actions: [
-            ElevatedButton(
-              onPressed: () {},
-              child: Text("등록"),
-              style: ElevatedButton.styleFrom(primary: Colors.pink),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text("등록"),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pink,
+                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  minimumSize: Size.zero,
+                ),
+              ),
             ),
             Padding(padding: EdgeInsets.only(right: 20))
           ],
