@@ -141,6 +141,37 @@ class _WritingScreenState extends State<WritingScreen> {
   List<String> secondAddress = [];
   List<bool> selectedSecondAddress = [];
 
+  // 키워드 DB
+  List<bool> selectedKeywords = [];
+  List<String> keywords = [
+    "인간 댕댕이",
+    "회색 아기 고양이",
+    "매력쟁이",
+    "건강미 뿜뿜",
+    "보기보다 동안",
+    "나름 귀여울지도",
+    "사람 냄새나는 스타일",
+    "카리스마 있는 편",
+    "센스 폭발",
+    "배꼽 도둑",
+    "틈새 드립러",
+    "분위기 메이커",
+    "부끄럼쟁이",
+    "리액션 부자",
+    "따뜻 다정",
+    "표현 서툰 츤데레",
+    "어색한건 못 참아",
+    "밥보단 술",
+    "술보단 밥",
+    "편하게 놀아요",
+    "술은 적당히",
+    "몸만 오세요",
+    "멈추지마 가보자고",
+    "분위기 캐리 부탁드립니다",
+    "시간 순삭 책임질게요",
+    "뚝딱이들"
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -172,6 +203,10 @@ class _WritingScreenState extends State<WritingScreen> {
         selectedSecondAddress.add(false);
       }
     }
+    // selectedKeywords
+    for (int i = 0; i < keywords.length; i++) {
+      selectedKeywords.add(false);
+    }
   }
 
   @override
@@ -197,10 +232,10 @@ class _WritingScreenState extends State<WritingScreen> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text("등록"),
+                child: Text("등록", style: TextStyle(fontSize: 16),),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
-                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   minimumSize: Size.zero,
                 ),
               ),
@@ -214,7 +249,6 @@ class _WritingScreenState extends State<WritingScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                // padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
@@ -226,10 +260,8 @@ class _WritingScreenState extends State<WritingScreen> {
                       // controller: studuntIDController1,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        // contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        // border: OutlineInputBorder(),
-                        // labelText: '제한 없음',
                         hintText: '미팅 제목을 입력하세요',
+                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500)
                       ),
                     ),
                   ],
@@ -249,7 +281,7 @@ class _WritingScreenState extends State<WritingScreen> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(bottom: 5),
-                      child: Text("지역"),
+                      child: Text("지역",style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                     ),
                     Row(
                       children: [
@@ -266,11 +298,15 @@ class _WritingScreenState extends State<WritingScreen> {
                               children: [
                                 Text(
                                   addressData == "" ? "지역 선택" : addressData,
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: addressData == "" ? Colors.grey.shade500 : Colors.black,
+                                      height: 1),
                                 ),
                                 Icon(
-                                  Icons.keyboard_arrow_down_outlined,
-                                  color: Colors.black,
+                                  Icons.keyboard_arrow_down,
+                                  color: addressData == "" ? Colors.grey.shade500 : Colors.black,
+                                  size: 26,
                                 ),
                               ],
                             ),
@@ -569,69 +605,76 @@ class _WritingScreenState extends State<WritingScreen> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(bottom: 10),
-                      child: Text("참가자"),
+                      child: Text("참가자", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                     ),
                     Container(
-                      height: 50,
-                      child: ListView.builder(
-                        itemCount: memberData.length + 2,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index == 0) {
-                            return Container(
-                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.pink,
-                                backgroundImage:
-                                    AssetImage("images/user1_profile.jpg"),
-                                child: Text(
-                                  "나",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            );
-                          } else if (index < memberData.length + 1) {
-                            return Container(
-                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.pink,
-                                radius: 25,
-                                child: Text(
-                                  "${memberData[index - 1]}",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              child: CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.grey,
-                                child: CircleAvatar(
-                                  radius: 23,
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                    icon: Icon(Icons.add, color: Colors.grey),
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () async {
-                                      final data = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MemberFomationScreen()));
-                                      setState(() {
-                                        memberData = data;
-                                      });
-                                    },
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          runSpacing: 10,
+                          children: List.generate(
+                            memberData.length + 2,
+                            (index) {
+                              if (index == 0) {
+                                return Container(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        AssetImage("images/user1_profile.jpg"),
+                                    child: CircleAvatar(
+                                      radius: 25,
+                                      backgroundColor: Colors.black.withOpacity(0.3),
+                                      child: Text(
+                                        "나",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          }
-                        },
+                                );
+                              } else if (index < memberData.length + 1) {
+                                return Container(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.pink,
+                                    radius: 25,
+                                    child: Text(
+                                      "${memberData[index - 1]}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 12),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  child: CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: Colors.grey,
+                                    child: CircleAvatar(
+                                      radius: 23,
+                                      backgroundColor: Colors.white,
+                                      child: IconButton(
+                                        icon:
+                                            Icon(Icons.add, color: Colors.grey),
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () async {
+                                          final data = await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MemberFomationScreen()));
+                                          setState(() {
+                                            memberData = data;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -639,24 +682,79 @@ class _WritingScreenState extends State<WritingScreen> {
               ),
 
               // 키워드
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Text("키워드"),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Text("미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!"),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Text("(최대 7개까지 선택가능)"),
-                    ),
-                  ],
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: Text("키워드", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+                      ),
+                      Container(
+                        child: Text("미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!", style: TextStyle(fontSize: 14),),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: Text("(최대 7개까지 선택가능)", style: TextStyle(fontSize: 14, color: Colors.grey.shade500),),
+                      ),
+
+                      // keywords 나열하자!
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            runSpacing: 10,
+                            spacing: 10,
+                            children: List<Widget>.generate(
+                              keywords.length,
+                              (index) => Container(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    elevation: 0,
+                                    primary: selectedKeywords[index]
+                                        ? Colors.pink
+                                        : Colors.grey.shade200,
+                                    padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                    minimumSize: Size.zero,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: Text(
+                                    "# ${keywords[index]}",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                        color: selectedKeywords[index]
+                                            ? Colors.white
+                                            : Colors.grey.shade500),
+                                  ),
+                                  onPressed: () {
+                                    // 현재 선택된 키워드 갯수 count
+                                    int count = 0;
+                                    for(int i = 0; i < keywords.length ; i++) {
+                                      if(selectedKeywords[i]) count ++;
+                                    }
+
+                                    // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
+                                    if(count == 7 && !selectedKeywords[index]){
+                                    } else {
+                                      setState(() {
+                                        selectedKeywords[index] =
+                                        !selectedKeywords[index];
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

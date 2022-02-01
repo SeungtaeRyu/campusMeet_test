@@ -38,15 +38,18 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < friendName.length; i++) {
+      selected.add(false);
+    }
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
-    for (var i = 0; i < friendName.length; i++) {
-      selected.add(false);
-    }
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -116,93 +119,106 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
             ),
 
             Container(
-              child: selected.indexOf(true) == -1
-                  ? SizedBox.shrink()
-                  : Container(
-                      height: 100,
-                      child: ListView.builder(
-                        itemCount: selectedFriendName.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.pink,
-                                  radius: 25,
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.pink,
-                                      radius: 8,
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            selected[friendName.indexOf(
-                                                selectedFriendName[
-                                                    index])] = false;
-                                            selectedFriendName.remove(
-                                                selectedFriendName[index]);
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                child: Wrap(
+                  children: selected.indexOf(true) == -1 ? [SizedBox.shrink()] : List<Widget>.generate(selectedFriendName.length, (index){
+                    return Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.pink,
+                            radius: 25,
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.pink,
+                                radius: 8,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selected[friendName.indexOf(
+                                          selectedFriendName[
+                                          index])] = false;
+                                      selectedFriendName.remove(
+                                          selectedFriendName[index]);
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 14,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                              Text("${selectedFriendName[index]} "),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
+                            ),
+                          ),
+                        ),
+                        Text("${selectedFriendName[index]} "),
+                      ],
+                    );
+                  }),
+                ),
+              ),
             ),
 
-            Divider(thickness: 5),
+            Divider(height: 5, thickness: 5),
 
             // 친구 목록 렌더링 컬럼 > 로우 > 이미지, 이름, 아이콘버튼
             Expanded(
-              child: _search.text.length != 0 ? buildSearchList() : ListView.builder(
-                itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
-                itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.pink,
-                          radius: 25,
+              child: _search.text.length != 0 ? buildSearchList() : Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                color: Colors.white,
+                child: ListView.builder(
+                  itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
+                  itemBuilder: (BuildContext context, int index) {
+                    return Row(
+                      children: [
+                        Container(
+                          // color: Colors.blue,
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.pink,
+                            radius: 25,
+                          ),
                         ),
-                      ),
-                      Text("${friendName[index]}"),
-                      Expanded(child: Container()),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (!selected[index]) {
-                                selected[index] = !selected[index];
-                                selectedFriendName.add(friendName[index]);
-                              } else {
-                                selected[index] = !selected[index];
-                                selectedFriendName.remove(friendName[index]);
+                        Text("${friendName[index]}"),
+                        Expanded(child: Container()),
+                        IconButton(
+                            onPressed: () {
+                              // 선택한 친구 수 count
+                              int count = 0;
+                              for(int i = 0; i < friendName.length ; i++){
+                                if(selected[i]) count++;
                               }
-                            });
-                          },
-                          icon: selected[index]
-                              ? Icon(
-                                  Icons.check_circle_rounded,
-                                  color: Colors.pink,
-                                )
-                              : Icon(Icons.circle_outlined)),
-                    ],
-                  );
-                },
+
+                              // 5명째에는 동작하지 않음
+                              if(count == 4 && !selected[index]){
+                              } else {
+                                setState(() {
+                                  if (!selected[index]) {
+                                    selected[index] = !selected[index];
+                                    selectedFriendName.add(friendName[index]);
+                                  } else {
+                                    selected[index] = !selected[index];
+                                    selectedFriendName.remove(friendName[index]);
+                                  }
+                                });
+                              }
+                            },
+                            icon: selected[index]
+                                ? Icon(
+                                    Icons.check_circle_rounded,
+                                    color: Colors.pink,
+                                  )
+                                : Icon(Icons.circle_outlined)),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ],
