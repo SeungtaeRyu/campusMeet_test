@@ -46,8 +46,6 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -75,6 +73,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                 ))
           ],
         ),
+
         body: Column(
           children: [
             Container(
@@ -120,11 +119,14 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
 
             Container(
               color: Colors.white,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               alignment: Alignment.centerLeft,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  children: selected.indexOf(true) == -1 ? [SizedBox.shrink()] : List<Widget>.generate(selectedFriendName.length, (index){
+              child: selected.indexOf(true) == -1 ? SizedBox.shrink() : Container(
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: selectedFriendName.length,
+                  itemBuilder: (BuildContext context, int index){
                     return Column(
                       children: [
                         Container(
@@ -157,13 +159,56 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                             ),
                           ),
                         ),
-                        Text("${selectedFriendName[index]} "),
+                        Container(padding: EdgeInsets.only(bottom: 10), child: Text("${selectedFriendName[index]} ")),
                       ],
                     );
-                  }),
+                  },
                 ),
-              ),
+              )
             ),
+
+            //   child: SingleChildScrollView(
+            //     child: Wrap(
+            //       children: selected.indexOf(true) == -1 ? [SizedBox.shrink()] : List<Widget>.generate(selectedFriendName.length, (index){
+            //         return Column(
+            //           children: [
+            //             Container(
+            //               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            //               child: CircleAvatar(
+            //                 backgroundColor: Colors.pink,
+            //                 radius: 25,
+            //                 child: Align(
+            //                   alignment: Alignment.topRight,
+            //                   child: CircleAvatar(
+            //                     backgroundColor: Colors.pink,
+            //                     radius: 8,
+            //                     child: InkWell(
+            //                       onTap: () {
+            //                         setState(() {
+            //                           selected[friendName.indexOf(
+            //                               selectedFriendName[
+            //                               index])] = false;
+            //                           selectedFriendName.remove(
+            //                               selectedFriendName[index]);
+            //                         });
+            //                       },
+            //                       child: Icon(
+            //                         Icons.close,
+            //                         size: 14,
+            //                         color: Colors.white,
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //             Text("${selectedFriendName[index]} "),
+            //           ],
+            //         );
+            //       }),
+            //     ),
+            //   ),
+            // ),
 
             Divider(height: 5, thickness: 5),
 
@@ -178,7 +223,6 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                     return Row(
                       children: [
                         Container(
-                          // color: Colors.blue,
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                           child: CircleAvatar(
                             backgroundColor: Colors.pink,

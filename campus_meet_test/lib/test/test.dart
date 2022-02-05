@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(SettingUnivPage());
@@ -16,6 +17,11 @@ class _State extends State<SettingUnivPage> {
   List<String> univ = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대", "용인대2"];
   List<String> search_univ = [];
   List<String> search_univ_result = [];
+  late final String title;
+  final List<int> _header = List.generate(9, (index) => index + 1);
+  final List<int> _body = List.generate(9, (index) => index + 1);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,127 +36,88 @@ class _State extends State<SettingUnivPage> {
           title: Text('학교선택'),
           backgroundColor: color,
         ),
-        body: Form(
-          autovalidateMode: AutovalidateMode.always,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            width: 380,
-                            height: 150,
-                            alignment: Alignment(-1.0, 0.0),
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              '현재 재학중인 학교를 알려주세요👀',
-                              //textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 25),
-                            )),
-                        // Row(
-                        // children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 280,
-                              padding: EdgeInsets.all(10),
-                              child: TextFormField(
-                                controller: univController,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: '학교이름',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              // 회원가입 조건 하나라도 누락 시 색 죽은색/ 조건 무두 완료시 빨
-                              height: 50,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffff375c),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: FlatButton(
-                                onPressed: () {
-                                  // print(univController.text);
-                                  search_univ_result = [];
-                                  search_univ = [];
-                                  if(univController.text == "") {
 
-                                  } else {
-                                    univ.forEach((value) {
-                                      if (value
-                                          .contains(univController.text)) {
-                                        search_univ.add(value);
-                                      }
-                                    });
-                                  }
 
-                                  setState(() {
-                                    search_univ_result = search_univ;
-                                  });
-
-                                  // print(search_univ);
-                                  // for (int i = 0;
-                                  // i < search_univ.length;
-                                  // i++) {
-                                  //   print(search_univ[i]);
-                                  // }
-                                },
-                                child: Text(
-                                  '검색',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        //saerch_univ 를 한줄씩 보여줘
-                        Container(
-                          height: 200,
-                          // padding: EdgeInsets.only(bottom: 200),
-                          child: ListView.builder(
-                            itemCount: search_univ_result.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child:Text(search_univ_result[index]),
-
-                              );
-                            },
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 20),
-                          child: Container(
-                            // padding: EdgeInsets.only(bottom: 10),
-                            height: 50,
-                            width: 250,
-                            decoration: BoxDecoration(
-                                color: Color(0xffff375c),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: Text(
-                                '다음',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 25),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
-              ]),
-        ),
+      // ),
+        body: Column(
+          children: [
+            Container(
+              height: 100, // 높이 안주고 자동으로 할당 하는 방법
+              color: Colors.pink,
+              child: ListView.builder(
+                // physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: 100,
+                itemBuilder: (BuildContext context, int index) {
+                  return Wrap(
+                    children: [
+                      Column(
+                        children: [
+                          Container(color: Colors.blue, child: CircleAvatar(
+                            radius: 25,
+                          ),),
+                          // Text("${index}"),
+                          // Container(color: Colors.blue, child: Text("3 "),),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
+        )
+        // Container(
+        //   child: SingleChildScrollView(
+        //     child: Wrap(
+        //       children: [
+        //         Container(
+        //           color: Colors.pink,
+        //           width: 300,
+        //           height: 200,
+        //           // width: MediaQuery.of(context).size.width*0.5,
+        //           child: ListView(
+        //             shrinkWrap: true,
+        //             physics: NeverScrollableScrollPhysics(),
+        //             scrollDirection: Axis.horizontal,
+        //             children: [
+        //             Container(color: Colors.blue, child: Text("50000 "),),
+        //             Container(child: Text("50000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //             Container(child: Text("50000000000000 "),),
+        //           ],),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

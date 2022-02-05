@@ -232,7 +232,10 @@ class _WritingScreenState extends State<WritingScreen> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text("등록", style: TextStyle(fontSize: 16),),
+                child: Text(
+                  "등록",
+                  style: TextStyle(fontSize: 16),
+                ),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -258,11 +261,12 @@ class _WritingScreenState extends State<WritingScreen> {
                   children: <Widget>[
                     TextFormField(
                       // controller: studuntIDController1,
+                      cursorColor: Colors.grey,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '미팅 제목을 입력하세요',
-                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500)
-                      ),
+                          border: InputBorder.none,
+                          hintText: '미팅 제목을 입력하세요',
+                          hintStyle: TextStyle(
+                              fontSize: 16, color: Colors.grey.shade500)),
                     ),
                   ],
                 ),
@@ -281,7 +285,11 @@ class _WritingScreenState extends State<WritingScreen> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(bottom: 5),
-                      child: Text("지역",style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+                      child: Text(
+                        "지역",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Row(
                       children: [
@@ -300,12 +308,16 @@ class _WritingScreenState extends State<WritingScreen> {
                                   addressData == "" ? "지역 선택" : addressData,
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: addressData == "" ? Colors.grey.shade500 : Colors.black,
+                                      color: addressData == ""
+                                          ? Colors.grey.shade500
+                                          : Colors.black,
                                       height: 1),
                                 ),
                                 Icon(
                                   Icons.keyboard_arrow_down,
-                                  color: addressData == "" ? Colors.grey.shade500 : Colors.black,
+                                  color: addressData == ""
+                                      ? Colors.grey.shade500
+                                      : Colors.black,
                                   size: 26,
                                 ),
                               ],
@@ -605,78 +617,150 @@ class _WritingScreenState extends State<WritingScreen> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.only(bottom: 10),
-                      child: Text("참가자", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
-                    ),
-                    Container(
-                      child: SingleChildScrollView(
-                        child: Wrap(
-                          runSpacing: 10,
-                          children: List.generate(
-                            memberData.length + 2,
-                            (index) {
-                              if (index == 0) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage:
-                                        AssetImage("images/user1_profile.jpg"),
-                                    child: CircleAvatar(
-                                      radius: 25,
-                                      backgroundColor: Colors.black.withOpacity(0.3),
-                                      child: Text(
-                                        "나",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 12),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              } else if (index < memberData.length + 1) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.pink,
-                                    radius: 25,
-                                    child: Text(
-                                      "${memberData[index - 1]}",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                return Container(
-                                  child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.grey,
-                                    child: CircleAvatar(
-                                      radius: 23,
-                                      backgroundColor: Colors.white,
-                                      child: IconButton(
-                                        icon:
-                                            Icon(Icons.add, color: Colors.grey),
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () async {
-                                          final data = await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MemberFomationScreen()));
-                                          setState(() {
-                                            memberData = data;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ),
+                      child: Text(
+                        "참가자",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
+                    Container(
+                      height: 60,
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: memberData.length + 2,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0) {
+                            return Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundImage:
+                                    AssetImage("images/user1_profile.jpg"),
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor:
+                                      Colors.black.withOpacity(0.3),
+                                  child: Text(
+                                    "나",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (index < memberData.length + 1) {
+                            return Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.pink,
+                                radius: 25,
+                                child: Text(
+                                  "${memberData[index - 1]}",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey,
+                                child: CircleAvatar(
+                                  radius: 23,
+                                  backgroundColor: Colors.white,
+                                  child: IconButton(
+                                    icon: Icon(Icons.add, color: Colors.grey),
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () async {
+                                      final data = await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MemberFomationScreen()));
+                                      setState(() {
+                                        memberData = data;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    // Container(
+                    //   child: SingleChildScrollView(
+                    //     child: Wrap(
+                    //       runSpacing: 10,
+                    //       children: List.generate(
+                    //         memberData.length + 2,
+                    //         (index) {
+                    //           if (index == 0) {
+                    //             return Container(
+                    //               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                    //               child: CircleAvatar(
+                    //                 radius: 25,
+                    //                 backgroundImage:
+                    //                     AssetImage("images/user1_profile.jpg"),
+                    //                 child: CircleAvatar(
+                    //                   radius: 25,
+                    //                   backgroundColor: Colors.black.withOpacity(0.3),
+                    //                   child: Text(
+                    //                     "나",
+                    //                     style: TextStyle(
+                    //                         color: Colors.white, fontSize: 12),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           } else if (index < memberData.length + 1) {
+                    //             return Container(
+                    //               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                    //               child: CircleAvatar(
+                    //                 backgroundColor: Colors.pink,
+                    //                 radius: 25,
+                    //                 child: Text(
+                    //                   "${memberData[index - 1]}",
+                    //                   style: TextStyle(
+                    //                       color: Colors.white, fontSize: 12),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           } else {
+                    //             return Container(
+                    //               child: CircleAvatar(
+                    //                 radius: 25,
+                    //                 backgroundColor: Colors.grey,
+                    //                 child: CircleAvatar(
+                    //                   radius: 23,
+                    //                   backgroundColor: Colors.white,
+                    //                   child: IconButton(
+                    //                     icon:
+                    //                         Icon(Icons.add, color: Colors.grey),
+                    //                     padding: EdgeInsets.zero,
+                    //                     onPressed: () async {
+                    //                       final data = await Navigator.push(
+                    //                           context,
+                    //                           MaterialPageRoute(
+                    //                               builder: (context) =>
+                    //                                   MemberFomationScreen()));
+                    //                       setState(() {
+                    //                         memberData = data;
+                    //                       });
+                    //                     },
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           }
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -690,14 +774,25 @@ class _WritingScreenState extends State<WritingScreen> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(bottom: 10),
-                        child: Text("키워드", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+                        child: Text(
+                          "키워드",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Container(
-                        child: Text("미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!", style: TextStyle(fontSize: 14),),
+                        child: Text(
+                          "미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!",
+                          style: TextStyle(fontSize: 14),
+                        ),
                       ),
                       Container(
                         padding: EdgeInsets.only(bottom: 20),
-                        child: Text("(최대 7개까지 선택가능)", style: TextStyle(fontSize: 14, color: Colors.grey.shade500),),
+                        child: Text(
+                          "(최대 7개까지 선택가능)",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade500),
+                        ),
                       ),
 
                       // keywords 나열하자!
@@ -726,7 +821,7 @@ class _WritingScreenState extends State<WritingScreen> {
                                   child: Text(
                                     "# ${keywords[index]}",
                                     style: TextStyle(
-                                      fontSize: 13,
+                                        fontSize: 13,
                                         color: selectedKeywords[index]
                                             ? Colors.white
                                             : Colors.grey.shade500),
@@ -734,16 +829,17 @@ class _WritingScreenState extends State<WritingScreen> {
                                   onPressed: () {
                                     // 현재 선택된 키워드 갯수 count
                                     int count = 0;
-                                    for(int i = 0; i < keywords.length ; i++) {
-                                      if(selectedKeywords[i]) count ++;
+                                    for (int i = 0; i < keywords.length; i++) {
+                                      if (selectedKeywords[i]) count++;
                                     }
 
                                     // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
-                                    if(count == 7 && !selectedKeywords[index]){
+                                    if (count == 7 &&
+                                        !selectedKeywords[index]) {
                                     } else {
                                       setState(() {
                                         selectedKeywords[index] =
-                                        !selectedKeywords[index];
+                                            !selectedKeywords[index];
                                       });
                                     }
                                   },
