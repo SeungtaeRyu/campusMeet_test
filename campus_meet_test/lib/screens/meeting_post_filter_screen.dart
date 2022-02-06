@@ -147,10 +147,10 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
   List<bool> selectedSecondAddress = [];
 
   // 키워드 DB
-  List<String> keywordData = []; // 선택할때마다 value 추가, 닫기 누를 시 finalKeywordData 와 동기화
-  List<String> finalKeywordData = []; // 확인 누를 시 keywordData 와 동기화
-  List<bool> selectedKeywords = []; // 선택할때마다 value 추가, 닫기 누를 시 finalSeledctedKeyword 와 동기화
-  List<bool> finalSelectedKeywords = []; // 확인 누를 시 selectedKeywords 와 동기화
+  List<String> tempKeywords = []; // 선택할때마다 value 추가, 닫기 누를 시 finalKeywordData 와 동기화
+  List<String> resultKeywords = []; // 확인 누를 시 keywordData 와 동기화
+  List<bool> tempBool = []; // 선택할때마다 value 추가, 닫기 누를 시 finalSeledctedKeyword 와 동기화
+  List<bool> resultBool = []; // 확인 누를 시 selectedKeywords 와 동기화
   List<String> keywords = [
     "인간 댕댕이",
     "회색 아기 고양이",
@@ -180,7 +180,7 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
     "뚝딱이들"
   ];
 
-  final _formKey=GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -216,22 +216,13 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
 
     // selectedKeywords
     for (int i = 0; i < keywords.length; i++) {
-      selectedKeywords.add(false);
-      finalSelectedKeywords.add(false);
+      tempBool.add(false);
+      resultBool.add(false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(keywordData);
-    // print(_formKey.currentState?.validate());
-    // print(finalKeywordData);
-    // print(finalSelectedKeywords);
-    // print(keywordData);
-    // print(selectedKeywords);
-    print('1. 빌드');
-    print(finalKeywordData);
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -253,7 +244,7 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                   color: Colors.black)),
         ),
         body: GestureDetector(
-          onTap: (){
+          onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: Form(
@@ -274,20 +265,27 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey.shade300))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade300))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    child: Text("인원수", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                    child: Text(
+                                      "인원수",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   SliderTheme(
                                     data: SliderThemeData(
                                       trackShape: CustomTrackShape(),
                                       trackHeight: 5,
                                       valueIndicatorColor: Colors.pink,
-                                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0), // thumb size
+                                      thumbShape: RoundSliderThumbShape(
+                                          enabledThumbRadius:
+                                              8.0), // thumb size
                                     ),
                                     child: Slider(
                                       value: numMember,
@@ -328,7 +326,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border(
-                                      bottom: BorderSide(color: Colors.grey.shade300))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade300))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -337,7 +336,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                     child: Text(
                                       "지역 선택",
                                       style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.bold),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Row(
@@ -349,7 +349,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                           style: TextButton.styleFrom(
                                             padding: EdgeInsets.zero,
                                             minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
                                           ),
                                           child: Row(
                                             children: [
@@ -371,70 +372,87 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             showModalBottomSheet(
                                               backgroundColor: Colors.white,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.vertical(
-                                                    top: Radius.circular(25.0)),
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            25.0)),
                                               ),
                                               isScrollControlled: true,
                                               context: context,
                                               builder: (context) {
                                                 return StatefulBuilder(builder:
                                                     (BuildContext context,
-                                                    StateSetter mystate) {
+                                                        StateSetter mystate) {
                                                   return SingleChildScrollView(
                                                     child: Container(
                                                       padding:
-                                                      EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 20, 0, 0),
                                                       height:
-                                                      MediaQuery.of(context).size.width *
-                                                          1.5,
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              1.5,
                                                       child: Column(
                                                         children: [
                                                           Container(
-                                                            padding: EdgeInsets.fromLTRB(
-                                                                0, 10, 0, 10),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(0, 10,
+                                                                    0, 10),
                                                             decoration: BoxDecoration(
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 border: Border(
                                                                     bottom: BorderSide(
                                                                         color: Colors
-                                                                            .grey.shade300))),
+                                                                            .grey
+                                                                            .shade300))),
                                                             child: Row(
                                                               crossAxisAlignment:
-                                                              CrossAxisAlignment.center,
+                                                                  CrossAxisAlignment
+                                                                      .center,
                                                               children: [
                                                                 Container(
                                                                   // color: Colors.pink,
-                                                                  alignment: Alignment.center,
-                                                                  width:
-                                                                  MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
                                                                       0.3,
                                                                   child: Text(
                                                                     "시/도",
                                                                     style: TextStyle(
-                                                                        fontSize: 16),
+                                                                        fontSize:
+                                                                            16),
                                                                   ),
                                                                 ),
                                                                 Container(
                                                                   // color: Colors.blue,
-                                                                  padding: EdgeInsets.only(
-                                                                      left: 30),
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              30),
                                                                   alignment:
-                                                                  Alignment.centerLeft,
-                                                                  width:
-                                                                  MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
                                                                       0.3,
                                                                   child: Text(
                                                                     "시/구/군",
                                                                     style: TextStyle(
-                                                                        fontSize: 16),
+                                                                        fontSize:
+                                                                            16),
                                                                   ),
                                                                 ),
                                                                 Expanded(
-                                                                  child: Container(),
+                                                                  child:
+                                                                      Container(),
                                                                 )
                                                               ],
                                                             ),
@@ -443,46 +461,45 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                                             child: Row(
                                                               children: [
                                                                 Container(
-                                                                  padding: EdgeInsets.only(
-                                                                      top: 10),
-                                                                  alignment: Alignment.center,
-                                                                  width:
-                                                                  MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(
+                                                                              top: 10),
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
                                                                       0.3,
                                                                   decoration: BoxDecoration(
-                                                                      color: Colors.white,
+                                                                      color: Colors
+                                                                          .white,
                                                                       border: Border(
-                                                                          bottom: BorderSide(
-                                                                              color: Colors
-                                                                                  .grey
-                                                                                  .shade300),
-                                                                          right: BorderSide(
-                                                                              color: Colors
-                                                                                  .grey
-                                                                                  .shade300))),
+                                                                          bottom:
+                                                                              BorderSide(color: Colors.grey.shade300),
+                                                                          right: BorderSide(color: Colors.grey.shade300))),
                                                                   child: renderFirstAddress(
                                                                       mystate),
                                                                 ),
                                                                 Expanded(
-                                                                  child: Container(
+                                                                  child:
+                                                                      Container(
                                                                     alignment:
-                                                                    Alignment.centerLeft,
-                                                                    width:
-                                                                    MediaQuery.of(context)
-                                                                        .size
-                                                                        .width *
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
                                                                         0.3,
                                                                     decoration: BoxDecoration(
-                                                                        color: Colors.white,
+                                                                        color: Colors
+                                                                            .white,
                                                                         border: Border(
-                                                                            bottom: BorderSide(
-                                                                                color: Colors
-                                                                                    .grey
-                                                                                    .shade300))),
-                                                                    child:
-                                                                    renderSecondAddress(
+                                                                            bottom:
+                                                                                BorderSide(color: Colors.grey.shade300))),
+                                                                    child: renderSecondAddress(
                                                                         mystate),
                                                                   ),
                                                                 ),
@@ -490,44 +507,41 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                                             ),
                                                           ),
                                                           Container(
-                                                            height: MediaQuery.of(context)
-                                                                .size
-                                                                .width *
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
                                                                 0.25,
-                                                            padding: EdgeInsets.fromLTRB(
-                                                                20, 0, 20, 20),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(20, 0,
+                                                                    20, 20),
                                                             child: Row(
                                                               children: [
                                                                 Expanded(
-                                                                  child: Container(
-                                                                    height:
-                                                                    MediaQuery.of(context)
-                                                                        .size
-                                                                        .width *
+                                                                  child:
+                                                                      Container(
+                                                                    height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
                                                                         0.1,
-                                                                    child: OutlinedButton(
-                                                                      child: Text(
+                                                                    child:
+                                                                        OutlinedButton(
+                                                                      child:
+                                                                          Text(
                                                                         "닫기",
                                                                         style: TextStyle(
                                                                             color:
-                                                                            Colors.pink,
-                                                                            fontWeight:
-                                                                            FontWeight
-                                                                                .bold),
+                                                                                Colors.pink,
+                                                                            fontWeight: FontWeight.bold),
                                                                       ),
-                                                                      style: OutlinedButton
-                                                                          .styleFrom(
-                                                                          shape:
-                                                                          RoundedRectangleBorder(
+                                                                      style: OutlinedButton.styleFrom(
+                                                                          shape: RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                            BorderRadius
-                                                                                .circular(
-                                                                                10),
+                                                                                BorderRadius.circular(10),
                                                                           ),
-                                                                          side: BorderSide(
-                                                                              color: Colors
-                                                                                  .pink)),
-                                                                      onPressed: () {
+                                                                          side: BorderSide(color: Colors.pink)),
+                                                                      onPressed:
+                                                                          () {
                                                                         Navigator.pop(
                                                                             context);
                                                                       },
@@ -536,39 +550,37 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                                                 ),
                                                                 Padding(
                                                                     padding: EdgeInsets.only(
-                                                                        right: 15)),
+                                                                        right:
+                                                                            15)),
                                                                 Expanded(
-                                                                  child: Container(
-                                                                    height:
-                                                                    MediaQuery.of(context)
-                                                                        .size
-                                                                        .width *
+                                                                  child:
+                                                                      Container(
+                                                                    height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
                                                                         0.1,
-                                                                    child: OutlinedButton(
-                                                                      child: Text(
+                                                                    child:
+                                                                        OutlinedButton(
+                                                                      child:
+                                                                          Text(
                                                                         "확인",
                                                                         style: TextStyle(
                                                                             color:
-                                                                            Colors.pink,
-                                                                            fontWeight:
-                                                                            FontWeight
-                                                                                .bold),
+                                                                                Colors.pink,
+                                                                            fontWeight: FontWeight.bold),
                                                                       ),
-                                                                      style: OutlinedButton
-                                                                          .styleFrom(
-                                                                          shape:
-                                                                          RoundedRectangleBorder(
+                                                                      style: OutlinedButton.styleFrom(
+                                                                          shape: RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                            BorderRadius
-                                                                                .circular(
-                                                                                10),
+                                                                                BorderRadius.circular(10),
                                                                           ),
-                                                                          side: BorderSide(
-                                                                              color: Colors
-                                                                                  .pink)),
-                                                                      onPressed: () {
-                                                                        setState(() {
-                                                                          addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
+                                                                          side: BorderSide(color: Colors.pink)),
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          addressData
+                                                                              .add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
                                                                         });
                                                                         Navigator.pop(
                                                                             context);
@@ -595,42 +607,69 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                   Wrap(
                                     // runSpacing: 10,
                                     // spacing: 10,
-                                    children: addressData == [] ? [SizedBox.shrink()] : List.generate(addressData.length, (index){
-                                      return Container(
-                                        padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                        child: Container(
-                                          height: 30,
-                                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade200,
-                                            borderRadius: BorderRadius.circular(20)
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: Text(addressData[index],style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1)),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: InkWell(
-                                                  child: Container(
-                                                      alignment: Alignment.center,
-                                                      padding: EdgeInsets.zero,
-                                                      child: Text(" X", style: TextStyle(color: Colors.grey.shade500, fontSize: 14,height: 1))),
-                                                  onTap: (){
-                                                    setState(() {
-                                                      addressData.remove(addressData[index]);
-                                                    });
-                                                  },
+                                    children: addressData == []
+                                        ? [SizedBox.shrink()]
+                                        : List.generate(addressData.length,
+                                            (index) {
+                                            return Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 10, 10),
+                                              child: Container(
+                                                height: 30,
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 0, 10, 0),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade200,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          addressData[index],
+                                                          style: TextStyle(
+                                                              color: Colors.grey
+                                                                  .shade500,
+                                                              fontSize: 14,
+                                                              height: 1)),
+                                                    ),
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: InkWell(
+                                                        child: Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            padding:
+                                                                EdgeInsets.zero,
+                                                            child: Text(" X",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade500,
+                                                                    fontSize:
+                                                                        14,
+                                                                    height:
+                                                                        1))),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            addressData.remove(
+                                                                addressData[
+                                                                    index]);
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    }),
+                                            );
+                                          }),
                                   ),
 
                                   // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
@@ -715,16 +754,18 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey.shade300))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade300))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.only(bottom: 5),
-                                    child: Text("학번 선택",
+                                    child: Text(
+                                      "학번 선택",
                                       style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.bold),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Container(
@@ -739,16 +780,28 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             controller: studuntIDController1,
                                             keyboardType: TextInputType.number,
                                             cursorColor: Colors.grey,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(
+                                                  2)
+                                            ],
                                             decoration: InputDecoration(
                                               contentPadding:
-                                                  EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                  EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
                                               hintText: '제한 없음',
-                                              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey.shade500,
+                                                  fontSize: 14),
                                               focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                               enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                             ),
                                           ),
                                         ),
@@ -758,16 +811,28 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             controller: studuntIDController2,
                                             keyboardType: TextInputType.number,
                                             cursorColor: Colors.grey,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(
+                                                  2)
+                                            ],
                                             decoration: InputDecoration(
                                               contentPadding:
-                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                  EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
                                               hintText: '22',
-                                              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey.shade500,
+                                                  fontSize: 14),
                                               focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                               enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                             ),
                                           ),
                                         ),
@@ -784,16 +849,19 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey.shade300))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade300))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.only(bottom: 5),
-                                    child: Text("나이 선택",
+                                    child: Text(
+                                      "나이 선택",
                                       style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.bold),),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   Container(
                                     // height: 80,
@@ -807,30 +875,48 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             // height: 60,
                                             child: TextFormField(
                                               controller: ageController1,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               cursorColor: Colors.grey,
-                                              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                                LengthLimitingTextInputFormatter(
+                                                    2)
+                                              ],
                                               decoration: InputDecoration(
                                                 contentPadding:
-                                                  EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                    EdgeInsets.fromLTRB(
+                                                        10, 0, 10, 0),
                                                 hintText: '19',
-                                                hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                                                hintStyle: TextStyle(
+                                                    color: Colors.grey.shade500,
+                                                    fontSize: 14),
                                                 errorBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.red)),
-                                                errorStyle: TextStyle(fontSize: 0.01),
+                                                    borderSide: BorderSide(
+                                                        color: Colors.red)),
+                                                errorStyle:
+                                                    TextStyle(fontSize: 0.01),
                                                 // border: OutlineInputBorder(
                                                 //     borderSide: BorderSide(color: Colors.blue)),
                                                 // disabledBorder: OutlineInputBorder(
                                                 //     borderSide: BorderSide(color: Colors.grey.shade300)),
                                                 // focusedErrorBorder: OutlineInputBorder(
                                                 //     borderSide: BorderSide(color: Colors.grey.shade300)),
-                                                focusedBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.grey.shade300)),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.grey
+                                                                .shade300)),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.grey
+                                                                .shade300)),
                                               ),
-                                              validator: (value){
-                                                if((value != null && int.parse(value) < 19)){
+                                              validator: (value) {
+                                                if ((value != null &&
+                                                    int.parse(value) < 19)) {
                                                   return "19 이상이어야 함";
                                                 } else {
                                                   return null;
@@ -845,16 +931,28 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             controller: ageController2,
                                             keyboardType: TextInputType.number,
                                             cursorColor: Colors.grey,
-                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(
+                                                  2)
+                                            ],
                                             decoration: InputDecoration(
                                               contentPadding:
-                                              EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                  EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
                                               hintText: '제한 없음',
-                                              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey.shade500,
+                                                  fontSize: 14),
                                               focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                               enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.grey.shade300)),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
                                             ),
                                           ),
                                         ),
@@ -873,9 +971,12 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.only(bottom: 5),
-                                    child: Text("키워드 선택",
+                                    child: Text(
+                                      "키워드 선택",
                                       style: TextStyle(
-                                          fontSize: 15, fontWeight: FontWeight.bold),),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   Row(
                                     children: [
@@ -886,7 +987,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                           style: TextButton.styleFrom(
                                             padding: EdgeInsets.zero,
                                             minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
                                           ),
                                           child: Row(
                                             children: [
@@ -905,209 +1007,182 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                             ],
                                           ),
                                           onPressed: () {
-                                            // selectedKeywords = finalSelectedKeywords;
-                                            // keywordData = finalKeywordData;
-
-                                            print('2. 키워드선택');
-                                            print(finalKeywordData);
-
                                             showModalBottomSheet(
                                               backgroundColor: Colors.white,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.vertical(
-                                                    top: Radius.circular(25.0)),
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            25.0)),
                                               ),
                                               isScrollControlled: true,
                                               context: context,
                                               builder: (context) {
                                                 return StatefulBuilder(builder:
                                                     (BuildContext context,
-                                                    StateSetter mystate) {
+                                                        StateSetter mystate) {
                                                   return SingleChildScrollView(
                                                     child: Container(
                                                       padding:
-                                                      EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                                          EdgeInsets.fromLTRB(
+                                                              20, 20, 20, 20),
                                                       height:
-                                                      MediaQuery.of(context).size.width *
-                                                          1.5,
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                        children: [
-                                                          Container(
-                                                            padding: EdgeInsets.fromLTRB(
-                                                                0, 10, 0, 20),
-                                                            child: Container(
-                                                              // color: Colors.pink,
-                                                              alignment: Alignment.centerLeft,
-                                                              width:
-                                                              MediaQuery.of(context)
+                                                          MediaQuery.of(context)
                                                                   .size
                                                                   .width *
+                                                              1.5,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .stretch,
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(0, 10,
+                                                                    0, 20),
+                                                            child: Container(
+                                                              // color: Colors.pink,
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
                                                                   0.3,
                                                               child: Text(
                                                                 "키워드 선택",
                                                                 style: TextStyle(
-                                                                    fontSize: 15,
-                                                                fontWeight: FontWeight.bold),
+                                                                    fontSize:
+                                                                        15,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                             ),
                                                           ),
-
                                                           Expanded(
                                                             child: Wrap(
                                                               runSpacing: 10,
                                                               spacing: 10,
-                                                              children: List<Widget>.generate(
+                                                              children: List<
+                                                                  Widget>.generate(
                                                                 keywords.length,
-                                                                    (index) => Container(
+                                                                (index) =>
+                                                                    Container(
                                                                   child: ElevatedButton(
-                                                                    style: ElevatedButton.styleFrom(
-                                                                      shape: RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(20),
+                                                                      style: ElevatedButton.styleFrom(
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20),
+                                                                        ),
+                                                                        elevation:
+                                                                            0,
+                                                                        primary: tempBool[index]
+                                                                            ? Colors.pink
+                                                                            : Colors.grey.shade200,
+                                                                        padding: EdgeInsets.fromLTRB(
+                                                                            10,
+                                                                            3,
+                                                                            10,
+                                                                            3),
+                                                                        minimumSize:
+                                                                            Size.zero,
+                                                                        tapTargetSize:
+                                                                            MaterialTapTargetSize.shrinkWrap,
                                                                       ),
-                                                                      elevation: 0,
-                                                                      primary: selectedKeywords[index]
-                                                                          ? Colors.pink
-                                                                          : Colors.grey.shade200,
-                                                                      padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                                                                      minimumSize: Size.zero,
-                                                                      tapTargetSize:
-                                                                      MaterialTapTargetSize.shrinkWrap,
-                                                                    ),
-                                                                    child: Text(
-                                                                      "# ${keywords[index]}",
-                                                                      style: TextStyle(
-                                                                          fontSize: 13,
-                                                                          color: selectedKeywords[index]
-                                                                              ? Colors.white
-                                                                              : Colors.grey.shade500),
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      print('3-1. 키워드선택 중');
-                                                                      print(finalKeywordData);
+                                                                      child: Text(
+                                                                        "# ${keywords[index]}",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                13,
+                                                                            color: tempBool[index]
+                                                                                ? Colors.white
+                                                                                : Colors.grey.shade500),
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        // 현재 선택된 키워드 갯수 count
+                                                                        int count =
+                                                                            0;
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < keywords.length;
+                                                                            i++) {
+                                                                          if (tempBool[
+                                                                              i])
+                                                                            count++;
+                                                                        }
 
-                                                                      // 현재 선택된 키워드 갯수 count
-                                                                      int count = 0;
-                                                                      for (int i = 0; i < keywords.length; i++) {
-                                                                        if (selectedKeywords[i]) count++;
-                                                                      }
-
-                                                                      // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
-                                                                      if (count == 7 &&
-                                                                          !selectedKeywords[index]) {
-                                                                      } else {
-                                                                        if(!selectedKeywords[index]){
-                                                                          mystate(() {
-                                                                            selectedKeywords[index] = !selectedKeywords[index];
-                                                                            keywordData.add(keywords[index]);
+                                                                        // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
+                                                                        if (!tempBool[
+                                                                            index]) {
+                                                                          mystate(
+                                                                              () {
+                                                                            tempBool[index] =
+                                                                                !tempBool[index];
+                                                                            tempKeywords.add(keywords[index]);
                                                                           });
                                                                         } else {
-                                                                          mystate(() {
-                                                                            selectedKeywords[index] = !selectedKeywords[index];
-                                                                            keywordData.remove(keywords[index]);
+                                                                          mystate(
+                                                                              () {
+                                                                            tempBool[index] =
+                                                                                !tempBool[index];
+                                                                            tempKeywords.remove(keywords[index]);
                                                                           });
                                                                         }
-                                                                      }
-                                                                      print('3-2. 키워드 선택중 끝');
-                                                                      print(finalKeywordData);
-                                                                    },
-                                                                  ),
+                                                                      }),
                                                                 ),
                                                               ),
                                                             ),
                                                           ),
-
                                                           Container(
-                                                            height: MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                                0.2,
+                                                            height: MediaQuery.of(context).size.width * 0.2,
                                                             child: Row(
                                                               children: [
                                                                 Expanded(
                                                                   child: Container(
-                                                                    height:
-                                                                    MediaQuery.of(context)
-                                                                        .size
-                                                                        .width *
-                                                                        0.1,
+                                                                    height: MediaQuery.of(context).size.width * 0.1,
                                                                     child: OutlinedButton(
-                                                                      child: Text(
-                                                                        "닫기",
+                                                                      child: Text("닫기",
                                                                         style: TextStyle(
-                                                                            color:
-                                                                            Colors.pink,
-                                                                            fontWeight:
-                                                                            FontWeight
-                                                                                .bold),
-                                                                      ),
-                                                                      style: OutlinedButton
-                                                                          .styleFrom(
-                                                                          shape:
-                                                                          RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                            BorderRadius
-                                                                                .circular(
-                                                                                10),
-                                                                          ),
-                                                                          side: BorderSide(
-                                                                              color: Colors
-                                                                                  .pink)),
+                                                                            color: Colors.pink,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                      style: OutlinedButton.styleFrom(
+                                                                          shape: RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.circular(10)),
+                                                                          side: BorderSide(color: Colors.pink)),
                                                                       onPressed: () {
-
                                                                         setState(() {
-                                                                          print('4. 키워드선택 닫기');
-                                                                          print(finalKeywordData);
-                                                                          selectedKeywords = finalSelectedKeywords;
-                                                                          keywordData = finalKeywordData;
+                                                                          tempBool = resultBool;
+                                                                          tempKeywords = resultKeywords;
                                                                         });
-                                                                        Navigator.pop(
-                                                                            context);
+                                                                        Navigator.pop(context);
                                                                       },
                                                                     ),
                                                                   ),
                                                                 ),
                                                                 Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        right: 15)),
+                                                                    padding: EdgeInsets.only(right: 15)),
                                                                 Expanded(
                                                                   child: Container(
-                                                                    height:
-                                                                    MediaQuery.of(context)
-                                                                        .size
-                                                                        .width *
-                                                                        0.1,
+                                                                    height: MediaQuery.of(context).size.width * 0.1,
                                                                     child: OutlinedButton(
-                                                                      child: Text(
-                                                                        "확인",
+                                                                      child: Text("확인",
                                                                         style: TextStyle(
-                                                                            color:
-                                                                            Colors.pink,
-                                                                            fontWeight:
-                                                                            FontWeight
-                                                                                .bold),
-                                                                      ),
-                                                                      style: OutlinedButton
-                                                                          .styleFrom(
-                                                                          shape:
-                                                                          RoundedRectangleBorder(
+                                                                            color: Colors.pink,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                      style: OutlinedButton.styleFrom(
+                                                                          shape: RoundedRectangleBorder(
                                                                             borderRadius:
-                                                                            BorderRadius
-                                                                                .circular(
-                                                                                10),
+                                                                                BorderRadius.circular(10),
                                                                           ),
-                                                                          side: BorderSide(
-                                                                              color: Colors
-                                                                                  .pink)),
+                                                                          side: BorderSide(color: Colors.pink)),
                                                                       onPressed: () {
                                                                         setState(() {
-                                                                          print('5. 키워드선택 확인');
-                                                                          print(finalKeywordData);
-                                                                          finalKeywordData = keywordData;
-                                                                          finalSelectedKeywords = selectedKeywords;
+                                                                          resultKeywords = tempKeywords;
+                                                                          resultBool = tempBool;
                                                                         });
-                                                                        Navigator.pop(
-                                                                            context);
+                                                                        Navigator.pop(context);
                                                                       },
                                                                     ),
                                                                   ),
@@ -1127,47 +1202,71 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                       ),
                                     ],
                                   ),
-
                                   Wrap(
                                     // runSpacing: 10,
                                     // spacing: 10,
-                                    children: finalKeywordData == [] ? [SizedBox.shrink()] : List.generate(finalKeywordData.length, (index){
-                                      return Container(
-                                        padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                        child: Container(
-                                          height: 30,
-                                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey.shade200,
-                                              borderRadius: BorderRadius.circular(20)
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: Text(finalKeywordData[index],style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1)),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: InkWell(
-                                                  child: Container(
-                                                      alignment: Alignment.center,
-                                                      padding: EdgeInsets.zero,
-                                                      child: Text(" X", style: TextStyle(color: Colors.grey.shade500, fontSize: 14,height: 1))),
-                                                  onTap: (){
-                                                    finalSelectedKeywords[keywords.indexOf(finalKeywordData[index])] = !finalSelectedKeywords[keywords.indexOf(finalKeywordData[index])];
-                                                    setState(() {
-                                                      finalKeywordData.remove(finalKeywordData[index]);
-                                                    });
-                                                  },
+                                    children: resultKeywords == []
+                                        ? [SizedBox.shrink()]
+                                        : List.generate(resultKeywords.length,
+                                            (index) {
+                                            return Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 10, 10),
+                                              child: Container(
+                                                height: 30,
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 0, 10, 0),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade200,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                          resultKeywords[index],
+                                                          style: TextStyle(
+                                                              color: Colors.grey
+                                                                  .shade500,
+                                                              fontSize: 14,
+                                                              height: 1)),
+                                                    ),
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: InkWell(
+                                                        child: Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            padding:
+                                                                EdgeInsets.zero,
+                                                            child: Text(" X",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade500,
+                                                                    fontSize:
+                                                                        14,
+                                                                    height:
+                                                                        1))),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            resultBool[keywords.indexOf(resultKeywords[index])] = !resultBool[keywords.indexOf(resultKeywords[index])];
+                                                            resultKeywords.remove(resultKeywords[index]);
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    }),
+                                            );
+                                          }),
                                   ),
                                 ],
                               ),
@@ -1177,7 +1276,6 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                       ),
                     ),
                   ),
-
                   Container(
                     height: MediaQuery.of(context).size.width * 0.25,
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -1190,7 +1288,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               child: Text(
                                 "초기화",
                                 style: TextStyle(
-                                    color: Colors.pink, fontWeight: FontWeight.bold),
+                                    color: Colors.pink,
+                                    fontWeight: FontWeight.bold),
                               ),
                               style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -1205,10 +1304,9 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                   studuntIDController2.text = "";
                                   ageController1.text = "";
                                   ageController2.text = "";
-                                  finalKeywordData = [];
+                                  resultKeywords = [];
+                                  resultBool = [];
                                 });
-                                // Navigator.pop(
-                                //     context);
                               },
                             ),
                           ),
@@ -1221,7 +1319,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                               child: Text(
                                 "적용",
                                 style: TextStyle(
-                                    color: Colors.pink, fontWeight: FontWeight.bold),
+                                    color: Colors.pink,
+                                    fontWeight: FontWeight.bold),
                               ),
                               style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
@@ -1230,16 +1329,6 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                                   side: BorderSide(color: Colors.pink)),
                               onPressed: () {
                                 print(_formKey.currentState!.validate());
-                                // if(_formKey.currentState!.validate()) {
-                                //   print(_formKey.currentState!.validate());
-                                // }
-                                // setState(() {
-                                //   // addressData =
-                                //   // "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
-                                //   // // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
-                                //   // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
-                                // });
-                                // Navigator.pop(context);
                               },
                             ),
                           ),
@@ -1255,6 +1344,7 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
       ),
     );
   }
+
   renderFirstAddress(StateSetter mystate) {
     return ListView.builder(
       itemCount: filteredFirstAddress.length,
@@ -1263,7 +1353,7 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
           child: CircleAvatar(
             radius: 20,
             backgroundColor:
-            selectedFirstAddress[index] ? Colors.pink : Colors.white,
+                selectedFirstAddress[index] ? Colors.pink : Colors.white,
             child: InkWell(
               onTap: () {
                 // selectedFirstAddress 새로 담을 변수 설정
