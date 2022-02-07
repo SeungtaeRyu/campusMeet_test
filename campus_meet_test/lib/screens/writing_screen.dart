@@ -190,8 +190,7 @@ class _WritingScreenState extends State<WritingScreen> {
 
     // secondAddress 초기화
     for (int i = 0; i < addresses.length; i++) {
-      if (addresses[i].firstAddress ==
-          filteredFirstAddress[selectedFirstAddress.indexOf(true)]) {
+      if (addresses[i].firstAddress == filteredFirstAddress[selectedFirstAddress.indexOf(true)]) {
         secondAddress.add(addresses[i].secondAddress);
       }
     }
@@ -252,21 +251,14 @@ class _WritingScreenState extends State<WritingScreen> {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                        bottom: BorderSide(color: Colors.grey.shade300))),
+                decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     TextFormField(
                       // controller: studuntIDController1,
                       cursorColor: Colors.grey,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '미팅 제목을 입력하세요',
-                          hintStyle: TextStyle(
-                              fontSize: 16, color: Colors.grey.shade500)),
+                      decoration: InputDecoration(border: InputBorder.none, hintText: '미팅 제목을 입력하세요', hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade500)),
                     ),
                   ],
                 ),
@@ -276,10 +268,7 @@ class _WritingScreenState extends State<WritingScreen> {
               Container(
                 alignment: Alignment.centerLeft,
                 padding: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                        bottom: BorderSide(color: Colors.grey.shade300))),
+                decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -287,8 +276,7 @@ class _WritingScreenState extends State<WritingScreen> {
                       padding: EdgeInsets.only(bottom: 5),
                       child: Text(
                         "지역",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Row(
@@ -306,18 +294,11 @@ class _WritingScreenState extends State<WritingScreen> {
                               children: [
                                 Text(
                                   addressData == "" ? "지역 선택" : addressData,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: addressData == ""
-                                          ? Colors.grey.shade500
-                                          : Colors.black,
-                                      height: 1),
+                                  style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
                                 ),
                                 Icon(
                                   Icons.keyboard_arrow_down,
-                                  color: addressData == ""
-                                      ? Colors.grey.shade500
-                                      : Colors.black,
+                                  color: addressData == "" ? Colors.grey.shade500 : Colors.black,
                                   size: 26,
                                 ),
                               ],
@@ -326,66 +307,41 @@ class _WritingScreenState extends State<WritingScreen> {
                               showModalBottomSheet(
                                 backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25.0)),
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
                                 ),
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) {
-                                  return StatefulBuilder(builder:
-                                      (BuildContext context,
-                                          StateSetter mystate) {
+                                  return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
                                     return SingleChildScrollView(
                                       child: Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                1.5,
+                                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                        height: MediaQuery.of(context).size.width * 1.5,
                                         child: Column(
                                           children: [
                                             Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 10, 0, 10),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Colors
-                                                              .grey.shade300))),
+                                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                              decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                                               child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
                                                     // color: Colors.pink,
                                                     alignment: Alignment.center,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
+                                                    width: MediaQuery.of(context).size.width * 0.3,
                                                     child: Text(
                                                       "시/도",
-                                                      style: TextStyle(
-                                                          fontSize: 16),
+                                                      style: TextStyle(fontSize: 16),
                                                     ),
                                                   ),
                                                   Container(
                                                     // color: Colors.blue,
-                                                    padding: EdgeInsets.only(
-                                                        left: 30),
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
+                                                    padding: EdgeInsets.only(left: 30),
+                                                    alignment: Alignment.centerLeft,
+                                                    width: MediaQuery.of(context).size.width * 0.3,
                                                     child: Text(
                                                       "시/구/군",
-                                                      style: TextStyle(
-                                                          fontSize: 16),
+                                                      style: TextStyle(fontSize: 16),
                                                     ),
                                                   ),
                                                   Expanded(
@@ -398,138 +354,69 @@ class _WritingScreenState extends State<WritingScreen> {
                                               child: Row(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.only(
-                                                        top: 10),
+                                                    padding: EdgeInsets.only(top: 10),
                                                     alignment: Alignment.center,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.3,
+                                                    width: MediaQuery.of(context).size.width * 0.3,
                                                     decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        border: Border(
-                                                            bottom: BorderSide(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300),
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300))),
-                                                    child: renderFirstAddress(
-                                                        mystate),
+                                                        color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
+                                                    child: renderFirstAddress(mystate),
                                                   ),
                                                   Expanded(
                                                     child: Container(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.3,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          border: Border(
-                                                              bottom: BorderSide(
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade300))),
-                                                      child:
-                                                          renderSecondAddress(
-                                                              mystate),
+                                                      alignment: Alignment.centerLeft,
+                                                      width: MediaQuery.of(context).size.width * 0.3,
+                                                      decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                                                      child: renderSecondAddress(mystate),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.25,
-                                              padding: EdgeInsets.fromLTRB(
-                                                  20, 0, 20, 20),
+                                              height: MediaQuery.of(context).size.width * 0.25,
+                                              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                                               child: Row(
                                                 children: [
                                                   Expanded(
                                                     child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.1,
+                                                      height: MediaQuery.of(context).size.width * 0.1,
                                                       child: OutlinedButton(
                                                         child: Text(
                                                           "닫기",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.pink,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
                                                         ),
-                                                        style: OutlinedButton
-                                                            .styleFrom(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                side: BorderSide(
-                                                                    color: Colors
-                                                                        .pink)),
+                                                        style: OutlinedButton.styleFrom(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                            ),
+                                                            side: BorderSide(color: Colors.pink)),
                                                         onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
+                                                          Navigator.pop(context);
                                                         },
                                                       ),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 15)),
+                                                  Padding(padding: EdgeInsets.only(right: 15)),
                                                   Expanded(
                                                     child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.1,
+                                                      height: MediaQuery.of(context).size.width * 0.1,
                                                       child: OutlinedButton(
                                                         child: Text(
                                                           "확인",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.pink,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
                                                         ),
-                                                        style: OutlinedButton
-                                                            .styleFrom(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                side: BorderSide(
-                                                                    color: Colors
-                                                                        .pink)),
+                                                        style: OutlinedButton.styleFrom(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                            ),
+                                                            side: BorderSide(color: Colors.pink)),
                                                         onPressed: () {
                                                           setState(() {
-                                                            addressData =
-                                                                "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
+                                                            addressData = "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
                                                             // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
                                                             // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
                                                           });
-                                                          Navigator.pop(
-                                                              context);
+                                                          Navigator.pop(context);
                                                         },
                                                       ),
                                                     ),
@@ -608,10 +495,7 @@ class _WritingScreenState extends State<WritingScreen> {
               // 참가자
               Container(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(
-                        bottom: BorderSide(color: Colors.grey.shade300))),
+                decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -619,8 +503,7 @@ class _WritingScreenState extends State<WritingScreen> {
                       padding: EdgeInsets.only(bottom: 10),
                       child: Text(
                         "참가자",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Container(
@@ -635,16 +518,13 @@ class _WritingScreenState extends State<WritingScreen> {
                               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
                               child: CircleAvatar(
                                 radius: 25,
-                                backgroundImage:
-                                    AssetImage("images/user1_profile.jpg"),
+                                backgroundImage: AssetImage("images/user1_profile.jpg"),
                                 child: CircleAvatar(
                                   radius: 25,
-                                  backgroundColor:
-                                      Colors.black.withOpacity(0.3),
+                                  backgroundColor: Colors.black.withOpacity(0.3),
                                   child: Text(
                                     "나",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
+                                    style: TextStyle(color: Colors.white, fontSize: 12),
                                   ),
                                 ),
                               ),
@@ -657,8 +537,7 @@ class _WritingScreenState extends State<WritingScreen> {
                                 radius: 25,
                                 child: Text(
                                   "${memberData[index - 1]}",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
+                                  style: TextStyle(color: Colors.white, fontSize: 12),
                                 ),
                               ),
                             );
@@ -674,11 +553,7 @@ class _WritingScreenState extends State<WritingScreen> {
                                     icon: Icon(Icons.add, color: Colors.grey),
                                     padding: EdgeInsets.zero,
                                     onPressed: () async {
-                                      final data = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MemberFomationScreen()));
+                                      final data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MemberFomationScreen()));
                                       setState(() {
                                         memberData = data;
                                       });
@@ -776,8 +651,7 @@ class _WritingScreenState extends State<WritingScreen> {
                         padding: EdgeInsets.only(bottom: 10),
                         child: Text(
                           "키워드",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
@@ -790,8 +664,7 @@ class _WritingScreenState extends State<WritingScreen> {
                         padding: EdgeInsets.only(bottom: 20),
                         child: Text(
                           "(최대 7개까지 선택가능)",
-                          style: TextStyle(
-                              fontSize: 14, color: Colors.grey.shade500),
+                          style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
                         ),
                       ),
 
@@ -810,21 +683,14 @@ class _WritingScreenState extends State<WritingScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     elevation: 0,
-                                    primary: selectedKeywords[index]
-                                        ? Colors.pink
-                                        : Colors.grey.shade200,
+                                    primary: selectedKeywords[index] ? Colors.pink : Colors.grey.shade200,
                                     padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
                                     minimumSize: Size.zero,
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   ),
                                   child: Text(
                                     "# ${keywords[index]}",
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: selectedKeywords[index]
-                                            ? Colors.white
-                                            : Colors.grey.shade500),
+                                    style: TextStyle(fontSize: 13, color: selectedKeywords[index] ? Colors.white : Colors.grey.shade500),
                                   ),
                                   onPressed: () {
                                     // 현재 선택된 키워드 갯수 count
@@ -834,12 +700,10 @@ class _WritingScreenState extends State<WritingScreen> {
                                     }
 
                                     // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
-                                    if (count == 7 &&
-                                        !selectedKeywords[index]) {
+                                    if (count == 7 && !selectedKeywords[index]) {
                                     } else {
                                       setState(() {
-                                        selectedKeywords[index] =
-                                            !selectedKeywords[index];
+                                        selectedKeywords[index] = !selectedKeywords[index];
                                       });
                                     }
                                   },
@@ -867,8 +731,7 @@ class _WritingScreenState extends State<WritingScreen> {
         return Container(
           child: CircleAvatar(
             radius: 20,
-            backgroundColor:
-                selectedFirstAddress[index] ? Colors.pink : Colors.white,
+            backgroundColor: selectedFirstAddress[index] ? Colors.pink : Colors.white,
             child: InkWell(
               onTap: () {
                 // selectedFirstAddress 새로 담을 변수 설정
@@ -884,8 +747,7 @@ class _WritingScreenState extends State<WritingScreen> {
                 // secondAddress 초기화
                 secondAddress = [];
                 for (int i = 0; i < addresses.length; i++) {
-                  if (addresses[i].firstAddress ==
-                      filteredFirstAddress[result.indexOf(true)]) {
+                  if (addresses[i].firstAddress == filteredFirstAddress[result.indexOf(true)]) {
                     secondAddress.add(addresses[i].secondAddress);
                   }
                 }
@@ -906,11 +768,7 @@ class _WritingScreenState extends State<WritingScreen> {
               },
               child: Text(
                 filteredFirstAddress[index],
-                style: TextStyle(
-                    color: selectedFirstAddress[index]
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 14),
+                style: TextStyle(color: selectedFirstAddress[index] ? Colors.white : Colors.black, fontSize: 14),
               ),
             ),
           ),
@@ -937,9 +795,7 @@ class _WritingScreenState extends State<WritingScreen> {
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.black,
-                fontWeight: selectedSecondAddress[index]
-                    ? FontWeight.bold
-                    : FontWeight.normal,
+                fontWeight: selectedSecondAddress[index] ? FontWeight.bold : FontWeight.normal,
               ),
             ),
             onPressed: () {

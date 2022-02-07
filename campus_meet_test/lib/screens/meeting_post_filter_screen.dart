@@ -10,13 +10,26 @@ class MeetingFilterScreen extends StatefulWidget {
 }
 
 class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
-  double numMember = 2;
+  double numMemberController = 2;
   TextEditingController studuntIDController1 = TextEditingController();
   TextEditingController studuntIDController2 = TextEditingController();
   TextEditingController ageController1 = TextEditingController();
   TextEditingController ageController2 = TextEditingController();
 
-  List<String> addressData = []; // 지역선택창에서 리턴될 데이터
+
+  // 주소 DB
+  List<String> firstAddress = [];
+  List<String> filteredFirstAddress = [];
+  List<bool> selectedFirstAddress = [];
+
+  List<int> filteredFirstAddressCount = [];
+  int addIndex = 0;
+
+  List<bool> tempAddressBool = [];
+  List<bool> resultAddressBool = [];
+  List<int> tempAddressId = [];
+  List<int> resultAddressId = [];
+
   List<Address> addresses = [
     Address.fromMap(
       {
@@ -138,19 +151,15 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
       },
     ),
   ];
-  List<String> firstAddress = [];
-  List<String> filteredFirstAddress = [];
-  List<bool> selectedFirstAddress = [];
-  List<bool> selectSecondAddress = [];
 
-  List<String> secondAddress = [];
-  List<bool> selectedSecondAddress = [];
 
   // 키워드 DB
-  List<String> tempKeywords = []; // 선택할때마다 value 추가, 닫기 누를 시 finalKeywordData 와 동기화
-  List<String> resultKeywords = []; // 확인 누를 시 keywordData 와 동기화
-  List<bool> tempBool = []; // 선택할때마다 value 추가, 닫기 누를 시 finalSeledctedKeyword 와 동기화
-  List<bool> resultBool = []; // 확인 누를 시 selectedKeywords 와 동기화
+  List<String> tempKeywords = [];
+  List<String> resultKeywords = [];
+
+  List<bool> tempKeywordBool = [];
+  List<bool> resultKeywordBool = [];
+
   List<String> keywords = [
     "인간 댕댕이",
     "회색 아기 고양이",
@@ -180,16 +189,32 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
     "뚝딱이들"
   ];
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
 
+    numMemberController = 2;
+    addIndex = 0;
+    tempAddressBool = [];
+    resultAddressBool = [];
+    tempAddressId = [];
+    resultAddressId = [];
+    studuntIDController1.text = "";
+    studuntIDController2.text = "";
+    ageController1.text = "";
+    ageController2.text = "";
+    tempKeywords = [];
+    tempKeywordBool = [];
+    resultKeywords = [];
+    resultKeywordBool = [];
+
+    // first address 중복 삭제
     for (int i = 0; i < addresses.length; i++) {
       firstAddress.add(addresses[i].firstAddress);
     }
     filteredFirstAddress = firstAddress.toSet().toList();
+
+    // first address selected default 값 설정
     for (int i = 0; i < filteredFirstAddress.length; i++) {
       if (i == 0) {
         selectedFirstAddress.add(true);
@@ -198,26 +223,27 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
       }
     }
 
-    // secondAddress 초기화
-    for (int i = 0; i < addresses.length; i++) {
-      if (addresses[i].firstAddress ==
-          filteredFirstAddress[selectedFirstAddress.indexOf(true)]) {
-        secondAddress.add(addresses[i].secondAddress);
+    // 중복 삭제된 first address 마다 second address 의 개수 구하기
+    for (int i = 0; i < filteredFirstAddress.length; i++) {
+      int count = 0;
+      for (int j = 0; j < addresses.length; j++) {
+        if (filteredFirstAddress[i] == addresses[j].firstAddress) {
+          count++;
+        }
       }
-    }
-    // selectedSecondAddress 초기화
-    for (int i = 0; i < secondAddress.length; i++) {
-      if (i == 0) {
-        selectedSecondAddress.add(true);
-      } else {
-        selectedSecondAddress.add(false);
-      }
+      filteredFirstAddressCount.add(count);
     }
 
-    // selectedKeywords
+    // second address selected default 값 설정
+    for (int i = 0; i < addresses.length; i++) {
+      tempAddressBool.add(false);
+      resultAddressBool.add(false);
+    }
+
+    // keyword selected default 값 설정
     for (int i = 0; i < keywords.length; i++) {
-      tempBool.add(false);
-      resultBool.add(false);
+      tempKeywordBool.add(false);
+      resultKeywordBool.add(false);
     }
   }
 
@@ -237,1107 +263,128 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
           backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0.0,
-          title: Text('검색 필터',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          title: Text('검색 필터', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
         ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Form(
-            key: _formKey,
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Column(
-                          children: <Widget>[
-                            // 인원수 필터
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      "인원수",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Column(
+                        children: <Widget>[
+                          // 인원수 선택
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                renderHeaderText("인원수"),
+                                SliderTheme(
+                                  data: SliderThemeData(
+                                    trackShape: CustomTrackShape(),
+                                    trackHeight: 5,
+                                    valueIndicatorColor: Colors.pink,
+                                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0), // thumb size
                                   ),
-                                  SliderTheme(
-                                    data: SliderThemeData(
-                                      trackShape: CustomTrackShape(),
-                                      trackHeight: 5,
-                                      valueIndicatorColor: Colors.pink,
-                                      thumbShape: RoundSliderThumbShape(
-                                          enabledThumbRadius:
-                                              8.0), // thumb size
-                                    ),
-                                    child: Slider(
-                                      value: numMember,
-                                      onChanged: (newnumMember) {
-                                        setState(() {
-                                          numMember = newnumMember;
-                                        });
-                                      },
-                                      min: 2,
-                                      max: 5,
-                                      divisions: 3,
-                                      activeColor: Colors.grey.shade300,
-                                      inactiveColor: Colors.grey.shade300,
-                                      thumbColor: Colors.pink,
-                                      label: "${numMember.round()}",
-                                    ),
+                                  child: Slider(
+                                    value: numMemberController,
+                                    onChanged: (newnumMember) {
+                                      setState(() {
+                                        numMemberController = newnumMember;
+                                      });
+                                    },
+                                    min: 2,
+                                    max: 5,
+                                    divisions: 3,
+                                    activeColor: Colors.grey.shade300,
+                                    inactiveColor: Colors.grey.shade300,
+                                    thumbColor: Colors.pink,
+                                    label: "${numMemberController.round()}",
                                   ),
-                                  Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("2"),
-                                        Text("3"),
-                                        Text("4"),
-                                        Text("5"),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // 지역 필터
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      "지역 선택",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Row(
+                                ),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        padding: EdgeInsets.only(bottom: 5),
-                                        child: TextButton(
-                                          // TextButton inner padding 삭제하는방법!!
-                                          style: TextButton.styleFrom(
-                                            padding: EdgeInsets.zero,
-                                            minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize
-                                                .shrinkWrap,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "지역을 선택하세요",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.grey.shade500,
-                                                    height: 1),
-                                              ),
-                                              Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Colors.grey.shade500,
-                                                size: 26,
-                                              ),
-                                            ],
-                                          ),
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              backgroundColor: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            25.0)),
-                                              ),
-                                              isScrollControlled: true,
-                                              context: context,
-                                              builder: (context) {
-                                                return StatefulBuilder(builder:
-                                                    (BuildContext context,
-                                                        StateSetter mystate) {
-                                                  return SingleChildScrollView(
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 20, 0, 0),
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              1.5,
-                                                      child: Column(
-                                                        children: [
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(0, 10,
-                                                                    0, 10),
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                border: Border(
-                                                                    bottom: BorderSide(
-                                                                        color: Colors
-                                                                            .grey
-                                                                            .shade300))),
-                                                            child: Row(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  // color: Colors.pink,
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  child: Text(
-                                                                    "시/도",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            16),
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  // color: Colors.blue,
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              30),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .centerLeft,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  child: Text(
-                                                                    "시/구/군",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            16),
-                                                                  ),
-                                                                ),
-                                                                Expanded(
-                                                                  child:
-                                                                      Container(),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              children: [
-                                                                Container(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .only(
-                                                                              top: 10),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  decoration: BoxDecoration(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      border: Border(
-                                                                          bottom:
-                                                                              BorderSide(color: Colors.grey.shade300),
-                                                                          right: BorderSide(color: Colors.grey.shade300))),
-                                                                  child: renderFirstAddress(
-                                                                      mystate),
-                                                                ),
-                                                                Expanded(
-                                                                  child:
-                                                                      Container(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .centerLeft,
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.3,
-                                                                    decoration: BoxDecoration(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        border: Border(
-                                                                            bottom:
-                                                                                BorderSide(color: Colors.grey.shade300))),
-                                                                    child: renderSecondAddress(
-                                                                        mystate),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.25,
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(20, 0,
-                                                                    20, 20),
-                                                            child: Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      Container(
-                                                                    height: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.1,
-                                                                    child:
-                                                                        OutlinedButton(
-                                                                      child:
-                                                                          Text(
-                                                                        "닫기",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.pink,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      style: OutlinedButton.styleFrom(
-                                                                          shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(10),
-                                                                          ),
-                                                                          side: BorderSide(color: Colors.pink)),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        right:
-                                                                            15)),
-                                                                Expanded(
-                                                                  child:
-                                                                      Container(
-                                                                    height: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.1,
-                                                                    child:
-                                                                        OutlinedButton(
-                                                                      child:
-                                                                          Text(
-                                                                        "확인",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.pink,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      style: OutlinedButton.styleFrom(
-                                                                          shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(10),
-                                                                          ),
-                                                                          side: BorderSide(color: Colors.pink)),
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {
-                                                                          addressData
-                                                                              .add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
-                                                                        });
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                      Text("2"),
+                                      Text("3"),
+                                      Text("4"),
+                                      Text("5"),
                                     ],
                                   ),
-
-                                  Wrap(
-                                    // runSpacing: 10,
-                                    // spacing: 10,
-                                    children: addressData == []
-                                        ? [SizedBox.shrink()]
-                                        : List.generate(addressData.length,
-                                            (index) {
-                                            return Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 10, 10),
-                                              child: Container(
-                                                height: 30,
-                                                padding: EdgeInsets.fromLTRB(
-                                                    10, 0, 10, 0),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey.shade200,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                          addressData[index],
-                                                          style: TextStyle(
-                                                              color: Colors.grey
-                                                                  .shade500,
-                                                              fontSize: 14,
-                                                              height: 1)),
-                                                    ),
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: InkWell(
-                                                        child: Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            padding:
-                                                                EdgeInsets.zero,
-                                                            child: Text(" X",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade500,
-                                                                    fontSize:
-                                                                        14,
-                                                                    height:
-                                                                        1))),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            addressData.remove(
-                                                                addressData[
-                                                                    index]);
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                  ),
-
-                                  // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
-                                  // 여기가 선택된 지역 보여주는 곳인데 flexible한 사이즈 할당이 안되는중
-                                  // Container(
-                                  //   child: addressData.length == 0
-                                  //       ? SizedBox.shrink()
-                                  //       : Container(
-                                  //     height: 40,
-                                  //     padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                  //     child: ListView.builder(
-                                  //       itemCount: addressData.length,
-                                  //       scrollDirection: Axis.horizontal,
-                                  //       itemBuilder: (BuildContext context, int index) {
-                                  //         return Row(
-                                  //           children: [
-                                  //             Container(
-                                  //               height: 30,
-                                  //               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                  //               decoration: BoxDecoration(
-                                  //                 color: Colors.grey.shade300,
-                                  //                 borderRadius: BorderRadius.circular(20)
-                                  //               ),
-                                  //               child: Row(
-                                  //                 children: [
-                                  //                   Container(
-                                  //                     alignment: Alignment.center,
-                                  //                     child: Text(addressData[index],style: TextStyle(fontSize: 14, height: 1)),
-                                  //                   ),
-                                  //                   Container(
-                                  //                     alignment: Alignment.center,
-                                  //                     child: InkWell(
-                                  //                       child: Container(
-                                  //                           alignment: Alignment.center,
-                                  //                           padding: EdgeInsets.zero,
-                                  //                           child: Text(" X", style: TextStyle(fontSize: 14,height: 1))),
-                                  //                       onTap: (){
-                                  //                         // setState(() {
-                                  //                         //   addressData.remove(addressData[index]);
-                                  //                         // });
-                                  //                       },
-                                  //                     ),
-                                  //                   ),
-                                  //                 ],
-                                  //               ),
-                                  //             ),
-                                  //             Padding(padding: EdgeInsets.only(right: 10)),
-                                  //           ],
-                                  //         );
-                                  //       },
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            // Container(
-                            //   padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                            //   decoration: BoxDecoration(
-                            //       color: Colors.white,
-                            //       border: Border(
-                            //           bottom:
-                            //               BorderSide(color: Colors.grey.shade300))),
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.stretch,
-                            //     children: <Widget>[
-                            //       Container(
-                            //         padding: EdgeInsets.only(bottom: 10),
-                            //         child: Text("지역 필터"),
-                            //       ),
-                            //       // 지역필터 버튼 구현해야함! API도 쓸수도?
-                            //       Container(
-                            //         child: Text("button"),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
+                          ),
 
-                            // 학번 선택 -> 텍스트폼필드 포커스 해제하는법 추가하기!
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      "학번 선택",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Container(
-                                    // color: Colors.pink,
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: TextFormField(
-                                            controller: studuntIDController1,
-                                            keyboardType: TextInputType.number,
-                                            cursorColor: Colors.grey,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly,
-                                              LengthLimitingTextInputFormatter(
-                                                  2)
-                                            ],
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      10, 0, 10, 0),
-                                              hintText: '제한 없음',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey.shade500,
-                                                  fontSize: 14),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                            ),
-                                          ),
-                                        ),
-                                        Text("  ~  "),
-                                        Expanded(
-                                          child: TextFormField(
-                                            controller: studuntIDController2,
-                                            keyboardType: TextInputType.number,
-                                            cursorColor: Colors.grey,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly,
-                                              LengthLimitingTextInputFormatter(
-                                                  2)
-                                            ],
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      10, 0, 10, 0),
-                                              hintText: '22',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey.shade500,
-                                                  fontSize: 14),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          // 지역 선택
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                renderHeaderText("지역 선택"),
+                                renderAddressPopUp(),
+                                renderResultAddress(),
+                              ],
                             ),
+                          ),
 
-                            // 나이 선택
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey.shade300))),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      "나이 선택",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Container(
-                                    // height: 80,
-                                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: SizedBox(
-                                            // height: 60,
-                                            child: TextFormField(
-                                              controller: ageController1,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              cursorColor: Colors.grey,
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter
-                                                    .digitsOnly,
-                                                LengthLimitingTextInputFormatter(
-                                                    2)
-                                              ],
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    EdgeInsets.fromLTRB(
-                                                        10, 0, 10, 0),
-                                                hintText: '19',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.grey.shade500,
-                                                    fontSize: 14),
-                                                errorBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.red)),
-                                                errorStyle:
-                                                    TextStyle(fontSize: 0.01),
-                                                // border: OutlineInputBorder(
-                                                //     borderSide: BorderSide(color: Colors.blue)),
-                                                // disabledBorder: OutlineInputBorder(
-                                                //     borderSide: BorderSide(color: Colors.grey.shade300)),
-                                                // focusedErrorBorder: OutlineInputBorder(
-                                                //     borderSide: BorderSide(color: Colors.grey.shade300)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.grey
-                                                                .shade300)),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.grey
-                                                                .shade300)),
-                                              ),
-                                              validator: (value) {
-                                                if ((value != null &&
-                                                    int.parse(value) < 19)) {
-                                                  return "19 이상이어야 함";
-                                                } else {
-                                                  return null;
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        Text("  ~  "),
-                                        Expanded(
-                                          child: TextFormField(
-                                            controller: ageController2,
-                                            keyboardType: TextInputType.number,
-                                            cursorColor: Colors.grey,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly,
-                                              LengthLimitingTextInputFormatter(
-                                                  2)
-                                            ],
-                                            decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      10, 0, 10, 0),
-                                              hintText: '제한 없음',
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey.shade500,
-                                                  fontSize: 14),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors
-                                                          .grey.shade300)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          // 학번 선택
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                renderHeaderText("학번 선택"),
+                                renderStudentIdInputBox(),
+                              ],
                             ),
+                          ),
 
-                            //키워드 선택
-                            Container(
-                              padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.only(bottom: 5),
-                                    child: Text(
-                                      "키워드 선택",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(bottom: 5),
-                                        child: TextButton(
-                                          // TextButton inner padding 삭제하는방법!!
-                                          style: TextButton.styleFrom(
-                                            padding: EdgeInsets.zero,
-                                            minimumSize: Size.zero,
-                                            tapTargetSize: MaterialTapTargetSize
-                                                .shrinkWrap,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "키워드를 선택하세요",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.grey.shade500,
-                                                    height: 1),
-                                              ),
-                                              Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Colors.grey.shade500,
-                                                size: 26,
-                                              ),
-                                            ],
-                                          ),
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              backgroundColor: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            25.0)),
-                                              ),
-                                              isScrollControlled: true,
-                                              context: context,
-                                              builder: (context) {
-                                                return StatefulBuilder(builder:
-                                                    (BuildContext context,
-                                                        StateSetter mystate) {
-                                                  return SingleChildScrollView(
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              20, 20, 20, 20),
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              1.5,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .stretch,
-                                                        children: [
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(0, 10,
-                                                                    0, 20),
-                                                            child: Container(
-                                                              // color: Colors.pink,
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.3,
-                                                              child: Text(
-                                                                "키워드 선택",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Wrap(
-                                                              runSpacing: 10,
-                                                              spacing: 10,
-                                                              children: List<
-                                                                  Widget>.generate(
-                                                                keywords.length,
-                                                                (index) =>
-                                                                    Container(
-                                                                  child: ElevatedButton(
-                                                                      style: ElevatedButton.styleFrom(
-                                                                        shape:
-                                                                            RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20),
-                                                                        ),
-                                                                        elevation:
-                                                                            0,
-                                                                        primary: tempBool[index]
-                                                                            ? Colors.pink
-                                                                            : Colors.grey.shade200,
-                                                                        padding: EdgeInsets.fromLTRB(
-                                                                            10,
-                                                                            3,
-                                                                            10,
-                                                                            3),
-                                                                        minimumSize:
-                                                                            Size.zero,
-                                                                        tapTargetSize:
-                                                                            MaterialTapTargetSize.shrinkWrap,
-                                                                      ),
-                                                                      child: Text(
-                                                                        "# ${keywords[index]}",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                13,
-                                                                            color: tempBool[index]
-                                                                                ? Colors.white
-                                                                                : Colors.grey.shade500),
-                                                                      ),
-                                                                      onPressed: () {
-                                                                        // 현재 선택된 키워드 갯수 count
-                                                                        int count =
-                                                                            0;
-                                                                        for (int i =
-                                                                                0;
-                                                                            i < keywords.length;
-                                                                            i++) {
-                                                                          if (tempBool[
-                                                                              i])
-                                                                            count++;
-                                                                        }
-
-                                                                        // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
-                                                                        if (!tempBool[
-                                                                            index]) {
-                                                                          mystate(
-                                                                              () {
-                                                                            tempBool[index] =
-                                                                                !tempBool[index];
-                                                                            tempKeywords.add(keywords[index]);
-                                                                          });
-                                                                        } else {
-                                                                          mystate(
-                                                                              () {
-                                                                            tempBool[index] =
-                                                                                !tempBool[index];
-                                                                            tempKeywords.remove(keywords[index]);
-                                                                          });
-                                                                        }
-                                                                      }),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            height: MediaQuery.of(context).size.width * 0.2,
-                                                            child: Row(
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    height: MediaQuery.of(context).size.width * 0.1,
-                                                                    child: OutlinedButton(
-                                                                      child: Text("닫기",
-                                                                        style: TextStyle(
-                                                                            color: Colors.pink,
-                                                                            fontWeight: FontWeight.bold)),
-                                                                      style: OutlinedButton.styleFrom(
-                                                                          shape: RoundedRectangleBorder(
-                                                                            borderRadius: BorderRadius.circular(10)),
-                                                                          side: BorderSide(color: Colors.pink)),
-                                                                      onPressed: () {
-                                                                        setState(() {
-                                                                          tempBool = resultBool;
-                                                                          tempKeywords = resultKeywords;
-                                                                        });
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                    padding: EdgeInsets.only(right: 15)),
-                                                                Expanded(
-                                                                  child: Container(
-                                                                    height: MediaQuery.of(context).size.width * 0.1,
-                                                                    child: OutlinedButton(
-                                                                      child: Text("확인",
-                                                                        style: TextStyle(
-                                                                            color: Colors.pink,
-                                                                            fontWeight: FontWeight.bold)),
-                                                                      style: OutlinedButton.styleFrom(
-                                                                          shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(10),
-                                                                          ),
-                                                                          side: BorderSide(color: Colors.pink)),
-                                                                      onPressed: () {
-                                                                        setState(() {
-                                                                          resultKeywords = tempKeywords;
-                                                                          resultBool = tempBool;
-                                                                        });
-                                                                        Navigator.pop(context);
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                });
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Wrap(
-                                    // runSpacing: 10,
-                                    // spacing: 10,
-                                    children: resultKeywords == []
-                                        ? [SizedBox.shrink()]
-                                        : List.generate(resultKeywords.length,
-                                            (index) {
-                                            return Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 10, 10),
-                                              child: Container(
-                                                height: 30,
-                                                padding: EdgeInsets.fromLTRB(
-                                                    10, 0, 10, 0),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey.shade200,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                          resultKeywords[index],
-                                                          style: TextStyle(
-                                                              color: Colors.grey
-                                                                  .shade500,
-                                                              fontSize: 14,
-                                                              height: 1)),
-                                                    ),
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: InkWell(
-                                                        child: Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            padding:
-                                                                EdgeInsets.zero,
-                                                            child: Text(" X",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade500,
-                                                                    fontSize:
-                                                                        14,
-                                                                    height:
-                                                                        1))),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            resultBool[keywords.indexOf(resultKeywords[index])] = !resultBool[keywords.indexOf(resultKeywords[index])];
-                                                            resultKeywords.remove(resultKeywords[index]);
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                  ),
-                                ],
-                              ),
+                          // 나이 선택
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                renderHeaderText("나이 선택"),
+                                renderAgeInputBox(),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+
+                          //키워드 선택
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                renderHeaderText("키워드 선택"),
+                                renderKeywordsPopUp(),
+                                renderResultKeywords(),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.25,
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.1,
-                            child: OutlinedButton(
-                              child: Text(
-                                "초기화",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  side: BorderSide(color: Colors.pink)),
-                              onPressed: () {
-                                setState(() {
-                                  numMember = 2;
-                                  addressData = [];
-                                  studuntIDController1.text = "";
-                                  studuntIDController2.text = "";
-                                  ageController1.text = "";
-                                  ageController2.text = "";
-                                  resultKeywords = [];
-                                  resultBool = [];
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.only(right: 15)),
-                        Expanded(
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.1,
-                            child: OutlinedButton(
-                              child: Text(
-                                "적용",
-                                style: TextStyle(
-                                    color: Colors.pink,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  side: BorderSide(color: Colors.pink)),
-                              onPressed: () {
-                                print(_formKey.currentState!.validate());
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                bottomButton(),
+              ],
             ),
           ),
         ),
@@ -1345,105 +392,713 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
     );
   }
 
-  renderFirstAddress(StateSetter mystate) {
-    return ListView.builder(
-      itemCount: filteredFirstAddress.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor:
-                selectedFirstAddress[index] ? Colors.pink : Colors.white,
-            child: InkWell(
-              onTap: () {
-                // selectedFirstAddress 새로 담을 변수 설정
-                List<bool> result = [];
-                for (int i = 0; i < filteredFirstAddress.length; i++) {
-                  if (i == index) {
-                    result.add(true);
-                  } else {
-                    result.add(false);
-                  }
-                }
-
-                // secondAddress 초기화
-                secondAddress = [];
-                for (int i = 0; i < addresses.length; i++) {
-                  if (addresses[i].firstAddress ==
-                      filteredFirstAddress[result.indexOf(true)]) {
-                    secondAddress.add(addresses[i].secondAddress);
-                  }
-                }
-
-                // selectedSecondAddress 초기화
-                selectedSecondAddress = [];
-                for (int i = 0; i < secondAddress.length; i++) {
-                  if (i == 0) {
-                    selectedSecondAddress.add(true);
-                  } else {
-                    selectedSecondAddress.add(false);
-                  }
-                }
-
-                mystate(() {
-                  selectedFirstAddress = result;
-                });
-              },
-              child: Text(
-                filteredFirstAddress[index],
-                style: TextStyle(
-                    color: selectedFirstAddress[index]
-                        ? Colors.white
-                        : Colors.black,
-                    fontSize: 14),
-              ),
-            ),
-          ),
-        );
-      },
+  // 제목
+  renderHeaderText(String text) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 5),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
-  renderSecondAddress(StateSetter mystate) {
-    return ListView.builder(
-      itemCount: secondAddress.length, // 첫번째선택된주소의 개수
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          padding: EdgeInsets.only(left: 30),
-          alignment: Alignment.centerLeft,
+  // 지역 선택
+  renderAddressPopUp() {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.only(bottom: 5),
           child: TextButton(
             style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
               padding: EdgeInsets.zero,
-              // backgroundColor: Colors.pink
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: Text(
-              secondAddress[index],
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: selectedSecondAddress[index]
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+            child: Row(
+              children: [
+                Text(
+                  "지역을 선택하세요",
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade500, height: 1),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey.shade500,
+                  size: 26,
+                ),
+              ],
             ),
             onPressed: () {
-              // selectedSecondAddress 초기화
-              List<bool> result = [];
-              for (int i = 0; i < secondAddress.length; i++) {
-                if (i == index) {
-                  result.add(true);
-                } else {
-                  result.add(false);
-                }
-              }
-              mystate(() {
-                selectedSecondAddress = result;
-              });
+              showModalBottomSheet(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
+                    return SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        height: MediaQuery.of(context).size.width * 1.5,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: MediaQuery.of(context).size.width * 0.3,
+                                    child: Text(
+                                      "시/도",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    // color: Colors.blue,
+                                    padding: EdgeInsets.only(left: 30),
+                                    alignment: Alignment.centerLeft,
+                                    width: MediaQuery.of(context).size.width * 0.3,
+                                    child: Text(
+                                      "시/구/군",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  // first Address
+                                  Container(
+                                    padding: EdgeInsets.only(top: 10),
+                                    alignment: Alignment.center,
+                                    width: MediaQuery.of(context).size.width * 0.3,
+                                    decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
+                                    child: ListView.builder(
+                                      itemCount: filteredFirstAddress.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return Container(
+                                          child: CircleAvatar(
+                                            radius: 20,
+                                            backgroundColor: selectedFirstAddress[index] ? Colors.pink : Colors.white,
+                                            child: InkWell(
+                                              onTap: () {
+                                                // 첫번째 주소 선택 시 셀렉트 변경
+                                                List<bool> result = [];
+                                                for (int i = 0; i < filteredFirstAddress.length; i++) {
+                                                  if (i == index) {
+                                                    result.add(true);
+                                                  } else {
+                                                    result.add(false);
+                                                  }
+                                                }
+
+                                                // 두번째 주소에 추가로 줄 인덱스 카운팅
+                                                addIndex = 0;
+                                                for (int i = 0; i < index; i++) {
+                                                  addIndex += filteredFirstAddressCount[i];
+                                                }
+
+                                                mystate(() {
+                                                  selectedFirstAddress = result;
+                                                });
+                                              },
+                                              child: Text(
+                                                filteredFirstAddress[index],
+                                                style: TextStyle(color: selectedFirstAddress[index] ? Colors.white : Colors.black, fontSize: 14),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+
+                                  // second Address
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                                      child: ListView.builder(
+                                        itemCount: filteredFirstAddressCount[selectedFirstAddress.indexOf(true)],
+                                        itemBuilder: (BuildContext context, int index) {
+                                          return Container(
+                                            padding: EdgeInsets.only(left: 30),
+                                            alignment: Alignment.centerLeft,
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                alignment: Alignment.centerLeft,
+                                                padding: EdgeInsets.zero,
+                                              ),
+                                              child: Text(
+                                                addresses[index + addIndex].secondAddress,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: tempAddressBool[index + addIndex] ? FontWeight.bold : FontWeight.normal,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                int count = 0;
+                                                for (int i = 0; i < tempAddressBool.length; i++) {
+                                                  if (tempAddressBool[i]) count++;
+                                                }
+
+                                                if (count == 5 && !tempAddressBool[index + addIndex]) {
+                                                } else {
+                                                  if (!tempAddressBool[index + addIndex]) {
+                                                    mystate(() {
+                                                      tempAddressBool[index + addIndex] = true;
+                                                      tempAddressId.add(addresses[index + addIndex].id);
+                                                    });
+                                                  } else {
+                                                    mystate(() {
+                                                      tempAddressBool[index + addIndex] = false;
+                                                      tempAddressId.remove(addresses[index + addIndex].id);
+                                                    });
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.width * 0.25,
+                              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.width * 0.1,
+                                      child: OutlinedButton(
+                                        child: Text(
+                                          "닫기",
+                                          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+                                        ),
+                                        style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            side: BorderSide(color: Colors.pink)),
+                                        onPressed: () {
+                                          setState(() {
+                                            for (int i = 0; i < addresses.length; i++) {
+                                              tempAddressBool[i] = resultAddressBool[i];
+                                            }
+                                            tempAddressId = [];
+                                            for (int i = 0; i < resultAddressId.length; i++) {
+                                              tempAddressId.add(resultAddressId[i]);
+                                            }
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(right: 15)),
+                                  Expanded(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.width * 0.1,
+                                      child: OutlinedButton(
+                                        child: Text(
+                                          "확인",
+                                          style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+                                        ),
+                                        style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            side: BorderSide(color: Colors.pink)),
+                                        onPressed: () {
+                                          setState(() {
+                                            for (int i = 0; i < addresses.length; i++) {
+                                              resultAddressBool[i] = tempAddressBool[i];
+                                            }
+                                            resultAddressId = [];
+                                            for (int i = 0; i < tempAddressId.length; i++) {
+                                              resultAddressId.add(tempAddressId[i]);
+                                            }
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+              );
             },
           ),
-        );
-      },
+        ),
+      ],
+    );
+  }
+
+  renderResultAddress() {
+    return Wrap(
+      children: resultAddressId == []
+          ? [SizedBox.shrink()]
+          : List.generate(
+              resultAddressId.length,
+              (index) {
+                return Container(
+                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
+                  child: Container(
+                    height: 30,
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(20)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text("${resultAddressId[index]}", style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1)),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: InkWell(
+                            child: Container(alignment: Alignment.center, padding: EdgeInsets.zero, child: Text(" X", style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1))),
+                            onTap: () {
+                              setState(() {
+                                tempAddressBool[tempAddressId[index] - 1] = false;
+                                resultAddressBool[resultAddressId[index] - 1] = false;
+
+                                tempAddressId.remove(tempAddressId[index]);
+                                resultAddressId.remove(resultAddressId[index]);
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+    );
+  }
+
+  // 학번 선택
+  renderStudentIdInputBox() {
+    return Container(
+      // color: Colors.pink,
+      height: 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: TextFormField(
+              controller: studuntIDController1,
+              keyboardType: TextInputType.number,
+              cursorColor: Colors.grey,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                hintText: '제한 없음',
+                hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+              ),
+            ),
+          ),
+          Text("  ~  "),
+          Expanded(
+            child: TextFormField(
+              controller: studuntIDController2,
+              keyboardType: TextInputType.number,
+              cursorColor: Colors.grey,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                hintText: '22',
+                hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 나이 선택
+  renderAgeInputBox() {
+    return Container(
+      // height: 80,
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: SizedBox(
+              // height: 60,
+              child: TextFormField(
+                controller: ageController1,
+                keyboardType: TextInputType.number,
+                cursorColor: Colors.grey,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  hintText: '19',
+                  hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                  errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+                  errorStyle: TextStyle(fontSize: 0.01),
+                  // border: OutlineInputBorder(
+                  //     borderSide: BorderSide(color: Colors.blue)),
+                  // disabledBorder: OutlineInputBorder(
+                  //     borderSide: BorderSide(color: Colors.grey.shade300)),
+                  // focusedErrorBorder: OutlineInputBorder(
+                  //     borderSide: BorderSide(color: Colors.grey.shade300)),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+                ),
+                validator: (value) {
+                  if ((value != null && int.parse(value) < 19)) {
+                    return "19 이상이어야 함";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+          ),
+          Text("  ~  "),
+          Expanded(
+            child: TextFormField(
+              controller: ageController2,
+              keyboardType: TextInputType.number,
+              cursorColor: Colors.grey,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                hintText: '제한 없음',
+                hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 키워드 선택
+  renderKeywordsPopUp() {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.only(bottom: 5),
+          child: TextButton(
+            // TextButton inner padding 삭제하는방법!!
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Row(
+              children: [
+                Text(
+                  "키워드를 선택하세요",
+                  style: TextStyle(fontSize: 14, color: Colors.grey.shade500, height: 1),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey.shade500,
+                  size: 26,
+                ),
+              ],
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
+                    return SingleChildScrollView(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        height: MediaQuery.of(context).size.width * 1.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                child: Text(
+                                  "키워드 선택",
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Wrap(
+                                runSpacing: 10,
+                                spacing: 10,
+                                children: List<Widget>.generate(
+                                  keywords.length,
+                                  (index) => Container(
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        elevation: 0,
+                                        primary: tempKeywordBool[index] ? Colors.pink : Colors.grey.shade200,
+                                        padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                        minimumSize: Size.zero,
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      child: Text(
+                                        "# ${keywords[index]}",
+                                        style: TextStyle(fontSize: 13, color: tempKeywordBool[index] ? Colors.white : Colors.grey.shade500),
+                                      ),
+                                      onPressed: () {
+                                        // 현재 선택된 키워드 갯수 count
+                                        int count = 0;
+                                        for (int i = 0; i < keywords.length; i++) {
+                                          if (tempKeywordBool[i]) count++;
+                                        }
+
+                                        if (!tempKeywordBool[index]) {
+                                          mystate(() {
+                                            tempKeywordBool[index] = true;
+                                            tempKeywords.add(keywords[index]);
+                                          });
+                                        } else {
+                                          mystate(() {
+                                            tempKeywordBool[index] = false;
+                                            tempKeywords.remove(keywords[index]);
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.width * 0.2,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.width * 0.1,
+                                      child: OutlinedButton(
+                                        child: Text("닫기", style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold)),
+                                        style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), side: BorderSide(color: Colors.pink)),
+                                        onPressed: () {
+                                          setState(() {
+                                            for (int i = 0; i < keywords.length; i++) {
+                                              tempKeywordBool[i] = resultKeywordBool[i];
+                                            }
+
+                                            tempKeywords = [];
+                                            for (int i = 0; i < resultKeywords.length; i++) {
+                                              tempKeywords.add(resultKeywords[i]);
+                                            }
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(right: 15)),
+                                  Expanded(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.width * 0.1,
+                                      child: OutlinedButton(
+                                        child: Text("확인", style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold)),
+                                        style: OutlinedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            side: BorderSide(color: Colors.pink)),
+                                        onPressed: () {
+                                          setState(() {
+                                            for (int i = 0; i < keywords.length; i++) {
+                                              resultKeywordBool[i] = tempKeywordBool[i];
+                                            }
+                                            resultKeywords = [];
+                                            for (int i = 0; i < tempKeywords.length; i++) {
+                                              resultKeywords.add(tempKeywords[i]);
+                                            }
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  renderResultKeywords() {
+    return Wrap(
+      children: resultKeywords == []
+          ? [SizedBox.shrink()]
+          : List.generate(resultKeywords.length, (index) {
+              return Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
+                child: Container(
+                  height: 30,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: BorderRadius.circular(20)),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(resultKeywords[index], style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        child: InkWell(
+                          child: Container(alignment: Alignment.center, padding: EdgeInsets.zero, child: Text(" X", style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1))),
+                          onTap: () {
+                            setState(() {
+                              tempKeywordBool[keywords.indexOf(tempKeywords[index])] = false;
+                              resultKeywordBool[keywords.indexOf(resultKeywords[index])] = false;
+
+                              tempKeywords.remove(tempKeywords[index]);
+                              resultKeywords.remove(resultKeywords[index]);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+    );
+  }
+
+  bottomButton() {
+    return Container(
+      height: MediaQuery.of(context).size.width * 0.25,
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.width * 0.1,
+              child: OutlinedButton(
+                child: Text(
+                  "초기화",
+                  style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+                ),
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    side: BorderSide(color: Colors.pink)),
+                onPressed: () {
+                  setState(() {
+                    numMemberController = 2;
+                    addIndex = 0;
+                    tempAddressBool = [];
+                    resultAddressBool = [];
+                    tempAddressId = [];
+                    resultAddressId = [];
+                    studuntIDController1.text = "";
+                    studuntIDController2.text = "";
+                    ageController1.text = "";
+                    ageController2.text = "";
+                    tempKeywords = [];
+                    tempKeywordBool = [];
+                    resultKeywords = [];
+                    resultKeywordBool = [];
+
+                    // first address selected default 값 설정
+                    selectedFirstAddress = [];
+                    for (int i = 0; i < filteredFirstAddress.length; i++) {
+                      if (i == 0) {
+                        selectedFirstAddress.add(true);
+                      } else {
+                        selectedFirstAddress.add(false);
+                      }
+                    }
+
+                    // second address selected default 값 설정
+                    for (int i = 0; i < addresses.length; i++) {
+                      tempAddressBool.add(false);
+                      resultAddressBool.add(false);
+                    }
+
+                    // keyword selected default 값 설정
+                    for (int i = 0; i < keywords.length; i++) {
+                      tempKeywordBool.add(false);
+                      resultKeywordBool.add(false);
+                    }
+                  });
+                },
+              ),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(right: 15)),
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.width * 0.1,
+              child: OutlinedButton(
+                child: Text(
+                  "적용",
+                  style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+                ),
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    side: BorderSide(color: Colors.pink)),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1459,8 +1114,7 @@ class CustomTrackShape extends RectangularSliderTrackShape {
   }) {
     final double? trackHeight = sliderTheme.trackHeight;
     final double trackLeft = offset.dx;
-    final double trackTop =
-        offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final double trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
     final double trackWidth = parentBox.size.width;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
