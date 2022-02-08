@@ -87,18 +87,12 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0.0,
         title: Container(
           height: MediaQuery.of(context).size.width * 0.1,
-          child: Text('홈',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          child: Text('홈', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
         ),
         actions: [
+          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: () {}),
           IconButton(
-              icon: Icon(Icons.search, color: Colors.black), onPressed: () {}),
-          IconButton(
-              icon:
-                  Icon(Icons.notifications_none_outlined, color: Colors.black),
+              icon: Icon(Icons.notifications_none_outlined, color: Colors.black),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -112,9 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: EdgeInsets.fromLTRB(0, 10, 20, 10),
             height: MediaQuery.of(context).size.width * 0.1,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+            decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -144,54 +136,123 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           contentPadding: EdgeInsets.zero,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          content: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.width * 0.8,
-                            child: ListView.separated(
-                              itemCount: meetingPosts[index].numMember,
-                              itemBuilder: (ctx, idx) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Icon(Icons.image),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text("이름"),
-                                        Text("학교, 학번"),
-                                      ],
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // 상대프로필 페이지로 이동
-                                      },
-                                      icon: Icon(Icons.arrow_forward),
-                                    )
-                                  ],
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return const Divider();
-                              },
-                            ),
-                          ),
-                          actions: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    // 미팅 신청 로직 구현
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("미팅 신청"),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          content: Wrap(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: Column(
+                                  children: List.generate(meetingPosts[index].numMember, (idx) {
+                                    return Container(
+                                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                      width: MediaQuery.of(context).size.width * 0.9,
+                                      decoration: BoxDecoration(
+                                          border: Border(bottom: BorderSide(color: meetingPosts[index].numMember == idx + 1 ? Colors.white : Colors.grey.shade300))),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.only(right: 10),
+                                            child: CircleAvatar(
+                                              radius: 20,
+                                              backgroundColor: Colors.grey.shade500,
+                                              child: CircleAvatar(
+                                                radius: 19,
+                                                backgroundColor: Colors.pink,
+                                                child: Align(
+                                                  alignment: Alignment.bottomRight,
+                                                  child: CircleAvatar(
+                                                    radius: 5,
+                                                    backgroundColor: Colors.grey.shade500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  child: Text("${idx}번 학생 이름",),
+                                                ),
+                                                Container(
+                                                  child: Text("${idx}번 학생 대학, 학번", style: TextStyle(color: Colors.grey.shade500, fontSize: 12),),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                              child: IconButton(
+                                                padding: EdgeInsets.zero, // 아이콘 패딩 설정
+                                                constraints: BoxConstraints(),
+                                            onPressed: () {
+                                              // 상대프로필 페이지로 이동
+                                            },
+                                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 14,),
+                                          )),
+                                        ],
+                                      ),
+                                    );
+                                  }),
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          //   Container(
+                          //     width: MediaQuery.of(context).size.width * 0.8,
+                          //     height: MediaQuery.of(context).size.width * 0.8,
+                          //     child: ListView.separated(
+                          //       itemCount: meetingPosts[index].numMember,
+                          //       itemBuilder: (ctx, idx) {
+                          //         return Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: <Widget>[
+                          //             Icon(Icons.image),
+                          //             Column(
+                          //               crossAxisAlignment:
+                          //                   CrossAxisAlignment.start,
+                          //               children: <Widget>[
+                          //                 Text("이름"),
+                          //                 Text("학교, 학번"),
+                          //               ],
+                          //             ),
+                          //             IconButton(
+                          //               onPressed: () {
+                          //                 // 상대프로필 페이지로 이동
+                          //               },
+                          //               icon: Icon(Icons.arrow_forward),
+                          //             )
+                          //           ],
+                          //         );
+                          //       },
+                          //       separatorBuilder:
+                          //           (BuildContext context, int index) {
+                          //         return const Divider();
+                          //       },
+                          //     ),
+                          //   ),
+                          // ],
+
+                          actions: <Widget>[
+                            Container(
+                              color: Colors.white,
+                              height: 30,
+                              // padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  OutlinedButton(
+                                    onPressed: () {},
+                                    style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        side: BorderSide(color: Colors.pink)),
+                                    child: Text(" 미팅 신청 ",style: TextStyle(color: Colors.pink, height: 1),),
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         );
@@ -208,10 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(meetingPosts[index].location),
                         Text(meetingPosts[index].createdAt),
                         Row(
-                          children: <Widget>[
-                            for (String keyword in meetingPosts[index].keyword)
-                              Text("${keyword} ")
-                          ],
+                          children: <Widget>[for (String keyword in meetingPosts[index].keyword) Text("${keyword} ")],
                         ),
                         Text(meetingPosts[index].writerId),
                         Text("미팅인원: ${meetingPosts[index].numMember}"),

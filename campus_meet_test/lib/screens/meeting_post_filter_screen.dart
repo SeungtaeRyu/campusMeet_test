@@ -33,6 +33,13 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
   List<Address> addresses = [
     Address.fromMap(
       {
+        'id': 0,
+        'firstAddress': '서울',
+        'secondAddress': '동작구',
+      },
+    ),
+    Address.fromMap(
+      {
         'id': 1,
         'firstAddress': '서울',
         'secondAddress': '강남구',
@@ -683,8 +690,8 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
                             child: Container(alignment: Alignment.center, padding: EdgeInsets.zero, child: Text(" X", style: TextStyle(color: Colors.grey.shade500, fontSize: 14, height: 1))),
                             onTap: () {
                               setState(() {
-                                tempAddressBool[tempAddressId[index] - 1] = false;
-                                resultAddressBool[resultAddressId[index] - 1] = false;
+                                tempAddressBool[tempAddressId[index]] = false;
+                                resultAddressBool[resultAddressId[index]] = false;
 
                                 tempAddressId.remove(tempAddressId[index]);
                                 resultAddressId.remove(resultAddressId[index]);
@@ -1017,6 +1024,7 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
     );
   }
 
+  // 초기화, 적용 버튼
   bottomButton() {
     return Container(
       height: MediaQuery.of(context).size.width * 0.25,
