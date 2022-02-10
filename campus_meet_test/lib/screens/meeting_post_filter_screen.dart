@@ -711,7 +711,6 @@ class _MeetingFilterScreenState extends State<MeetingFilterScreen> {
   // 학번 선택
   renderStudentIdInputBox() {
     return Container(
-      // color: Colors.pink,
       height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

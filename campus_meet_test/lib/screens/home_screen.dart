@@ -2,6 +2,7 @@ import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/writing_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'home_meetingRequest.dart';
 import 'meeting_post_filter_screen.dart';
 import 'notice_screen.dart';
 
@@ -198,41 +199,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          //   Container(
-                          //     width: MediaQuery.of(context).size.width * 0.8,
-                          //     height: MediaQuery.of(context).size.width * 0.8,
-                          //     child: ListView.separated(
-                          //       itemCount: meetingPosts[index].numMember,
-                          //       itemBuilder: (ctx, idx) {
-                          //         return Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.spaceBetween,
-                          //           children: <Widget>[
-                          //             Icon(Icons.image),
-                          //             Column(
-                          //               crossAxisAlignment:
-                          //                   CrossAxisAlignment.start,
-                          //               children: <Widget>[
-                          //                 Text("이름"),
-                          //                 Text("학교, 학번"),
-                          //               ],
-                          //             ),
-                          //             IconButton(
-                          //               onPressed: () {
-                          //                 // 상대프로필 페이지로 이동
-                          //               },
-                          //               icon: Icon(Icons.arrow_forward),
-                          //             )
-                          //           ],
-                          //         );
-                          //       },
-                          //       separatorBuilder:
-                          //           (BuildContext context, int index) {
-                          //         return const Divider();
-                          //       },
-                          //     ),
-                          //   ),
-                          // ],
 
                           actions: <Widget>[
                             Container(
@@ -243,7 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   OutlinedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => MeetingRequest(data: meetingPosts[index],)));
+                                    },
                                     style: OutlinedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),

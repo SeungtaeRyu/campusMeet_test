@@ -1,13 +1,16 @@
+import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/screens/home_meetingRequest2.dart';
 import 'package:flutter/material.dart';
 
-class MemberFomationScreen extends StatefulWidget {
-  const MemberFomationScreen({Key? key}) : super(key: key);
+class MeetingRequest extends StatefulWidget {
+  const MeetingRequest({Key? key, required this.data}) : super(key: key);
+  final MeetingPost data;
 
   @override
-  State<MemberFomationScreen> createState() => _MemberFomationScreenState();
+  _MeetingRequestState createState() => _MeetingRequestState();
 }
 
-class _MemberFomationScreenState extends State<MemberFomationScreen> {
+class _MeetingRequestState extends State<MeetingRequest> {
   List<String> friendName = [
     "도진",
     "해수",
@@ -30,7 +33,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
   final TextEditingController _search = TextEditingController();
   String _searchText = "";
 
-  _MemberFomationScreenState() {
+  _MeetingRequestState() {
     _search.addListener(() {
       setState(() {
         _searchText = _search.text;
@@ -67,10 +70,12 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context, selectedFriendName);
+                    if(selectedFriendName.length + 1 == widget.data.numMember) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MeetingRequest2(data: selectedFriendName)));
+                    }
                   },
                   child: Text(
-                    "완료",
+                    "확인",
                     style: TextStyle(color: Colors.black, fontSize: 16),
                   )),
             )
@@ -121,97 +126,54 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
             ),
 
             Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              alignment: Alignment.centerLeft,
-              child: selected.indexOf(true) == -1 ? SizedBox.shrink() : Container(
-                height: 100,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: selectedFriendName.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.pink,
-                            radius: 25,
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.pink,
-                                radius: 8,
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      selected[friendName.indexOf(
-                                          selectedFriendName[
-                                          index])] = false;
-                                      selectedFriendName.remove(
-                                          selectedFriendName[index]);
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.close,
-                                    size: 14,
-                                    color: Colors.white,
+                color: Colors.white,
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                alignment: Alignment.centerLeft,
+                child: selected.indexOf(true) == -1 ? SizedBox.shrink() : Container(
+                  height: 100,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: selectedFriendName.length,
+                    itemBuilder: (BuildContext context, int index){
+                      return Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.pink,
+                              radius: 25,
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.pink,
+                                  radius: 8,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selected[friendName.indexOf(
+                                            selectedFriendName[
+                                            index])] = false;
+                                        selectedFriendName.remove(
+                                            selectedFriendName[index]);
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 14,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Container(padding: EdgeInsets.only(bottom: 10), child: Text("${selectedFriendName[index]} ")),
-                      ],
-                    );
-                  },
-                ),
-              )
+                          Container(padding: EdgeInsets.only(bottom: 10), child: Text("${selectedFriendName[index]} ")),
+                        ],
+                      );
+                    },
+                  ),
+                )
             ),
-
-            //   child: SingleChildScrollView(
-            //     child: Wrap(
-            //       children: selected.indexOf(true) == -1 ? [SizedBox.shrink()] : List<Widget>.generate(selectedFriendName.length, (index){
-            //         return Column(
-            //           children: [
-            //             Container(
-            //               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            //               child: CircleAvatar(
-            //                 backgroundColor: Colors.pink,
-            //                 radius: 25,
-            //                 child: Align(
-            //                   alignment: Alignment.topRight,
-            //                   child: CircleAvatar(
-            //                     backgroundColor: Colors.pink,
-            //                     radius: 8,
-            //                     child: InkWell(
-            //                       onTap: () {
-            //                         setState(() {
-            //                           selected[friendName.indexOf(
-            //                               selectedFriendName[
-            //                               index])] = false;
-            //                           selectedFriendName.remove(
-            //                               selectedFriendName[index]);
-            //                         });
-            //                       },
-            //                       child: Icon(
-            //                         Icons.close,
-            //                         size: 14,
-            //                         color: Colors.white,
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //             Text("${selectedFriendName[index]} "),
-            //           ],
-            //         );
-            //       }),
-            //     ),
-            //   ),
-            // ),
 
             Divider(height: 5, thickness: 5),
 
@@ -243,7 +205,7 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                               }
 
                               // 5명째에는 동작하지 않음
-                              if(count == 4 && !selected[index]){
+                              if(count == widget.data.numMember-1 && !selected[index]){
                               } else {
                                 setState(() {
                                   if (!selected[index]) {
@@ -258,9 +220,9 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                             },
                             icon: selected[index]
                                 ? Icon(
-                                    Icons.check_circle_rounded,
-                                    color: Colors.pink,
-                                  )
+                              Icons.check_circle_rounded,
+                              color: Colors.pink,
+                            )
                                 : Icon(Icons.circle_outlined)),
                       ],
                     );
@@ -320,3 +282,4 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
     );
   }
 }
+
