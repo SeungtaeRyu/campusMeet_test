@@ -1,4 +1,5 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/screens/otherPersonProfile_screen.dart';
 import 'package:campus_meet_test/screens/writing_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -147,8 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return Container(
                                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                                       width: MediaQuery.of(context).size.width * 0.9,
-                                      decoration: BoxDecoration(
-                                          border: Border(bottom: BorderSide(color: meetingPosts[index].numMember == idx + 1 ? Colors.white : Colors.grey.shade300))),
+                                      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: meetingPosts[index].numMember == idx + 1 ? Colors.white : Colors.grey.shade300))),
                                       child: Row(
                                         children: [
                                           Container(
@@ -174,22 +174,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  child: Text("${idx}번 학생 이름",),
+                                                  child: Text(
+                                                    "${idx}번 학생 이름",
+                                                  ),
                                                 ),
                                                 Container(
-                                                  child: Text("${idx}번 학생 대학, 학번", style: TextStyle(color: Colors.grey.shade500, fontSize: 12),),
+                                                  child: Text(
+                                                    "${idx}번 학생 대학, 학번",
+                                                    style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                                                  ),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           Container(
                                               child: IconButton(
-                                                padding: EdgeInsets.zero, // 아이콘 패딩 설정
-                                                constraints: BoxConstraints(),
+                                            padding: EdgeInsets.zero, // 아이콘 패딩 설정
+                                            constraints: BoxConstraints(),
                                             onPressed: () {
                                               // 상대프로필 페이지로 이동
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => OtherPersonProfileScreen(userId: idx)),
+                                              );
                                             },
-                                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 14,),
+                                            icon: Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 14,
+                                            ),
                                           )),
                                         ],
                                       ),
@@ -199,7 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-
                           actions: <Widget>[
                             Container(
                               color: Colors.white,
@@ -211,15 +222,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                   OutlinedButton(
                                     onPressed: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => MeetingRequest(data: meetingPosts[index],)));
+                                        context,
+                                        MaterialPageRoute(builder: (context) => MeetingRequest(data: meetingPosts[index])),
+                                      );
                                     },
                                     style: OutlinedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
                                         ),
                                         side: BorderSide(color: Colors.pink)),
-                                    child: Text(" 미팅 신청 ",style: TextStyle(color: Colors.pink, height: 1),),
+                                    child: Text(
+                                      " 미팅 신청 ",
+                                      style: TextStyle(color: Colors.pink, height: 1),
+                                    ),
                                   ),
                                 ],
                               ),
