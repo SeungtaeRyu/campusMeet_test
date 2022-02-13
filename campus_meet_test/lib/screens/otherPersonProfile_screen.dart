@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:campus_meet_test/widgets/carousel_slider.dart';
 import 'package:campus_meet_test/widgets/renderOtherPersonProfile.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class OtherPersonProfileScreen extends StatefulWidget {
 }
 
 class _OtherPersonProfileScreenState extends State<OtherPersonProfileScreen> {
+  final bool isAddInfo = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +28,40 @@ class _OtherPersonProfileScreenState extends State<OtherPersonProfileScreen> {
                 TopBar(),
                 Positioned(
                   bottom: 0,
-                  child: RenderOtherPersonProfile(userId: widget.userId),
+                  child: isAddInfo
+                      ? RenderOtherPersonProfile(userId: widget.userId)
+                      : RenderOtherPersonProfile(userId: widget.userId).blurred(
+                          blur: 10,
+                          borderRadius: BorderRadius.circular(25),
+                          overlay: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "이름",
+                                    style: TextStyle(color: Colors.pink, fontSize: 15, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "님의 프로필을 더 완성해주세요!",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "(추가 프로필을 작성해야 열람할 수 있습니다)",
+                                style: TextStyle(color: Colors.grey.shade500, fontSize: 15),
+                              ),
+                              OutlinedButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)), side: BorderSide(color: Colors.pink)),
+                                  child: Text(
+                                    "정보 입력하기",
+                                    style: TextStyle(color: Colors.pink, height: 1),
+                                  ))
+                            ],
+                          )),
                 ),
               ],
             ),
