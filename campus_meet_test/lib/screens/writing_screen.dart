@@ -437,57 +437,7 @@ class _WritingScreenState extends State<WritingScreen> {
                       ],
                     ),
 
-                    // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
-                    // 여기가 선택된 지역 보여주는 곳인데 flexible한 사이즈 할당이 안되는중
-                    // Container(
-                    //   child: addressData.length == 0
-                    //       ? SizedBox.shrink()
-                    //       : Container(
-                    //     height: 40,
-                    //     padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    //     child: ListView.builder(
-                    //       itemCount: addressData.length,
-                    //       scrollDirection: Axis.horizontal,
-                    //       itemBuilder: (BuildContext context, int index) {
-                    //         return Row(
-                    //           children: [
-                    //             Container(
-                    //               height: 30,
-                    //               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    //               decoration: BoxDecoration(
-                    //                 color: Colors.grey.shade300,
-                    //                 borderRadius: BorderRadius.circular(20)
-                    //               ),
-                    //               child: Row(
-                    //                 children: [
-                    //                   Container(
-                    //                     alignment: Alignment.center,
-                    //                     child: Text(addressData[index],style: TextStyle(fontSize: 14, height: 1)),
-                    //                   ),
-                    //                   Container(
-                    //                     alignment: Alignment.center,
-                    //                     child: InkWell(
-                    //                       child: Container(
-                    //                           alignment: Alignment.center,
-                    //                           padding: EdgeInsets.zero,
-                    //                           child: Text(" X", style: TextStyle(fontSize: 14,height: 1))),
-                    //                       onTap: (){
-                    //                         // setState(() {
-                    //                         //   addressData.remove(addressData[index]);
-                    //                         // });
-                    //                       },
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             Padding(padding: EdgeInsets.only(right: 10)),
-                    //           ],
-                    //         );
-                    //       },
-                    //     ),
-                    //   ),
-                    // ),
+
                   ],
                 ),
               ),
@@ -566,76 +516,6 @@ class _WritingScreenState extends State<WritingScreen> {
                         },
                       ),
                     ),
-                    // Container(
-                    //   child: SingleChildScrollView(
-                    //     child: Wrap(
-                    //       runSpacing: 10,
-                    //       children: List.generate(
-                    //         memberData.length + 2,
-                    //         (index) {
-                    //           if (index == 0) {
-                    //             return Container(
-                    //               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                    //               child: CircleAvatar(
-                    //                 radius: 25,
-                    //                 backgroundImage:
-                    //                     AssetImage("images/user1_profile.jpg"),
-                    //                 child: CircleAvatar(
-                    //                   radius: 25,
-                    //                   backgroundColor: Colors.black.withOpacity(0.3),
-                    //                   child: Text(
-                    //                     "나",
-                    //                     style: TextStyle(
-                    //                         color: Colors.white, fontSize: 12),
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           } else if (index < memberData.length + 1) {
-                    //             return Container(
-                    //               padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                    //               child: CircleAvatar(
-                    //                 backgroundColor: Colors.pink,
-                    //                 radius: 25,
-                    //                 child: Text(
-                    //                   "${memberData[index - 1]}",
-                    //                   style: TextStyle(
-                    //                       color: Colors.white, fontSize: 12),
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           } else {
-                    //             return Container(
-                    //               child: CircleAvatar(
-                    //                 radius: 25,
-                    //                 backgroundColor: Colors.grey,
-                    //                 child: CircleAvatar(
-                    //                   radius: 23,
-                    //                   backgroundColor: Colors.white,
-                    //                   child: IconButton(
-                    //                     icon:
-                    //                         Icon(Icons.add, color: Colors.grey),
-                    //                     padding: EdgeInsets.zero,
-                    //                     onPressed: () async {
-                    //                       final data = await Navigator.push(
-                    //                           context,
-                    //                           MaterialPageRoute(
-                    //                               builder: (context) =>
-                    //                                   MemberFomationScreen()));
-                    //                       setState(() {
-                    //                         memberData = data;
-                    //                       });
-                    //                     },
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           }
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

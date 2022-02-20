@@ -1,9 +1,5 @@
-import 'package:campus_meet_test/models/user_model.dart';
-import 'package:campus_meet_test/widgets/profile_picture_widget.dart';
-import 'package:campus_meet_test/widgets/render_user_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-
 import 'myPageEdit.dart';
 
 class MyPageScreen extends StatefulWidget {
