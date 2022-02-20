@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // 페이지 2분할
 class MyMeetingScreen extends StatefulWidget {
+
   const MyMeetingScreen({Key? key}) : super(key: key);
+ // final List<String> data;
 
   @override
   _MyMeetingScreenState createState() => _MyMeetingScreenState();
@@ -12,13 +14,14 @@ class MyMeetingScreen extends StatefulWidget {
 class _MyMeetingScreenState extends State<MyMeetingScreen> {
   bool myMeeting = true;
   bool BrequestToMe = true;
- bool confirm = true;
-
-  List<String> requestToMe = ["group1", "group2"];
+ //bool confirm = true;
+  List<double> position = [];
+  List<List<String>> requestToMe = [['1','1','어필문구','202202201754','202202201756','','N','' ],['2','2','어필문구2','202202201654','202202201656','','Y',''],['3','3','어필문구3','202202201654','202202201656','','Y','']];
 
   @override
   Widget build(BuildContext context) {
     // Color colorPink = Color(0xffe7eb);
+    print(requestToMe.length);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -30,7 +33,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                color: Colors.blue,
+                color: Colors.grey,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -243,39 +246,43 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             ],
           ),
         ),
-        // 요청묶음 보이기
+       // 요청묶음 보이기
         SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.only(top: 10),
             height: 330,
-            child: ListView.builder(
+            child: ListView.builder( //
               padding: const EdgeInsets.all(8),
               itemCount: requestToMe.length,
+
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: EdgeInsets.only(top: 15),
                   child: Column(children: [
                     // Text(requestToMe[index]
                     Row(children: [
-
-                      Container(
-                        width: 39,
-                        child: Text(
-                          '새 글',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 10),
+//
+                      Visibility(
+                        visible:requestToMe[index][6] == 'Y',
+                        child: Container(
+                          width: 39,
+                          child: Text(
+                            '새 글',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 10),
+                          ),
+                          decoration: BoxDecoration(
+                              color: Color(0xffff375c),
+                              borderRadius: BorderRadius.circular(3)),
                         ),
-                        decoration: BoxDecoration(
-                            color: Color(0xffff375c),
-                            borderRadius: BorderRadius.circular(3)),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 10),
                         child: Text(
-                          '미팅 신청글 타이틀${index}',
+                          requestToMe[index][2] ,
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
@@ -290,6 +297,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                         ),
                       ),
                     ]),
+
                     Container(
                       alignment: Alignment(-1.0, -0.6),
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -298,7 +306,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                         radius: 25,
                       ),
                       decoration: BoxDecoration(
-                          // color:Colors.grey ,
+                        // color:Colors.grey ,
                           border: Border(
                               bottom: BorderSide(
                                   color: index + 1 == requestToMe.length
