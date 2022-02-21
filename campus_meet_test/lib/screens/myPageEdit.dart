@@ -14,6 +14,7 @@ class MyPageEditScreen extends StatefulWidget {
 class _MyPageEditScreenState extends State<MyPageEditScreen> {
   TextEditingController selfIntroduction = TextEditingController();
   TextEditingController major = TextEditingController();
+
   List<String> images = ['사진1', '사진2', '사진3', '사진4', '사진5'];
 
   String addressData = ""; // 지역선택창에서 리턴될 데이터
@@ -308,7 +309,10 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             onPressed: () {
                               selectAddress();
                             },
+
+
                             icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: addressData == '' ? Colors.black : Colors.pink),
+
                           ),
                         ],
                       ),

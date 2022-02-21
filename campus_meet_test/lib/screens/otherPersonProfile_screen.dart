@@ -21,6 +21,7 @@ class _OtherPersonProfileScreenState extends State<OtherPersonProfileScreen> {
         children: <Widget>[
           Container(height: MediaQuery.of(context).viewPadding.top),
           Container(
+           // color: Colors.yellow,
             height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top,
             child: Stack(
               children: <Widget>[
@@ -78,6 +79,7 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       alignment: Alignment.topLeft,
       child: IconButton(
         icon: Icon(Icons.arrow_back_ios_rounded),
