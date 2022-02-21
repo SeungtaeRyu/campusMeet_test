@@ -13,6 +13,8 @@ class MyPageEditScreen extends StatefulWidget {
 
 class _MyPageEditScreenState extends State<MyPageEditScreen> {
   TextEditingController selfIntroduction = TextEditingController();
+  TextEditingController major = TextEditingController();
+
   List<String> images = ['사진1', '사진2', '사진3', '사진4', '사진5'];
 
   String addressData = ""; // 지역선택창에서 리턴될 데이터
@@ -307,7 +309,10 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             onPressed: () {
                               selectAddress();
                             },
-                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.pink),
+
+
+                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: addressData == '' ? Colors.black : Colors.pink),
+
                           ),
                         ],
                       ),
@@ -320,10 +325,30 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             child: Icon(CustomIcons.my_page, size: 15, color: Colors.white),
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
-                          Text("학과 미입력", style: TextStyle(height: 1))
+                          // Text("학과 미입력", style: TextStyle(height: 1))
+                          Expanded(
+                            child: Container(
+                              height: 30,
+                              child: TextFormField(
+                                controller: major,
+                                onChanged: (value) {
+                                },
+                                style: TextStyle(fontSize: 14),
+                                decoration: InputDecoration(
+                                  hintText: "학과 미입력",
+                                  contentPadding: EdgeInsets.zero,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(bottom: 10)),
                     ],
                   ),
                 ),

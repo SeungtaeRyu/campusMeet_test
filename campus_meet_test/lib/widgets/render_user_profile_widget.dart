@@ -111,8 +111,8 @@ class RenderUserProfileInfo extends StatelessWidget {
   }
   _renderArrowIcon() {
     return IconButton(
-      padding: EdgeInsets.zero, // 아이콘 패딩 설정
-      constraints: BoxConstraints(), // constraints
+      padding: EdgeInsets.zero,
+      constraints: BoxConstraints(),
       onPressed: () {},
       icon: Icon(
         Icons.arrow_forward_ios_rounded,

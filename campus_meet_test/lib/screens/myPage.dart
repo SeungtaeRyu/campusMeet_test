@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'myPageEdit.dart';
+import 'myPageFriend.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);
@@ -80,26 +81,48 @@ class _MyPageScreenState extends State<MyPageScreen> {
             ),
 
             // 내가 쓴 글
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 13),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-              child: Row(
-                children: [
-                  Icon(Icons.image, color: Colors.pink),
-                  Expanded(child: Text("  내가 쓴 글", style: TextStyle(fontSize: 14))),
-                ],
+            InkWell(
+              onTap: (){},
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.image, color: Colors.pink),
+                    Expanded(child: Text("  내가 쓴 글", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
               ),
             ),
 
             // 내가 참여한 미팅
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 13),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-              child: Row(
-                children: [
-                  Icon(Icons.image, color: Colors.pink),
-                  Expanded(child: Text("  내가 참여한 미팅", style: TextStyle(fontSize: 14))),
-                ],
+            InkWell(
+              onTap: (){},
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.image, color: Colors.pink),
+                    Expanded(child: Text("  내가 참여한 미팅", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+
+            // 나의 친구 관리
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                child: Row(
+                  children: [
+                    Icon(Icons.image, color: Colors.pink),
+                    Expanded(child: Text("  나의 친구 관리", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
               ),
             ),
           ],
