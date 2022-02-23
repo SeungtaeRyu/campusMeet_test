@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 // 페이지 2분할
@@ -7,11 +8,9 @@ class requestMeetingARScreen extends StatefulWidget {
 }
 
 class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
-
-  List<String> proposer = [
-   '1','2','3'
-  ];
-
+  List<String> proposer = ['1', '2', '3'];
+  List<bool> like = [false, false, false];
+  int _currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +26,6 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -55,31 +53,42 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
                 ),
               ),
             ),
-
             Container(
               margin: EdgeInsets.symmetric(vertical: 30.0),
               height: 280,
               //color: Colors.red,
-              child: ListView.builder(
-                itemCount: proposer.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
+              child: CarouselSlider(
+                items: List.generate(proposer.length, (index) {
                   return Container(
                     margin: EdgeInsets.only(right: 20, left: 20),
                     width: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(10),
-
                     ),
                   );
-                },
+                }),
+                options: CarouselOptions(
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.5,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                ),
               ),
             ),
-
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                mainAxisAlignment:MainAxisAlignment.center ,
+                children: makeIndicator(like, _currentPage),
+              ),
+            ),
             Container(
               alignment: Alignment(0.0, -0.6),
-              margin: EdgeInsets.only(top: 20,bottom: 10),
+              margin: EdgeInsets.only(top: 20, bottom: 10),
               child: Text(
                 '어필문구',
                 style: TextStyle(
@@ -87,69 +96,86 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
                 ),
               ),
             ),
-
             Container(
               width: 320,
               decoration: BoxDecoration(
-                // color:Colors.grey ,
-                  border: Border( bottom: BorderSide(color:Colors.grey.shade300)
-
-                  )),),
-
-         Container(
-           margin: EdgeInsets.only(top: 40),
-           child: Row(
-             children: [
-               Container(
-                 margin: EdgeInsets.only(left: 20),
-                 height: 46,
-                 width: 182,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(5),
-                   border: Border.all(
-                     width: 1,
-                     color: Color(0xffff375c),
-                   ),),
-                 child: OutlinedButton(
-                   onPressed: () async {
-                   },
-                   child: Text(
-                     '다음 기회에!',
-                     style: TextStyle(
-                       color: Color(0xffff375c),
-                       fontSize: 16,
-                     ),
-                   ),
-                 ),
-               ),
-               Container(
-                 margin: EdgeInsets.only(left: 20),
-                 height: 46,
-                 width: 182,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(5),
-                   border: Border.all(
-                     width: 1,
-                     color: Color(0xffff375c),
-                   ),),
-                 child: OutlinedButton(
-                   onPressed: () async {
-                   },
-                   child: Text(
-                     '네 좋아요!',
-                     style: TextStyle(
-                       color: Color(0xffff375c),
-                       fontSize: 16,
-                     ),
-                   ),
-                 ),
-               ),
-             ],
-           ),
-         )
+                  // color:Colors.grey ,
+                  border:
+                      Border(bottom: BorderSide(color: Colors.grey.shade300))),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 40),
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    height: 46,
+                    width: 162,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        width: 1,
+                        color: Color(0xffff375c),
+                      ),
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () async {},
+                      child: Text(
+                        '다음 기회에!',
+                        style: TextStyle(
+                          color: Color(0xffff375c),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    height: 46,
+                    width: 162,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        width: 1,
+                        color: Color(0xffff375c),
+                      ),
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () async {},
+                      child: Text(
+                        '네 좋아요!',
+                        style: TextStyle(
+                          color: Color(0xffff375c),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> makeIndicator(List list, int _currentPage) {
+    List<Widget> results = [];
+    for (var i = 0; i < list.length; i++) {
+      results.add(
+        Container(
+          width: 8,
+          height: 8,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _currentPage == i ? Colors.pink : Colors.grey.shade500,
+          ),
+        ),
+      );
+    }
+
+    return results;
   }
 }
