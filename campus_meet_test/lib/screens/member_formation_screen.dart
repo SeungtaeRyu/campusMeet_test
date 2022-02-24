@@ -103,14 +103,14 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide(
                             color: Colors.pink,
-                            width: 2.0,
+                            width: 1.0,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide(
                             color: Colors.pink,
-                            width: 2.0,
+                            width: 1.0,
                           ),
                         ),
                       ),

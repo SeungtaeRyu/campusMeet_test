@@ -58,28 +58,7 @@ class _MyPageFriendAddScreenState extends State<MyPageFriendAddScreen> {
                   // 엔터키 입력 시
                   onFieldSubmitted: (value) {
                     FocusScope.of(context).unfocus();
-                    isFirstSearch = true;
-                    int count = 0;
-                    for (String email in emailList){
-                      if (email == _searchText){
-                        setState(() {
-                          isValid = true;
-                        });
-                      } else {
-                        count++;
-                      }
-                    }
-                    if (count == emailList.length) {
-                      setState(() {
-                        isValid = false;
-                      });
-                    }
-                  },
-                  decoration: InputDecoration(
-                    hintText: "이메일을 입력하세요...",
-                    fillColor: Colors.white,
-                    suffixIcon: IconButton(color: Colors.pink, icon: Icon(Icons.search), onPressed: () {
-                      FocusScope.of(context).unfocus();
+                    if(_searchText != '') {
                       isFirstSearch = true;
                       int count = 0;
                       for (String email in emailList){
@@ -96,20 +75,45 @@ class _MyPageFriendAddScreenState extends State<MyPageFriendAddScreen> {
                           isValid = false;
                         });
                       }
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "이메일을 입력하세요...",
+                    fillColor: Colors.white,
+                    suffixIcon: IconButton(color: Colors.pink, icon: Icon(Icons.search), onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      if(_searchText != '') {
+                        isFirstSearch = true;
+                        int count = 0;
+                        for (String email in emailList){
+                          if (email == _searchText){
+                            setState(() {
+                              isValid = true;
+                            });
+                          } else {
+                            count++;
+                          }
+                        }
+                        if (count == emailList.length) {
+                          setState(() {
+                            isValid = false;
+                          });
+                        }
+                      }
                     }),
                     contentPadding: EdgeInsets.only(left: 15, bottom: 5, top: 5, right: 5),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Colors.pink,
-                        width: 2.0,
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Colors.pink,
-                        width: 2.0,
+                        width: 1.0,
                       ),
                     ),
                   ),

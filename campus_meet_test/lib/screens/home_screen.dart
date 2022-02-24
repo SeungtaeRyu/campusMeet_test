@@ -3,6 +3,7 @@ import 'package:campus_meet_test/screens/otherPersonProfile_screen.dart';
 import 'package:campus_meet_test/screens/writing_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'homeSearch.dart';
 import 'home_meetingRequest.dart';
 import 'meeting_post_filter_screen.dart';
 import 'notice_screen.dart';
@@ -92,7 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text('홈', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
         ),
         actions: [
-          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: () {}),
+          IconButton(icon: Icon(Icons.search, color: Colors.black), onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeSearchScreen()));
+          }),
           IconButton(
               icon: Icon(Icons.notifications_none_outlined, color: Colors.black),
               onPressed: () {
