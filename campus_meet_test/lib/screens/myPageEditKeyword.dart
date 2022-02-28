@@ -23,7 +23,7 @@ class _MyPageEditKeywordScreenState extends State<MyPageEditKeywordScreen> {
               color: Colors.black,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, []);
             }),
         backgroundColor: Colors.white,
         toolbarHeight: MediaQuery.of(context).size.width * 0.1,
@@ -106,7 +106,7 @@ class _MyPageEditKeywordScreenState extends State<MyPageEditKeywordScreen> {
                                   ),
                                   side: BorderSide(color: Colors.pink)),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(context, []);
                               },
                             ),
                           ),
@@ -126,7 +126,7 @@ class _MyPageEditKeywordScreenState extends State<MyPageEditKeywordScreen> {
                                   ),
                                   side: BorderSide(color: Colors.pink)),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pop(context, data);
                               },
                             ),
                           ),

@@ -1,12 +1,12 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/otherPersonProfile_screen.dart';
-import 'package:campus_meet_test/screens/writing_screen.dart';
+import 'package:campus_meet_test/screens/homeWriting.dart';
 import 'package:flutter/material.dart';
 
 import 'homeSearch.dart';
-import 'home_meetingRequest.dart';
-import 'meeting_post_filter_screen.dart';
-import 'notice_screen.dart';
+import 'homeMeetingRequest.dart';
+import 'homeFilter.dart';
+import 'homeNotice.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

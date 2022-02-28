@@ -1,5 +1,6 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/address_model.dart';
+import 'package:campus_meet_test/screens/myPageEditMajor.dart';
 import 'package:flutter/material.dart';
 import 'myPageEditKeyword.dart';
 
@@ -12,11 +13,12 @@ class MyPageEditScreen extends StatefulWidget {
 
 class _MyPageEditScreenState extends State<MyPageEditScreen> {
   TextEditingController selfIntroduction = TextEditingController();
-  TextEditingController major = TextEditingController();
+  String majorData = "";
 
   List<String> images = ['사진1', '사진2', '사진3', '사진4', '사진5'];
 
   String addressData = ""; // 지역선택창에서 리턴될 데이터
+  List<String> keywordsData = [];
   List<Address> addresses = [
     Address.fromMap(
       {
@@ -198,7 +200,12 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
           Container(
             padding: EdgeInsets.only(right: 5),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                print("addressData: ${addressData}");
+                print("majorData: ${majorData}");
+                print("한줄 자기소개: ${selfIntroduction.text}");
+                print("keywordsData: ${keywordsData}");
+              },
               child: Text(
                 "완료",
                 style: TextStyle(color: Colors.black, fontSize: 16),
@@ -279,6 +286,7 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // 나이
                       Text("기본 정보", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       Padding(padding: EdgeInsets.only(bottom: 10)),
                       Row(
@@ -289,10 +297,16 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             child: Icon(CustomIcons.my_page, size: 15, color: Colors.white),
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
-                          Text("나이", style: TextStyle(height: 1))
+                          Container(
+                            height: 30,
+                            alignment: Alignment.center,
+                            child: Text("나이", style: TextStyle(height: 1)),
+                          )
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 10)),
+
+                      // 지역
                       Row(
                         children: [
                           CircleAvatar(
@@ -301,48 +315,47 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             child: Icon(CustomIcons.my_page, size: 15, color: Colors.white),
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
-                          Text(addressData == '' ? "사는 지역" : addressData, style: TextStyle(color: addressData == '' ? Colors.black : Colors.pink, height: 1)),
+                          Container(
+                            height: 30,
+                            alignment: Alignment.center,
+                            child: Text(addressData == '' ? "사는 지역" : addressData, style: TextStyle(height: 1, color: addressData == '' ? Colors.black : Colors.pink)),
+                          ),
                           IconButton(
                             padding: EdgeInsets.zero, // 아이콘 패딩 설정
                             constraints: BoxConstraints(), // constraints
                             onPressed: () {
                               selectAddress();
                             },
-
-
                             icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: addressData == '' ? Colors.black : Colors.pink),
-
                           ),
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 10)),
+
+                      // 학과
                       Row(
                         children: [
                           CircleAvatar(
                             radius: 15,
-                            backgroundColor: Colors.pink,
-                            child: Icon(CustomIcons.my_page, size: 15, color: Colors.white),
+                            backgroundColor: majorData == '' ? Colors.grey.shade200 : Colors.pink,
+                            child: Icon(CustomIcons.my_page, size: 15, color: majorData == '' ? Colors.grey.shade500 : Colors.white),
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
-                          // Text("학과 미입력", style: TextStyle(height: 1))
-                          Expanded(
+                          InkWell(
+                            onTap: () async {
+                              String data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageEditMajorScreen()));
+                              if(data != "") {
+                                setState(() {
+                                  majorData = data;
+                                });
+                              }
+                            },
                             child: Container(
                               height: 30,
-                              child: TextFormField(
-                                controller: major,
-                                onChanged: (value) {
-                                },
-                                style: TextStyle(fontSize: 14),
-                                decoration: InputDecoration(
-                                  hintText: "학과 미입력",
-                                  contentPadding: EdgeInsets.zero,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                  ),
-                                ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                majorData == '' ? "학과 미입력" : majorData,
+                                style: TextStyle(height: 1, color: majorData == ''? Colors.grey.shade500 : Colors.black),
                               ),
                             ),
                           ),
@@ -402,32 +415,38 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                       _renderQustion("당신은 어떤 사람인가요?"),
                       Padding(padding: EdgeInsets.only(bottom: 15)),
                       Wrap(
-                          spacing: 11,
+                          spacing: 10,
                           runSpacing: 15,
-                          children: List.generate(9 + 1, (index) {
-                            if (index == 9) {
+                          children: List.generate(keywordsData.length + 1, (index) {
+                            if (index == keywordsData.length) {
                               return InkWell(
                                 child: Container(
                                     padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.pink),
                                     child: Text('+', style: TextStyle(color: Colors.white, height: 1))),
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageEditKeywordScreen()));
+                                onTap: () async {
+                                  List<String> data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageEditKeywordScreen()));
+                                  if(data != []){
+                                    setState(() {
+                                      keywordsData = data;
+                                    });
+                                  }
                                 },
                               );
                             } else {
                               return Container(
                                   padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.grey.shade200),
-                                  child: Text('키워드', style: TextStyle(color: Colors.grey.shade500, height: 1)));
+                                  child: Text(keywordsData[index], style: TextStyle(color: Colors.grey.shade500, height: 1)));
                             }
                           })),
+                      Padding(padding: EdgeInsets.only(bottom: 30)),
 
                       _renderQustion("쉬는날 주로 무얼 하나요?"),
-                      Padding(padding: EdgeInsets.only(bottom: 10)),
+                      Padding(padding: EdgeInsets.only(bottom: 30)),
 
                       _renderQustion("어떤 상대에게 호감을 느끼나요?"),
-                      Padding(padding: EdgeInsets.only(bottom: 10)),
+                      Padding(padding: EdgeInsets.only(bottom: 30)),
                     ],
                   ),
                 ),

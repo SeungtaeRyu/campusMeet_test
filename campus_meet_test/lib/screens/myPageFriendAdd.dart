@@ -101,7 +101,7 @@ class _MyPageFriendAddScreenState extends State<MyPageFriendAddScreen> {
                         }
                       }
                     }),
-                    contentPadding: EdgeInsets.only(left: 15, bottom: 5, top: 5, right: 5),
+                    contentPadding: EdgeInsets.only(left: 18, bottom: 5, top: 5, right: 5),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
@@ -128,7 +128,6 @@ class _MyPageFriendAddScreenState extends State<MyPageFriendAddScreen> {
                   ),
                 ),
 
-                //
                 Visibility(
                   visible: isFirstSearch,
                   child: Container(

@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/home_screen.dart';
+import 'package:campus_meet_test/screens/home.dart';
 import 'package:campus_meet_test/screens/my_meeting_screen.dart';
 import 'package:campus_meet_test/screens/myPage.dart';
 import 'package:campus_meet_test/screens/requestMeetingAcceptRefusal.dart';

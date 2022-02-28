@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MeetingRequest2 extends StatefulWidget {
-  const MeetingRequest2({Key? key, required this.data}) : super(key: key);
-  final List<String> data;
+  const MeetingRequest2({Key? key, required this.memberData}) : super(key: key);
+  final List<String> memberData;
 
   @override
   _MeetingRequest2State createState() => _MeetingRequest2State();
@@ -17,7 +17,7 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
   @override
   void initState() {
     super.initState();
-    if (widget.data.length == 1) {
+    if (widget.memberData.length == 1) {
       position.add(-40);
       position.add(40);
     } else {
@@ -46,7 +46,10 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
           Container(
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print("memberData: ${widget.memberData}");
+                    print("appealController.text: ${appealController.text}");
+                  },
                   child: Text(
                     "완료",
                     style: TextStyle(color: Colors.black, fontSize: 16),
@@ -72,8 +75,8 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.all(20),
                       child: Stack(
-                        children: List.generate(widget.data.length == 1 ? 2 : 3, (index) {
-                          if (widget.data.length >= 3 && index == 2) {
+                        children: List.generate(widget.memberData.length == 1 ? 2 : 3, (index) {
+                          if (widget.memberData.length >= 3 && index == 2) {
                             return Positioned(
                               left: MediaQuery.of(context).size.width * 0.5 - 85 + position[index],
                               child: CircleAvatar(
@@ -82,7 +85,7 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
                                 child: CircleAvatar(
                                   radius: 63,
                                   backgroundColor: Colors.pink,
-                                  child: Text("+${widget.data.length-1}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+                                  child: Text("+${widget.memberData.length-1}", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
                                 ),
                               ),
                             );

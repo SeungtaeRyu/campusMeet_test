@@ -1,3 +1,5 @@
+import 'package:campus_meet_test/common/custom_icons_icons.dart';
+import 'package:campus_meet_test/screens/myMeetingHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'myPageEdit.dart';
@@ -80,31 +82,18 @@ class _MyPageScreenState extends State<MyPageScreen> {
               ),
             ),
 
-            // 내가 쓴 글
+            // 나의 미팅 히스토리
             InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyMeetingHistoryScreen()));
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 13),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Row(
                   children: [
-                    Icon(Icons.image, color: Colors.pink),
-                    Expanded(child: Text("  내가 쓴 글", style: TextStyle(fontSize: 14))),
-                  ],
-                ),
-              ),
-            ),
-
-            // 내가 참여한 미팅
-            InkWell(
-              onTap: (){},
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                child: Row(
-                  children: [
-                    Icon(Icons.image, color: Colors.pink),
-                    Expanded(child: Text("  내가 참여한 미팅", style: TextStyle(fontSize: 14))),
+                    Icon(Icons.favorite, color: Colors.pink),
+                    Expanded(child: Text("  나의 미팅 히스토리", style: TextStyle(fontSize: 14))),
                   ],
                 ),
               ),
@@ -117,10 +106,96 @@ class _MyPageScreenState extends State<MyPageScreen> {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Row(
                   children: [
-                    Icon(Icons.image, color: Colors.pink),
+                    Icon(CustomIcons.my_page, color: Colors.pink),
                     Expanded(child: Text("  나의 친구 관리", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+
+            // 자주 묻는 질문
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Expanded(child: Text("  자주 묻는 질문", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+
+            // 문의하기
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Expanded(child: Text("  문의하기", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+
+            // 공지사항
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Expanded(child: Text("  공지사항", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+
+            // 이용약관
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Expanded(child: Text("  이용약관", style: TextStyle(fontSize: 14))),
+                  ],
+                ),
+              ),
+            ),
+            
+            // 설정
+            InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                child: Row(
+                  children: [
+                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Expanded(child: Text("  설정", style: TextStyle(fontSize: 14))),
                   ],
                 ),
               ),
@@ -132,25 +207,3 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 }
 
-// class _MyPageScreenState extends State<MyPageScreen> {
-//   User user = User.fromMap({
-//     'name': '아이유',
-//     'university': '명지대학교',
-//     'studentId': 12,
-//     'age': 30,
-//     'gender': 'female',
-//     'profileImage': 'user1_profile.jpg',
-//     'birthday': '1993년 5월 16일',
-//     'introduction': '상큼발랄'
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView(
-//       children: <Widget>[
-//         ProfilePicture(user: user),
-//         RenderUserProfileInfo(user: user),
-//       ],
-//     );
-//   }
-// }
