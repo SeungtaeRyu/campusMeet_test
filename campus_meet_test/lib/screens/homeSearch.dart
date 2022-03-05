@@ -149,7 +149,7 @@ class _HomeSearchScreenState extends State<HomeSearchScreen> {
               ) : Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    color: Colors.grey.shade200,
+                    color: Colors.grey.shade100,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

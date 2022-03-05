@@ -39,6 +39,7 @@ dependencies:
   blur: ^3.0.0
   dotted_border: ^2.0.0+2
   cached_network_image:
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -94,5 +95,8 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf
+    - family: TmoneyRoundWind
+      fonts:
+        - asset: assets/font/TmoneyRoundWindExtraBold.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
