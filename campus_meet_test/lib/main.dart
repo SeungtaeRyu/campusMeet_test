@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/screens/SignIn_Screen.dart';
 import 'package:campus_meet_test/screens/home.dart';
 import 'package:campus_meet_test/screens/my_meeting_screen.dart';
 import 'package:campus_meet_test/screens/myPage.dart';
@@ -5,6 +6,7 @@ import 'package:campus_meet_test/screens/requestMeetingAcceptRefusal.dart';
 import 'package:campus_meet_test/widgets/bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
 
+bool isLogined = true;
 
 void main() {
   runApp(const MyApp());
@@ -48,12 +50,13 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: createMaterialColor(Color(0xffff375c)),
         scaffoldBackgroundColor: Color(0xFFFFFFFF)
       ),
-      home: DefaultTabController(
+      home: !isLogined ? SignInPage() : DefaultTabController(
         length: 3,
         child: Scaffold(
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
+
               HomeScreen(),
               MyMeetingScreen(),
               MyPageScreen(),
