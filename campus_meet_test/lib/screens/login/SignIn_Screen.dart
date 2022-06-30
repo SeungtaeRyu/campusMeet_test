@@ -1,14 +1,9 @@
-import 'package:campus_meet_test/screens/SignUp_Screen.dart';
-import 'package:campus_meet_test/screens/resetPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
-import '../main.dart';
-import 'findPasswordConfirmation_screen.dart';
+import '../../main.dart';
 import 'findPassword_screen.dart';
-import 'package:campus_meet_test/screens/terms _screen.dart';
 import 'University_setting_screen.dart';
-import 'home_screen.dart';
 
 class SignInPage extends StatefulWidget {
   @override

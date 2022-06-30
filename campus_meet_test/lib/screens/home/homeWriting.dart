@@ -1,6 +1,6 @@
 import 'package:campus_meet_test/models/address_model.dart';
-import 'package:campus_meet_test/screens/homeWritingAddMember.dart';
 import 'package:flutter/material.dart';
+import 'homeWritingAddMember.dart';
 
 class WritingScreen extends StatefulWidget {
   const WritingScreen({Key? key}) : super(key: key);

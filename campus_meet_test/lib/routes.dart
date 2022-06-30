@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/check_univ_email_screen.dart';
+import 'package:campus_meet_test/screens/login/check_univ_email_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class Routes{

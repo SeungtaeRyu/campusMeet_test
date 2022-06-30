@@ -1,14 +1,13 @@
 import 'package:badges/badges.dart';
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
-import 'package:campus_meet_test/screens/otherPersonProfile_screen.dart';
-import 'package:campus_meet_test/screens/homeWriting.dart';
+import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'homeSearch.dart';
-import 'homeMeetingRequest.dart';
 import 'homeFilter.dart';
+import 'homeMeetingRequest.dart';
 import 'homeNotice.dart';
+import 'homeSearch.dart';
+import 'homeWriting.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

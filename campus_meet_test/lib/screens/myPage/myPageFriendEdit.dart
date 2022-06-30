@@ -41,7 +41,9 @@ class _MyPageFriendEditScreenState extends State<MyPageFriendEditScreen> {
           Container(
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "완료",
                     style: TextStyle(color: Colors.black, fontSize: 16),
@@ -82,12 +84,12 @@ class _MyPageFriendEditScreenState extends State<MyPageFriendEditScreen> {
                       height: 30,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.pink,
-                        ),
-                        color: boolDeleteFriend[index] ? Colors.pink : Colors.white
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.pink,
+                          ),
+                          color: boolDeleteFriend[index] ? Colors.pink : Colors.white
                       ),
                       child: Text('삭제', style: TextStyle(color: boolDeleteFriend[index] ? Colors.white : Colors.pink, fontSize: 13)),
                     ),

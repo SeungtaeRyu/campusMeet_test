@@ -1,6 +1,7 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
-import 'package:campus_meet_test/screens/homeMeetingRequest2.dart';
 import 'package:flutter/material.dart';
+
+import 'homeMeetingRequest2.dart';
 
 class MeetingRequest extends StatefulWidget {
   const MeetingRequest({Key? key, required this.data}) : super(key: key);

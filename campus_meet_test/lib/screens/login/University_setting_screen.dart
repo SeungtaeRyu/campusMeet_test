@@ -3,7 +3,6 @@ import 'package:campus_meet_test/routes.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
-import 'check_univ_email_screen.dart';
 
 void main() {
   runApp(SettingUnivPage());

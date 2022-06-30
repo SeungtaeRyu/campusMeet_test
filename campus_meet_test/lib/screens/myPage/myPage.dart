@@ -1,9 +1,11 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/screens/myMeetingHistory.dart';
+import 'package:campus_meet_test/screens/myPage/myPageMyMeetingHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'myPageEdit.dart';
 import 'myPageFriend.dart';
+import 'myPageNotice.dart';
+import 'myPageSettings.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);
@@ -116,82 +118,31 @@ class _MyPageScreenState extends State<MyPageScreen> {
               ),
             ),
 
-            // 자주 묻는 질문
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                child: Row(
-                  children: [
-                    Icon(Icons.close, color: Colors.grey.shade500),
-                    Expanded(child: Text("  자주 묻는 질문", style: TextStyle(fontSize: 14))),
-                  ],
-                ),
-              ),
-            ),
-
-            // 문의하기
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                child: Row(
-                  children: [
-                    Icon(Icons.close, color: Colors.grey.shade500),
-                    Expanded(child: Text("  문의하기", style: TextStyle(fontSize: 14))),
-                  ],
-                ),
-              ),
-            ),
-
             // 공지사항
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageNoticeScreen()));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 13),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Row(
                   children: [
-                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Icon(Icons.notifications_none_outlined, color: Colors.grey.shade500),
                     Expanded(child: Text("  공지사항", style: TextStyle(fontSize: 14))),
                   ],
                 ),
               ),
             ),
 
-            // 이용약관
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                child: Row(
-                  children: [
-                    Icon(Icons.close, color: Colors.grey.shade500),
-                    Expanded(child: Text("  이용약관", style: TextStyle(fontSize: 14))),
-                  ],
-                ),
-              ),
-            ),
-            
             // 설정
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageFriendScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageSettinsScreen()));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 13),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+                // decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Row(
                   children: [
                     Icon(Icons.close, color: Colors.grey.shade500),

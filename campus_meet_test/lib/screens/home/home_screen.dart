@@ -2,10 +2,6 @@
 // import 'package:campus_meet_test/screens/writing_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
-//
-// import 'home_meetingRequest.dart';
-// import 'meeting_post_filter_screen.dart';
-// import 'notice_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

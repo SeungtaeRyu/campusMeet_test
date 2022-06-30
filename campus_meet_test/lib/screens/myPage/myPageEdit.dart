@@ -1,8 +1,8 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/address_model.dart';
-import 'package:campus_meet_test/screens/myPageEditMajor.dart';
 import 'package:flutter/material.dart';
 import 'myPageEditKeyword.dart';
+import 'myPageEditMajor.dart';
 
 class MyPageEditScreen extends StatefulWidget {
   const MyPageEditScreen({Key? key}) : super(key: key);
@@ -14,6 +14,10 @@ class MyPageEditScreen extends StatefulWidget {
 class _MyPageEditScreenState extends State<MyPageEditScreen> {
   TextEditingController selfIntroduction = TextEditingController();
   String majorData = "";
+
+  TextEditingController nickNameController = TextEditingController();
+  String nickName = "닉네임";
+  String tempNickName = "";
 
   List<String> images = ['사진1', '사진2', '사진3', '사진4', '사진5'];
 
@@ -152,6 +156,8 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
   void initState() {
     super.initState();
     selfIntroduction.text = "저는 인간이 된 댕댕이입니다.";
+    nickNameController.text = nickName;
+    tempNickName = nickName;
 
     for (int i = 0; i < addresses.length; i++) {
       firstAddress.add(addresses[i].firstAddress);
@@ -286,9 +292,133 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // 나이
                       Text("기본 정보", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       Padding(padding: EdgeInsets.only(bottom: 10)),
+
+                      // 닉네임
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.pink,
+                            child: Icon(CustomIcons.my_page, size: 15, color: Colors.white),
+                          ),
+                          Padding(padding: EdgeInsets.only(right: 10)),
+                          Container(
+                            height: 30,
+                            alignment: Alignment.center,
+                            child: Text(nickName, style: TextStyle(height: 1, color: Colors.pink)),
+                          ),
+
+                          // 닉네임 변경 팝업창
+                          IconButton(
+                            padding: EdgeInsets.zero, // 아이콘 패딩 설정
+                            constraints: BoxConstraints(), // constraints
+                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.pink),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
+                                      return AlertDialog(
+                                        contentPadding: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                        content: Wrap(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                                              width: MediaQuery.of(context).size.width * 0.9,
+                                              child: Column(
+                                                children: [
+                                                  // 닫기 버튼
+                                                  Container(
+                                                    alignment: Alignment.topRight,
+                                                    child: IconButton(
+                                                      padding: EdgeInsets.zero, // 패딩 설정
+                                                      constraints: BoxConstraints(), // constraints
+                                                      onPressed: (){
+                                                        nickNameController.text = nickName;
+                                                        tempNickName = nickName;
+                                                        Navigator.pop(context);
+                                                      },
+                                                      icon: Icon(Icons.close),
+                                                      color: Colors.grey,),
+                                                  ),
+
+                                                  // 닉네임 변경 문구
+                                                  Container(
+                                                    child: Text("닉네임 변경", style: TextStyle(color: Colors.pink, fontSize: 18, fontWeight: FontWeight.bold),),),
+                                                  Padding(padding: EdgeInsets.only(bottom: 20)),
+
+                                                  // 닉네임 변경 인풋박스
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                                    child: TextFormField(
+                                                      controller: nickNameController,
+                                                      onChanged: (value) {
+                                                        mystate(() {
+                                                          tempNickName = value;
+                                                        });
+                                                      },
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          color: tempNickName == nickName ? Colors.grey : Colors.black
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        fillColor: Colors.grey.shade200,
+                                                        filled: true,
+                                                        contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                                        enabledBorder: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.grey.shade200),
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.grey.shade200),
+                                                          borderRadius: BorderRadius.circular(10),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(padding: EdgeInsets.only(bottom: 20)),
+
+                                                  // 확인 버튼
+                                                  Container(
+                                                    height: MediaQuery.of(context).size.width * 0.1,
+                                                    child: OutlinedButton(
+                                                      child: Text(
+                                                        "확인",
+                                                        style: TextStyle(color: tempNickName == nickName ? Colors.grey : Colors.pink, fontWeight: FontWeight.bold),
+                                                      ),
+                                                      style: OutlinedButton.styleFrom(
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                          ),
+                                                          side: BorderSide(color: tempNickName == nickName ? Colors.grey : Colors.pink)),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          nickNameController.text = tempNickName;
+                                                          nickName = tempNickName;
+                                                          Navigator.pop(context);
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+
+                                  });
+                            },
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 10)),
+
+                      // 나이
                       Row(
                         children: [
                           CircleAvatar(
@@ -306,7 +436,7 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 10)),
 
-                      // 지역
+                      // 사는 지역
                       Row(
                         children: [
                           CircleAvatar(
@@ -318,7 +448,7 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                           Container(
                             height: 30,
                             alignment: Alignment.center,
-                            child: Text(addressData == '' ? "사는 지역" : addressData, style: TextStyle(height: 1, color: addressData == '' ? Colors.black : Colors.pink)),
+                            child: Text(addressData == '' ? "사는 지역" : addressData, style: TextStyle(height: 1, color: Colors.pink)),
                           ),
                           IconButton(
                             padding: EdgeInsets.zero, // 아이콘 패딩 설정
@@ -326,7 +456,7 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                             onPressed: () {
                               selectAddress();
                             },
-                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: addressData == '' ? Colors.black : Colors.pink),
+                            icon: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.pink),
                           ),
                         ],
                       ),
@@ -425,7 +555,7 @@ class _MyPageEditScreenState extends State<MyPageEditScreen> {
                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.pink),
                                     child: Text('+', style: TextStyle(color: Colors.white, height: 1))),
                                 onTap: () async {
-                                  List<String> data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageEditKeywordScreen()));
+                                  List<String> data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageEditKeywordScreen(keywordsData: keywordsData)));
                                   if(data != []){
                                     setState(() {
                                       keywordsData = data;

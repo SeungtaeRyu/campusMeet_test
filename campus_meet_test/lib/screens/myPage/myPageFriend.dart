@@ -1,6 +1,5 @@
-import 'package:campus_meet_test/screens/myPageFriendAdd.dart';
 import 'package:flutter/material.dart';
-
+import 'myPageFriendAdd.dart';
 import 'myPageFriendEdit.dart';
 
 class MyPageFriendScreen extends StatefulWidget {

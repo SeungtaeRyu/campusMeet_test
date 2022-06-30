@@ -1,5 +1,5 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
-import 'package:campus_meet_test/screens/requestMeetingAcceptRefusal.dart';
+import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:flutter/material.dart';
 
 // 페이지 2분할

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'SignIn_Screen.dart';
-import 'SignUp_Screen.dart';
 
 class TermsPage extends StatefulWidget {
   @override
