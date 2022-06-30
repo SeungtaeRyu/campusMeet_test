@@ -145,7 +145,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 // decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
                 child: Row(
                   children: [
-                    Icon(Icons.close, color: Colors.grey.shade500),
+                    Icon(Icons.settings, color: Colors.grey.shade500),
                     Expanded(child: Text("  설정", style: TextStyle(fontSize: 14))),
                   ],
                 ),
