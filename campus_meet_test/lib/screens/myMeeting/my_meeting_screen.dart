@@ -2,6 +2,8 @@ import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:flutter/material.dart';
 
+import 'check_my_writing.dart';
+
 // 페이지 2분할
 class MyMeetingScreen extends StatefulWidget {
   const MyMeetingScreen({Key? key}) : super(key: key);
@@ -15,12 +17,21 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   bool BmeetingPropose = true;
 
   List<double> position = [];
-  List<List<String> > meetingPropose = [
+  List<List<String>> meetingPropose = [
     ['1', '1', '어필문구', '202202201754', '202202201756', '', 'N', ''],
     ['2', '2', '어필문구2', '202202201654', '202202201656', '', 'Y', ''],
     ['3', '3', '어필문구3', '202202201654', '202202201656', '', 'Y', ''],
-    ['4', '4', '어필문구4', '202202201654', '202202201656', '', 'Y', ''] //시간은 이런형태가 아닐듯..?
-];
+    [
+      '4',
+      '4',
+      '어필문구4',
+      '202202201654',
+      '202202201656',
+      '',
+      'Y',
+      ''
+    ] //시간은 이런형태가 아닐듯..?
+  ];
 //meetingPropose table id=1참조하는 proposer table
   List<List<String>> proposer = [
     ['1', '1', '1', 'Y'],
@@ -38,7 +49,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
         Container(
           height: (MediaQuery.of(context).size.height -
                   MediaQuery.of(context).viewPadding.top -
-                  MediaQuery.of(context).size.width * 0.2) * 0.5,
+                  MediaQuery.of(context).size.width * 0.2) *
+              0.5,
           padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
           color: Colors.grey.shade200,
           child: Column(
@@ -268,13 +280,15 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                 child: Row(
                   children: [
                     Container(
-                        child: Text(
-                      '내가 쓴 미팅 글 확인하기',
-                      style: TextStyle(
-                          color: Color(0xffff375c),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13),
-                    )),
+                      child: Text(
+                        '내가 쓴 미팅 글 확인하기',
+                        style: TextStyle(
+                            color: Color(0xffff375c),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 13),
+                      ),
+                    ),
+                    //여기 눌리면 내가 쓴 글 페이지로 넘어가
                     SizedBox(
                         child: IconButton(
                       padding: EdgeInsets.zero,
@@ -284,7 +298,13 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                         color: Color(0xffff375c),
                         size: 17,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => checkMyWritingScreen()),
+                        );
+                      },
                     )),
                   ],
                 ),
@@ -302,11 +322,13 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                 return Container(
                     margin: EdgeInsets.only(top: 15),
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         //페이지 이동 requestMeetingARScreen // id값 줘야겠지?
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => requestMeetingARScreen()));
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    requestMeetingARScreen()));
                       },
                       child: Column(children: [
                         Row(children: [
@@ -366,11 +388,15 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                                         ),
                                       ))),
                         ),
-                  Container(
-                      decoration: BoxDecoration(
-                        // color:Colors.grey ,
-                          border: Border(bottom: BorderSide(color: index +1 == meetingPropose.length
-                              ? Colors.white : Colors.grey.shade300))),)
+                        Container(
+                          decoration: BoxDecoration(
+                              // color:Colors.grey ,
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: index + 1 == meetingPropose.length
+                                          ? Colors.white
+                                          : Colors.grey.shade300))),
+                        )
                       ]),
                     ));
               },

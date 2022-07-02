@@ -1,12 +1,13 @@
 import 'package:campus_meet_test/screens/login/SignIn_Screen.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
+import 'package:campus_meet_test/screens/login/check_univ_email_screen.dart';
 import 'package:campus_meet_test/screens/myMeeting/my_meeting_screen.dart';
 import 'package:campus_meet_test/screens/myPage/myPage.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:campus_meet_test/widgets/bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
 
-bool isLogined = true;
+bool isLogined = false;
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       });
       return MaterialColor(color.value, swatch);
     }
-
+    const String checkUnivEmailScreen = '/checkUnivEmailScreen';
     return MaterialApp(
       title: 'Campus Meet',
       theme: ThemeData(
@@ -65,6 +66,9 @@ class _MyAppState extends State<MyApp> {
           bottomNavigationBar: BottomBar(),
         ),
       ),
+    routes: {
+      checkUnivEmailScreen: (BuildContext context) => CheckUnivPage()
+      },
     );
   }
 }

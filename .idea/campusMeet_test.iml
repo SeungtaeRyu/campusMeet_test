@@ -13,6 +13,30 @@
       <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/path_provider_ios/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/sqflite/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/campus_meet_test/ios/.symlinks/plugins/image_picker_ios/example/.dart_tool" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
