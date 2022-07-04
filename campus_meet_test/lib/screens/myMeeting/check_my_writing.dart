@@ -2,7 +2,7 @@ import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/screens/home/homeWritingAddMember.dart';
 import 'package:flutter/material.dart';
 
-import 'edit_mt_writing.dart';
+import 'edit_my_writing.dart';
 
 class checkMyWritingScreen extends StatefulWidget {
   const checkMyWritingScreen({Key? key}) : super(key: key);
@@ -15,7 +15,12 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
   List<String> memberData = []; // 멤버결성창에서 리턴될 데이터
   String addressData = ""; // 지역선택창에서 리턴될 데이터
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
+  // List<bool> selectedKeywords = [];
+  List<String> selectedKeywords = [
+    "인간 댕댕이",
+    "회색 아기 고양이",
+    "매력쟁이"
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -257,22 +262,39 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
-            child: Text(
-              "미팅 상대에게 멤버들의 특징이나 장점들을 어필해보세요!",
-              style: TextStyle(fontSize: 14),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(bottom: 20),
-            child: Text(
-              "(최대 7개까지 선택가능)",
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-            ),
-          ),
+
 
           // keywords 나열하자!
-          Wrap(),
+          Wrap(
+            runSpacing: 10,
+            spacing: 10,
+            children: List<Widget>.generate(
+              selectedKeywords.length,
+                  (index) => Container(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 0,
+                    primary:
+                         Colors.pink
+                        ,
+                    padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () {  },
+                  child: Text(
+                    "# ${selectedKeywords[index]}",
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(padding: EdgeInsets.only(bottom: 20))
         ],
       ),
