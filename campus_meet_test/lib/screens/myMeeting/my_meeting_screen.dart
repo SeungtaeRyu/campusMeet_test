@@ -13,8 +13,8 @@ class MyMeetingScreen extends StatefulWidget {
 }
 
 class _MyMeetingScreenState extends State<MyMeetingScreen> {
-  bool myMeeting = true;
-  bool BmeetingPropose = true;
+  bool myMeeting = false;
+  bool BmeetingPropose = false;
 
   List<double> position = [];
   List<List<String>> meetingPropose = [
@@ -73,13 +73,16 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   ),
                 ],
               ),
-              //홈화면에 있는 미팅들 중 내가 신청한 미팅
+              //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
               Container(
-                child: noMeetingMyPropose(),
+//                여기가 위 컨텐츠
+                child: noMeetingMyPropose(), // 위
+//                 child: existRequestMeeting(),
               )
             ],
           ),
         ),
+        //아래 컨텐츠
         Container(
           height: (MediaQuery.of(context).size.height -
                   MediaQuery.of(context).viewPadding.top -
@@ -97,7 +100,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 
-//내가 신청한 미팅이 없을때
+//내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
     return Expanded(
       child: Container(
@@ -151,7 +154,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 
-  // 미팅 신청이 없을 때
+  // 미팅 신청이 없을 때 아래
   Widget noMeetingPropose() {
     return Column(
       children: [
@@ -202,7 +205,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 
-  // 미팅 게시글이 없을 때
+  // 미팅 게시글이 없을 때 하단에 들어가는 컨텐츠임
   Widget noMeetingPost() {
     return Column(
       children: [
@@ -226,7 +229,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   width: 63,
                   height: 63,
                   color: Colors.grey,
-                  child: Image.asset('images/글쓰기아이콘.png')),
+                  child: Image.asset('images/미작성아이콘.png')),
             ), //캠퍼스밋이미지가져와
           ),
         ),
@@ -260,7 +263,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 
-  // 미팅 게시글 있고 && 미팅 신청도 있을 때
+  // 미팅 게시글 있고 && 미팅 신청도 있을 때 아래 컨텐츠
   Widget existRequestMeeting() {
     return Column(
       children: [

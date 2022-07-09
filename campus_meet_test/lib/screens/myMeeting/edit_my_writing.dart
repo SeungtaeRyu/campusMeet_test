@@ -319,7 +319,7 @@ class _ReviseScreenState extends State<ReviseScreen> {
             cursorColor: Colors.grey,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: '미팅 제목을 입력하세요',
+                hintText: '개강 싫은 사람 모여',
                 hintStyle:
                 TextStyle(fontSize: 16, color: Colors.grey.shade500)),
           ),
@@ -360,6 +360,7 @@ class _ReviseScreenState extends State<ReviseScreen> {
                   child: Row(
                     children: [
                       Text(
+                        // 전 페이지에 있던 지역을 (DB에 현재 저장돼있는지역)을 선택해 놓아야한다.
                         addressData == "" ? "지역 선택" : addressData,
                         style: TextStyle(
                             fontSize: 16,
@@ -785,7 +786,7 @@ class _ReviseScreenState extends State<ReviseScreen> {
                     style: TextStyle(color: Colors.grey.shade500),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '오픈 채팅방 링크를 입력해주세요.',
+                      hintText: '오픈 채팅방 링크',
                       hintStyle:
                       TextStyle(fontSize: 15, color: Colors.grey.shade500),
                     ),
