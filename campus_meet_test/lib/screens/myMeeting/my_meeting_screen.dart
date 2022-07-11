@@ -270,12 +270,12 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             children: [
               Container(
                   child: Text(
-                '받은 미팅 신청',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18),
-              )),
+                    '받은 미팅 신청',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18),
+                  )),
               Container(
                 child: Row(
                   children: [
@@ -291,21 +291,21 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                     //여기 눌리면 내가 쓴 글 페이지로 넘어가
                     SizedBox(
                         child: IconButton(
-                      padding: EdgeInsets.zero,
-                      constraints: BoxConstraints(),
-                      icon: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Color(0xffff375c),
-                        size: 17,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => checkMyWritingScreen()),
-                        );
-                      },
-                    )),
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(),
+                          icon: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Color(0xffff375c),
+                            size: 17,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => checkMyWritingScreen()),
+                            );
+                          },
+                        )),
                   ],
                 ),
               ),
@@ -376,21 +376,21 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                           child: Stack(
                               children: List.generate(
                                   proposer.length,
-                                  (index) => Positioned(
-                                        left: index * 35, //!!!!!!!!
-                                        child: new CircleAvatar(
-                                          radius: 25,
-                                          backgroundColor: Colors.white,
-                                          child: new CircleAvatar(
-                                            radius: 23,
-                                            backgroundColor: Colors.pink,
-                                          ),
-                                        ),
-                                      ))),
+                                      (index) => Positioned(
+                                    left: index * 35, //!!!!!!!!
+                                    child: new CircleAvatar(
+                                      radius: 25,
+                                      backgroundColor: Colors.white,
+                                      child: new CircleAvatar(
+                                        radius: 23,
+                                        backgroundColor: Colors.pink,
+                                      ),
+                                    ),
+                                  ))),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                              // color:Colors.grey ,
+                            // color:Colors.grey ,
                               border: Border(
                                   bottom: BorderSide(
                                       color: index + 1 == meetingPropose.length
@@ -407,67 +407,5 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 }
-//       Scaffold(
-//       // appBar: AppBar(),
-//       body: Padding(
-//         padding: const EdgeInsets.all(10),
-//         //autovalidateMode: AutovalidateMode.always,
-//         child: Column(
-//             //   mainAxisSize: MainAxisSize.max,
-//             //  mainAxisAlignment: MainAxisAlignment.start,
-//             mainAxisAlignment: MainAxisAlignment.spaceAround,
-//             //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               Container(
-//                 color: Colors.grey,
-//                 child: SingleChildScrollView(
-//                   child: Column(
-//                     children: [
-//                       Container(
-//                         //  color: Colors.red,
-//                         child: Row(
-//                           children: <Widget>[
-//                             Container(
-//                                 // color: Colors.red,
-//                                 width: 52,
-//                                 height: 350,
-//                                 alignment: Alignment(-1.0, -0.6),
-//                                 padding: EdgeInsets.only(left: 5),
-//                                 child: Text(
-//                                   '샛별',
-//                                   //textAlign: TextAlign.left,
-//                                   style: TextStyle(
-//                                       color: Color(0xffff375c),
-//                                       fontWeight: FontWeight.w700,
-//                                       fontSize: 22),
-//                                 )),
-//                             Container(
-//                                 height: 350,
-//                                 alignment: Alignment(-1.0, -0.6),
-//                                 child: Text(
-//                                   '님의 미팅',
-//                                   //textAlign: TextAlign.left,
-//                                   style: TextStyle(
-//                                       color: Colors.black,
-//                                       fontWeight: FontWeight.w700,
-//                                       fontSize: 22),
-//                                 )),
-//                           ],
-//                         ),
-//                       ),
-//                       //홈화면에 있는 미팅들 중 내가 신청한 미팅
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Flexible(
-//                   fit: FlexFit.tight,
-//                   child: myMeeting
-//                       ? BmeetingPropose
-//                           ? existRequestMeeting()
-//                           : noMeetingPropose()
-//                       : noMeetingPost()),
-//             ]),
-//       ),
-//     );
-//   }
+
+
