@@ -55,7 +55,7 @@ class _State extends State<SignInPage> {
                       child: Container(
                           width: 138,
                           height: 126,
-                          child: Image.asset('asset/campusMeetLogo.png')),
+                          child: Image.asset('images/campusMeetLogo.png')),
                     ), //캠퍼스밋이미지가져와
                   ),
                 ),

@@ -86,21 +86,23 @@ var _selectedValue = '24';8*/
           child: Column(
             children: <Widget>[
               Container(
-                  width: 380,
-                  height: 150,
-                  alignment: Alignment(-1.0, 0.0),
-                  padding: EdgeInsets.all(10),
+                  width: 287,
+                  height: 60,
+                  alignment: Alignment(-5.5, 0.0),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Text(
                     '거의 다 왔어요! \n회원정보를 입력해주세요!🐣',
                     //textAlign: TextAlign.left,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
-                        fontSize: 25),
+                        fontSize: 22),
                   )),
 
               Container(
-                padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                // padding: EdgeInsets.all(10),
                 child: TextFormField(
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅎ|가-힣|ㆍ|ᆢ]')),
@@ -110,6 +112,7 @@ var _selectedValue = '24';8*/
                   decoration: InputDecoration(
                     //  border: OutlineInputBorder(),
                     labelText: '이름',
+                    hintText: '실명으로 입력해주세요'
                   ),
                   autovalidateMode: AutovalidateMode.always,
                   onChanged: (dynamic val) {},
@@ -153,6 +156,7 @@ var _selectedValue = '24';8*/
                   decoration: InputDecoration(
                     //   border: OutlineInputBorder(),
                     labelText: '학번', //텍스트필드말고 숫자만?데 두자리?
+                      hintText: '숫자만 입력해주세요 ex)21'
                   ),
                   validator: Validators.compose([
                     Validators.required('입학년도 2자리 입니다.')
@@ -182,20 +186,37 @@ var _selectedValue = '24';8*/
               Container(
                 //signin 65
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: TextFormField(
-                  //비밀번호 조건
-                  obscureText: true,
-                  controller: pwd,
-                  decoration: InputDecoration(
-                    //  border: OutlineInputBorder(),
-                      labelText: 'Password'),
-                  validator: Validators.compose([
-                    Validators.required('Password is required'),
-                    Validators.patternString(
-                        r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                        '8자리이상,숫자,특수문자를 포함해주세요.')
-                  ]),
-                ),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      //비밀번호 조건
+                      obscureText: true,
+                      controller: pwd,
+                      decoration: InputDecoration(
+                        //  border: OutlineInputBorder(),
+                          labelText: '비밀번호'),
+                      validator: Validators.compose([
+                        Validators.required('Password is required'),
+                        Validators.patternString(
+                            r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                            '8자리이상,숫자,특수문자를 포함해주세요.')
+                      ]),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, 8, 0, 1),
+                      alignment: Alignment(-0.9, 0.0),
+                      child: Text(
+                        "- 8자 이상 입력 \n- 영문/숫자/특수문자(공백제외)만 허용하며, 2개 이상 조합",
+                        //textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
+                      ),
+                    )
+                  ],
+                  ),
+
               ),
               Container(
                 //비밀번호확
@@ -205,7 +226,7 @@ var _selectedValue = '24';8*/
                   controller: passwordEController,
                   decoration: InputDecoration(
                     //  border: OutlineInputBorder(),
-                      labelText: 'Password'),
+                      labelText: '비밀번호 확인'),
                   //validateEPassword:
                   validator: (value) {
                     //애러메세지 띄워
