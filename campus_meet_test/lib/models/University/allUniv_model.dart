@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/models/oneUniv_model.dart';
+import 'package:campus_meet_test/models/University/oneUniv_model.dart';
 
 class Universities {
   Universities({

@@ -1,7 +1,6 @@
-
 // 수정있다 onePostGet랑 비슷함
-import 'oneLocation_model.dart';
-import 'oneTag_model.dart';
+import '../Location/oneLocation_model.dart';
+import '../Tag/oneTag_model.dart';
 
 class PostPost {
   PostPost({
