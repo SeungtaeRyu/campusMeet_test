@@ -5,6 +5,7 @@ import '../../main.dart';
 import 'findPassword_screen.dart';
 import 'University_setting_screen.dart';
 
+
 class SignInPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
@@ -30,15 +31,15 @@ class _State extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_rounded,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        backgroundColor: Colors.white,
+        // leading: IconButton(
+        //     icon: Icon(
+        //       Icons.arrow_back_ios_rounded,
+        //       color: Colors.black,
+        //     ),
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     }),
+        // backgroundColor: appBarBackgroundColor,
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
@@ -53,53 +54,56 @@ class _State extends State<SignInPage> {
                     padding: const EdgeInsets.only(top: 60.0),
                     child: Center(
                       child: Container(
-                          width: 138,
-                          height: 126,
+                          width: MediaQuery.of(context).size.width * 0.33,
+                          height: MediaQuery.of(context).size.width * 0.33,
                           child: Image.asset('images/campusMeetLogo.png')),
                     ), //캠퍼스밋이미지가져와
                   ),
                 ),
-                Padding(
+                Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    height: 46,
-                    child: TextFormField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder( borderRadius: BorderRadius.circular(31.0)),
-                            //labelText: 'Email',
-                            hintText: '이메일'),
-                        validator: MultiValidator([
-                          // RequiredValidator(errorText: "* Required"),
-                          // EmailValidator(errorText: "Enter valid email id"),
-                        ])
+                  height: MediaQuery.of(context).size.width * 0.12,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(31.0)),
+                        hintText: '이메일',
+                        hintStyle: TextStyle(height: 0.7)
+                    ),
+                    validator: MultiValidator(
+                      [
+                        // RequiredValidator(errorText: "* Required"),
+                        // EmailValidator(errorText: "Enter valid email id"),
+                      ],
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 6, bottom: 0),
-                  child: Container(
-                    height: 46,
-                    child: TextFormField(
-                      obscureText: true,
-                      //controller: passwordController,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(31.0)),
-                          //  labelText: 'Password',
-                          hintText: '비밀번호'),
-                      validator: Validators.compose([
-                        //  Validators.required('Password is required'),
-                        //   Validators.patternString(
-                        //       r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                        //       '8자리이상,숫자,특수문자를 포함해주세요.')
-                      ]),
-                      //validatePassword,        //Function to check validation
+                Padding(padding: EdgeInsets.only(top: 6)),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  height: MediaQuery.of(context).size.width * 0.12,
+                  child: TextFormField(
+                    obscureText: true,
+                    //controller: passwordController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(31.0)),
+                        //  labelText: 'Password',
+                        hintText: '비밀번호',
+                        hintStyle: TextStyle(height: 0.7)
                     ),
+                    validator: Validators.compose([
+                      //  Validators.required('Password is required'),
+                      //   Validators.patternString(
+                      //       r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                      //       '8자리이상,숫자,특수문자를 포함해주세요.')
+                    ]),
+                    //validatePassword,        //Function to check validation
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(right: 10),
                   alignment: Alignment.topRight,
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -110,17 +114,17 @@ class _State extends State<SignInPage> {
                       //요기서 화면 바 SettingUnivPage() RadioApp() DropDown()
                       //signup screen
                     },
-                    child: Text('비밀번호 찾기'),
+                    child: Text('비밀번호 찾기',style: TextStyle(color: Colors.black),),
                   ),
                 ),
                 Container(
-                  height: 50,
-                  width: 340,
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
                       color: Color(0xffff375c),
                       borderRadius: BorderRadius.circular(10)),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       //print(nameController.text);
                       //print(passwordController.text);
@@ -145,11 +149,11 @@ class _State extends State<SignInPage> {
                     child: Column(
                       children: <Widget>[
                         Text('처음 오셨나요?'),
-                        FlatButton(
+                        TextButton(
                           //textColor: Colors.pinkAccent,
                           child: Text(
                             '회원가입 하러가기 🐾',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
                           onPressed: () {
                             Navigator.push(
