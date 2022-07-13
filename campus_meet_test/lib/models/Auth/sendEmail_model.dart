@@ -8,4 +8,5 @@ class SendEmail {
 
   Map<String, dynamic> toJson() => {
     "email": email
-  };}
+  };
+}

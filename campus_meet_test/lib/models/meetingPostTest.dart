@@ -2,9 +2,13 @@ class MeetingPostTest {
   final int id;
   final String userName;
   final String name;
-  final Location location ;
+  final Location location;
 
-  MeetingPostTest({required this.id, required this.userName, required this.name, required this.location });
+  MeetingPostTest(
+      {required this.id,
+      required this.userName,
+      required this.name,
+      required this.location});
 
   factory MeetingPostTest.fromJson(Map<String, dynamic> json) {
     return MeetingPostTest(

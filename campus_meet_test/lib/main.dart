@@ -49,7 +49,10 @@ class _MyAppState extends State<MyApp> {
       title: 'Campus Meet',
       theme: ThemeData(
         primarySwatch: createMaterialColor(Color(0xffff375c)),
-        scaffoldBackgroundColor: Color(0xFFFFFFFF)
+        scaffoldBackgroundColor: Color(0xFFFFFFFF),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+        )
       ),
       home: !isLogined ? SignInPage() : DefaultTabController(
         length: 3,

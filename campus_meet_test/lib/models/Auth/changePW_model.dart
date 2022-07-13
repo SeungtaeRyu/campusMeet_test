@@ -1,2 +1,14 @@
-//아니 이거 request에는 현재비번이란 새로운 비번 있는데  body에는 그냥 pssword하나 적혀있네? 바디는 그냥 존재만하는 거임?
-//우째
+class ChangePW {
+  ChangePW({
+    required this.currentPw,
+    required this.newPw,
+  });
+
+  String currentPw;
+  String newPw;
+
+  Map<String, dynamic> toJson() => {
+    "currentPw": currentPw,
+    "newPw": newPw
+  };
+}

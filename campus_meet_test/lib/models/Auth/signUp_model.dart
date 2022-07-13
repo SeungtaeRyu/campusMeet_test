@@ -25,4 +25,5 @@ class SignUp {
     "pwd": pwd,
     "birthDate": birthDate,
     "sex": sex
-  };}
+  };
+}
