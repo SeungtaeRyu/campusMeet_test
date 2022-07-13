@@ -2,7 +2,6 @@ class ResetPW {
   ResetPW({
     required this.name,
     required this.email
-    //채팅방url
   });
 
   String name;

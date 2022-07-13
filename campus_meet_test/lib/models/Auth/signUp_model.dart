@@ -7,7 +7,6 @@ class SignUp {
     required this.pwd,
     required this.birthDate,
     required this.sex,
-    //채팅방url
   });
 
   String email;

@@ -2,7 +2,6 @@ class VerifyEmail {
   VerifyEmail({
     required this.email,
     required this.code
-    //채팅방url
   });
 
   String email;

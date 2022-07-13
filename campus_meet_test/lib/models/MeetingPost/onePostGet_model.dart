@@ -26,7 +26,7 @@ class PostGet {
   DateTime updatedAt;
   int numOfMember;
   List<Tag> tags;
-  String members;
+  String members; // 자료형이 달라서 grt post 분리했음..?
   //채팅방url
 
   factory PostGet.fromJson(Map<String, dynamic> json) => PostGet(
@@ -43,7 +43,7 @@ class PostGet {
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id, //안보내도 되는거지요?
+    "id": id,
     "location": location.toJson(),
     "writer": writer.toJson(),
     "title": title,

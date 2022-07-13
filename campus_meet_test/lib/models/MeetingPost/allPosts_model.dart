@@ -1,5 +1,3 @@
-
-
 import 'onePostGet_model.dart';
 
 class Posts {

@@ -1,7 +1,6 @@
 class SendEmail {
   SendEmail({
     required this.email
-    //채팅방url
   });
 
   String email;
