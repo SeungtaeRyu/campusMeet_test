@@ -18,6 +18,16 @@ class PostPost {
   List<Tag> tags;
   List<int> members;
 
+  factory PostPost.fromJson(Map<String, dynamic> json) => PostPost(
+
+    location: Location.fromJson(json["location"]),
+    title: json["title"],
+    numOfMember: json["numOfMember"],
+    tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+    members: List<int>.from(json["members"].map((x) => x)),
+    //채팅방url
+  );
+
   Map<String, dynamic> toJson() => {
     "location": location.toJson(),
     "title": title,

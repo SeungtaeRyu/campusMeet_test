@@ -5,6 +5,9 @@ class SendEmail {
 
   String email;
 
+  factory SendEmail.fromJson(Map<String, dynamic> json) => SendEmail(
+    email: json["email"],
+  );
 
   Map<String, dynamic> toJson() => {
     "email": email

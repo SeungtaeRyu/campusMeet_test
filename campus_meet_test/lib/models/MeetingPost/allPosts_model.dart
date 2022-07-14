@@ -1,14 +1,14 @@
-import 'onePostGet_model.dart';
+import 'onePost_model.dart';
 
 class Posts {
   Posts({
     required this.posts,
   });
 
-  List<PostGet> posts;
+  List<Post> posts;
 
   factory Posts.fromJson(Map<String, dynamic> json) => Posts(
-    posts: List<PostGet>.from(json["posts"].map((x) => PostGet.fromJson(x))),
+    posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
