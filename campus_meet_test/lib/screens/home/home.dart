@@ -3,7 +3,7 @@ import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
-import 'package:campus_meet_test/widgets/render_post_widget.dart';
+import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'homeFilter.dart';
 import 'homeMeetingRequest.dart';
@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String currentPage = "home";
   List<Post> posts = [
     Post.fromJson({
       "id": 0,
@@ -257,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return RenderPost(post: posts[index]);
+                return RenderPostCard(post: posts[index], currentPage: 'currentPage',);
               },
             ),
           ),
