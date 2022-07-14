@@ -86,11 +86,11 @@ var _selectedValue = '24';8*/
           child: Column(
             children: <Widget>[
               Container(
-                  width: 287,
-                  height: 60,
-                  alignment: Alignment(-5.5, 0.0),
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  // margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  height: MediaQuery.of(context).size.width * 0.14,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  alignment: Alignment(-1.2, 0.0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Text(
                     '거의 다 왔어요! \n회원정보를 입력해주세요!🐣',
                     //textAlign: TextAlign.left,
@@ -112,7 +112,8 @@ var _selectedValue = '24';8*/
                   decoration: InputDecoration(
                     //  border: OutlineInputBorder(),
                     labelText: '이름',
-                    hintText: '실명으로 입력해주세요'
+                    hintText: '실명으로 입력해주세요',
+                      hintStyle: TextStyle(height: 0.7)
                   ),
                   autovalidateMode: AutovalidateMode.always,
                   onChanged: (dynamic val) {},
@@ -156,7 +157,8 @@ var _selectedValue = '24';8*/
                   decoration: InputDecoration(
                     //   border: OutlineInputBorder(),
                     labelText: '학번', //텍스트필드말고 숫자만?데 두자리?
-                      hintText: '숫자만 입력해주세요 ex)21'
+                      hintText: '숫자만 입력해주세요 ex)21',
+                      hintStyle: TextStyle(height: 0.7)
                   ),
                   validator: Validators.compose([
                     Validators.required('입학년도 2자리 입니다.')
@@ -339,13 +341,17 @@ var _selectedValue = '24';8*/
               ),
 // https://api.flutter.dev/flutter/material/Radio-class.html 값을 어떻게 갖고오
               Container(
+                // color: Colors.red,
                 // 회원가입 조건 하나라도 누락 시 색 죽은색/ 조건 무두 완료시 빨
-                height: 50,
-                width: 250,
+                height: MediaQuery.of(context).size.width * 0.14,
+                width: MediaQuery.of(context).size.width * 0.9,
+                // padding: EdgeInsets.only(top: 20),
+                margin: EdgeInsets.only(top:30),
                 decoration: BoxDecoration(
                     color: Color(0xffff375c),
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(10)),
                 child: FlatButton(
+                  // padding: EdgeInsets.only(top: 20),
                   onPressed: () {
                     //print(name.text);
                     //print(pwd.text);

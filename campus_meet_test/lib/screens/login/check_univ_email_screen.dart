@@ -61,10 +61,11 @@ class _State extends State<CheckUnivPage> {
                         child: Column(
                   children: <Widget>[
                     Container(
-                        width: 380,
-                        height: 150,
+                      // color: Colors.red,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.width * 0.25,
                         alignment: Alignment(-1.0, 0.0),
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(left: 10,bottom: 30),
                         child: Text(
                           '대학교 확인을 위해 \n'
                           '학교 이메일 인증이 필요해요!',
@@ -75,7 +76,7 @@ class _State extends State<CheckUnivPage> {
                               fontSize: 25),
                         )),
                     Container(
-                      height: 65,
+                      height: MediaQuery.of(context).size.width * 0.15,
                       // color: Colors.red,
                       padding: EdgeInsets.only(top: 10, bottom: 10),
                       //padding: EdgeInsets.only(right: ),
@@ -110,9 +111,6 @@ class _State extends State<CheckUnivPage> {
                           Padding(padding: EdgeInsets.only(right: 10)),
                           Expanded(
                             // 학교이메일 형식
-                            // height: 60,
-                            // width: 150,
-                            // padding: EdgeInsets.all(10),
                             child: TextFormField(
                               enabled: false,
                               decoration: InputDecoration(
@@ -127,8 +125,8 @@ class _State extends State<CheckUnivPage> {
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 10, right: 10),
-                            height: 42,
-                            width: 90,
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            height: MediaQuery.of(context).size.width * 0.25,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10)),
                             child: ElevatedButton(
@@ -169,11 +167,7 @@ class _State extends State<CheckUnivPage> {
                         autovalidateMode: AutovalidateMode.always,
                         key: formkey,
                         child: Container(
-                          //color: Colors.red,
                           padding: EdgeInsets.only(left: 10, right: 10),
-                          // height: 60,
-                          // width:400,
-                          //alignment: Alignment.,
                           margin: const EdgeInsets.only(
                               left: 0.0, right: 0.0, bottom: 10.0),
                           child: TextFormField(
@@ -249,8 +243,8 @@ class _State extends State<CheckUnivPage> {
                   padding: EdgeInsets.only(bottom: 10),
                   child: Container(
                     // padding: EdgeInsets.only(bottom: 10),
-                    height: 50,
-                    width: 250,
+                    height: MediaQuery.of(context).size.width * 0.14,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                         color: Color.fromARGB(250, 191, 191, 191),
                         borderRadius: BorderRadius.circular(10)),

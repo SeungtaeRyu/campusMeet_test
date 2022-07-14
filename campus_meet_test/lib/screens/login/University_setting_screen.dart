@@ -67,10 +67,11 @@ class _State extends State<SettingUnivPage> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                          width: 380,
-                          height: 150,
+                        // color: Colors.red,
+                          height: MediaQuery.of(context).size.width * 0.13,
+                          width: MediaQuery.of(context).size.width * 0.9,
                           alignment: Alignment(-1.0, 0.0),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.only(left: 5,bottom: 5 ),
                           child: Text(
                             '현재 재학중인 학교를 알려주세요👀',
                             //textAlign: TextAlign.left,
@@ -84,8 +85,8 @@ class _State extends State<SettingUnivPage> {
                       Row(
                         children: [
                           Container(
-                            height: 70,
-                            width: 280,
+                            height: MediaQuery.of(context).size.width * 0.17,
+                            width: MediaQuery.of(context).size.width * 0.73,
                             padding: EdgeInsets.all(10),
                             child: TextFormField(
                               cursorColor: color,
@@ -101,7 +102,8 @@ class _State extends State<SettingUnivPage> {
                                   border: OutlineInputBorder(
                                   ),
                                   //labelText: 'Email',
-                                  hintText: '학교이름'),
+                                  hintText: '학교이름',
+                                  hintStyle: TextStyle(height: 0.7)),
 
                               validator: Validators.compose([
                                 Validators.required('Name is required'),
@@ -113,11 +115,11 @@ class _State extends State<SettingUnivPage> {
                           ),
                           Container(
                             // 회원가입 조건 하나라도 누락 시 색 죽은색/ 조건 무두 완료시 빨
-                            height: 50,
-                            width: 80,
+                            height: MediaQuery.of(context).size.width * 0.12,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             decoration: BoxDecoration(
                                 color: Color(0xffff375c),
-                                borderRadius: BorderRadius.circular(10)),
+                                borderRadius: BorderRadius.circular(5)),
                             child: FlatButton(
                               onPressed: () {
                                 // print(univController.text);
@@ -215,9 +217,8 @@ class _State extends State<SettingUnivPage> {
               Container( //다음 버튼
                 padding: EdgeInsets.only(bottom: 20),
                 child: Container(
-                  // padding: EdgeInsets.only(bottom: 10),
-                  height: 50,
-                  width: 350,
+                  height: MediaQuery.of(context).size.width * 0.14,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   decoration: BoxDecoration(
                       color: Color(0xffff375c),
                       borderRadius: BorderRadius.circular(10)),

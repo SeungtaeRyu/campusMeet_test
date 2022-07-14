@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/widgets/terms_Widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,8 @@ class _State extends State<TermsPage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                            width: 380,
-                            height: 90,
+                            height: MediaQuery.of(context).size.width * 0.18,
+                            width: MediaQuery.of(context).size.width * 0.9,
                             // alignment: Alignment(-1.0, 0.0),
                             margin: EdgeInsets.only(right: 1, bottom: 10, top: 10),
                             child: Text(
@@ -81,8 +82,9 @@ class _State extends State<TermsPage> {
                         Container(
                           margin:
                           EdgeInsets.only(top: 10, right: 7, left: 7, bottom: 10),
-                          height: 1,
-                          width: 355,
+                          height: MediaQuery.of(context).size.width * 0.002,
+                          width: MediaQuery.of(context).size.width * 1,
+
                           color: Colors.grey,
                         ),
                         Row(
@@ -97,22 +99,25 @@ class _State extends State<TermsPage> {
                                 child: Image.asset('asset/disagree.png'),
                               ),
                             ),
+                            TermText("이용약관 동의"),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 10),
+                            //   height: 30,
+                            //   width: 85,
+                            //   child: Text(
+                            //     '이용약관 동의',
+                            //     style: TextStyle(
+                            //         color: Colors.black,
+                            //         fontWeight: FontWeight.w500,
+                            //         fontSize: 15),
+                            //   ),
+                            // ),
                             Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 85,
-                              child: Text(
-                                '이용약관 동의',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 200,
+                              // color: Colors.red,
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.52,
+
                               child: Text(
                                 '(필수)',
                                 style: TextStyle(
@@ -122,9 +127,10 @@ class _State extends State<TermsPage> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 10,
+                              // color: Colors.red,
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.05,
+                              width: MediaQuery.of(context).size.width * 0.05,
                               child: Text( //아이콘으로 바꿔
                                 '>',
                                 style: TextStyle(
@@ -151,9 +157,10 @@ class _State extends State<TermsPage> {
                             ),
 
                             Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 145,
+                              color: Colors.red,
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.38,
                               child: Text(
                                 '개인정보 수집.이용 동의',
                                 style: TextStyle(
@@ -202,9 +209,10 @@ class _State extends State<TermsPage> {
                             ),
 
                             Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 180,
+                              // color: Colors.blue,
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.45,
                               child: Text(
                                 'SNS / 이메일 정보 수신 동의',
                                 style: TextStyle(
@@ -214,9 +222,10 @@ class _State extends State<TermsPage> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 105,
+                              color: Colors.red,
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.1,
                               child: Text(
                                 '(선택)',
                                 style: TextStyle(
