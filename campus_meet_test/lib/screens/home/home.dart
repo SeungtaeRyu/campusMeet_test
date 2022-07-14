@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
+import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
+import 'package:campus_meet_test/widgets/render_post_widget.dart';
 import 'package:flutter/material.dart';
 import 'homeFilter.dart';
 import 'homeMeetingRequest.dart';
@@ -17,6 +19,78 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Post> posts = [
+    Post.fromJson({
+      "id": 0,
+      "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
+      "writer": {
+        "id": 0,
+        "univ": "명지대학교",
+        "entryYear": 20,
+        "name": "홍길동",
+        "profileImages": ["http://hostaddress/path"]
+      },
+      "title": "방학 3일남은 한량들입니다",
+      "createdAt": "2020-02-11 13:01:12",
+      "updatedAt": "2020-02-11 13:01:12",
+      "numOfMember": 3,
+      "tags": [
+        {"id": 0, "text": "얼굴천재"},
+        {"id": 1, "text": "마네킹비율"},
+        {"id": 2, "text": "보기보다 동안"},
+        {"id": 3, "text": "나름 귀여울지도"},
+        {"id": 4, "text": "사람 냄새나는 스타일"},
+      ],
+      "members": "http://localhost:3000/api/v1/post/0/member"
+    }),
+    Post.fromJson({
+      "id": 0,
+      "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
+      "writer": {
+        "id": 0,
+        "univ": "명지대학교",
+        "entryYear": 20,
+        "name": "홍길동",
+        "profileImages": ["http://hostaddress/path"]
+      },
+      "title": "방학 3일남은 한량들입니다",
+      "createdAt": "2020-02-11 13:01:12",
+      "updatedAt": "2020-02-11 13:01:12",
+      "numOfMember": 3,
+      "tags": [
+        {"id": 0, "text": "얼굴천재"},
+        {"id": 1, "text": "마네킹비율"},
+        {"id": 2, "text": "보기보다 동안"},
+        {"id": 3, "text": "나름 귀여울지도"},
+        {"id": 4, "text": "사람 냄새나는 스타일"},
+      ],
+      "members": "http://localhost:3000/api/v1/post/0/member"
+    }),
+    Post.fromJson({
+      "id": 0,
+      "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
+      "writer": {
+        "id": 0,
+        "univ": "명지대학교",
+        "entryYear": 20,
+        "name": "홍길동",
+        "profileImages": ["http://hostaddress/path"]
+      },
+      "title": "방학 3일남은 한량들입니다",
+      "createdAt": "2020-02-11 13:01:12",
+      "updatedAt": "2020-02-11 13:01:12",
+      "numOfMember": 3,
+      "tags": [
+        {"id": 0, "text": "얼굴천재"},
+        {"id": 1, "text": "마네킹비율"},
+        {"id": 2, "text": "보기보다 동안"},
+        {"id": 3, "text": "나름 귀여울지도"},
+        {"id": 4, "text": "사람 냄새나는 스타일"},
+      ],
+      "members": "http://localhost:3000/api/v1/post/0/member"
+    })
+  ];
+
   List<MeetingPost> meetingPosts = [
     MeetingPost.fromMap({
       'id': 1,
@@ -178,14 +252,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // 게시글 읽기
+          // 모델 수정, widget 분리 후
           Expanded(
             child: ListView.builder(
-              itemCount: meetingPosts.length,
+              itemCount: posts.length,
               itemBuilder: (context, index) {
-                return renderMeetingPost(index);
+                return RenderPost(post: posts[index]);
               },
             ),
           ),
+
+          // 모델 수정 전, widget 분리 전
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: meetingPosts.length,
+          //     itemBuilder: (context, index) {
+          //       return renderMeetingPost(index);
+          //     },
+          //   ),
+          // ),
         ],
       ),
 

@@ -1,4 +1,5 @@
 import 'package:campus_meet_test/models/Auth/SiginIn_model.dart';
+import 'package:campus_meet_test/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -154,9 +155,23 @@ class _State extends State<SignInPage> {
                     onPressed: () {
                       //print(nameController.text);
                       //print(passwordController.text);
+
                       isLogined = true;
                       // requestLogIn(
                       //     emailController.text, passwordController.text);
+
+                      requestLogIn(
+                          emailController.text, passwordController.text);
+                      isLogined = true;
+                      MaterialPageRoute(builder: (context) => HomeScreen());
+                      // if (formkey.currentState!.validate()) {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (_) => MyApp()));
+                      //   print("Validated"); // 사용자 정보 맞았을때 넘어가야하는데
+                      //                       //지금은 구현 못하는게 맞는지? 일단 했다 치고
+                      // } else {
+                      //   print("Not Validated");
+                      // }
 
                     },
                     child: Text(

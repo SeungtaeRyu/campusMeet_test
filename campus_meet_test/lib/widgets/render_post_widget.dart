@@ -1,0 +1,80 @@
+import 'package:campus_meet_test/common/custom_icons_icons.dart';
+import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
+import 'package:flutter/material.dart';
+
+class RenderPost extends StatefulWidget {
+  const RenderPost({Key? key, required this.post}) : super(key: key);
+  final Post post;
+
+  @override
+  _RenderPostState createState() => _RenderPostState();
+}
+
+class _RenderPostState extends State<RenderPost> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            offset: const Offset(5, 5),
+            blurRadius: 5.0,
+          )
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.post.title,
+            style: TextStyle(fontSize: 16),
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 5)),
+          Text(
+            "${widget.post.location.cityStateName} ${widget.post.location.cityCountryName} · ${widget.post.createdAt}",
+            style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 20)),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: <Widget>[
+              for (int i = 0; i < widget.post.tags.length; i++)
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade200,
+                  ),
+                  child: Text("${widget.post.tags[i].text} "),
+                ),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 20)),
+          Row(
+            children: [
+              Text(
+                "${widget.post.writer.univ} ${widget.post.writer.entryYear}학번 ${widget.post.writer.name} ",
+                style: TextStyle(fontSize: 14),
+              ),
+              Icon(
+                CustomIcons.my_page,
+                size: 14,
+                color: Colors.pink,
+              ),
+              Text(
+                "${widget.post.numOfMember}",
+                style: TextStyle(color: Colors.pink),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

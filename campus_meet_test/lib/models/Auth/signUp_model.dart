@@ -17,6 +17,16 @@ class SignUp {
   DateTime birthDate; //DateTime맞나?
   String sex;
 
+  factory SignUp.fromJson(Map<String, dynamic> json) => SignUp(
+    email: json["email"],
+    name: json["name"],
+    entryYear: json["entryYear"],
+    nickName: json["nickName"],
+    pwd: json["pwd"],
+    birthDate: json["birthDate"],
+    sex: json["sex"],
+  );
+
   Map<String, dynamic> toJson() => {
     "email": email,
     "name": name,

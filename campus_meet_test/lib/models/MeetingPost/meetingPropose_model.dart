@@ -17,12 +17,12 @@ class MeetingPropose {
   String appealText;
   String createdAt;
 
-  // factory MeetingPropose.fromJson(Map<String, dynamic> json) => MeetingPropose(
-  //   id: json["id"],
-  //   post: json["post"],
-  //   appealText: json["appealText"],
-  //   createdAt: json["createdAt"],
-  // );
+  factory MeetingPropose.fromJson(Map<String, dynamic> json) => MeetingPropose(
+    id: json["id"],
+    post: json["post"],
+    appealText: json["appealText"],
+    createdAt: json["createdAt"],
+  );
 
   Map<String, dynamic> toJson() => {
     "id": id,

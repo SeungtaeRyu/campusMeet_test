@@ -4,8 +4,8 @@
 import '../Location/oneLocation_model.dart';
 import '../Tag/oneTag_model.dart';
 
-class PostGet {
-  PostGet({
+class Post {
+  Post({
     required this.id,
     required this.location,
     required this.writer,
@@ -29,7 +29,7 @@ class PostGet {
   String members; // 자료형이 달라서 grt post 분리했음..?
   //채팅방url
 
-  factory PostGet.fromJson(Map<String, dynamic> json) => PostGet(
+  factory Post.fromJson(Map<String, dynamic> json) => Post(
     id: json["id"],
     location: Location.fromJson(json["location"]),
     writer: Writer.fromJson(json["writer"]),
