@@ -2,15 +2,16 @@ import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
 import 'package:flutter/material.dart';
 
-class RenderPost extends StatefulWidget {
-  const RenderPost({Key? key, required this.post}) : super(key: key);
+class RenderPostCard extends StatefulWidget {
+  const RenderPostCard({Key? key, required this.post, required this.currentPage}) : super(key: key);
   final Post post;
+  final String currentPage;
 
   @override
   _RenderPostState createState() => _RenderPostState();
 }
 
-class _RenderPostState extends State<RenderPost> {
+class _RenderPostState extends State<RenderPostCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
