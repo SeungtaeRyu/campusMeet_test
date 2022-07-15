@@ -7,8 +7,8 @@ class Universities {
 
   List<University> universities;
 
-  factory Universities.fromJson(Map<String, dynamic> json) => Universities(
-    universities: List<University>.from(json["universities"].map((x) => University.fromJson(x))),
+  factory Universities.fromJson(json) => Universities(
+    universities: List<University>.from(json.map((x) => University.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {

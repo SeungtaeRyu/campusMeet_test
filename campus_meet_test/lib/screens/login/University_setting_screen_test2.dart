@@ -22,26 +22,28 @@ class _State extends State<SettingUnivPage> {
   TextEditingController univController = TextEditingController();
 
   //List<String> univ_addressList = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대"];
-  List<Map> Universities = [
-    {
-      "id": 0,
-      "name": "명지대 인문캠퍼스",
-      "domainAddress": "www.mju.ac.kr",
-      "address": "서울특별시 서대문구 거북골로34"
-    },
-    {
-      "id": 1,
-      "name": "명지대 자연캠퍼스",
-      "domainAddress": "www.mju.ac.kr",
-      "address": "경기도 용인시 처인구 남동 명지로 116"
-    },
-    {
-      "id": 2,
-      "name": "단국대",
-      "domainAddress": "www.단국.ac.kr",
-      "address": "단국대주소"
-    }
-  ];
+  Universities universities =
+  Universities.fromJson( [
+        {
+          "id": 0,
+          "name": "명지대 인문캠퍼스",
+          "domainAddress": "www.mju.ac.kr",
+          "address": "서울특별시 서대문구 거북골로34"
+        },
+        {
+          "id": 1,
+          "name": "명지대 자연캠퍼스",
+          "domainAddress": "www.mju.ac.kr",
+          "address": "경기도 용인시 처인구 남동 명지로 116"
+        },
+        {
+          "id": 2,
+          "name": "단국대",
+          "domainAddress": "www.단국.ac.kr",
+          "address": "단국대주소"
+        }
+      ]) ;
+  // universities.fromJson(jsonDecode(universitiesFromJson));
 
   // String name = Universities.get(0).get("name").toString();
 // //리스트
@@ -155,12 +157,12 @@ class _State extends State<SettingUnivPage> {
                                 borderRadius: BorderRadius.circular(5)),
                             child: FlatButton(
                               onPressed: () {
-                                var values = Universities.contains(univController.text);
+
                                 // print("input한 학교 잘 나오니?");
                                 // print(values);
                                 print(univController.text);
-                                print(Universities);
-                                print(Universities.length);
+                                print(universities);
+                                // print(Universities.length);
 
                                 search_univ_result = [];
                                 search_univ = [];
@@ -169,12 +171,13 @@ class _State extends State<SettingUnivPage> {
                                 univList = [];
                                 univ_url = [];
                                 // Map result = Universities.stream().filter(x -> x.get("name").equals("명지대")).findAny().get();
-                                for (int i = 0; i < Universities.length; i++) {
-                                  var listValues =
-                                      Universities[i].values.toList();
-                                  univList.add(Universities[i]['name']);
-                                  univ_url.add(Universities[i]['address']);
-                                }
+                                // for (int i = 0; i < Universities.length; i++) {
+                                //   var univList = Universities[i]["name"].contains(univController.text);
+                                //   // var listValues =
+                                //   //     Universities[i].values.toList();
+                                //   // univList.add(Universities[i]['name']);
+                                //   // univ_url.add(Universities[i]['address']);
+                                // }
                                 print("univList : $univList");
                                 print(univ_url);
 
