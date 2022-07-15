@@ -89,7 +89,7 @@ class _State extends State<TermsPage> {
                         ),
                         Row(
                           children: [
-                            SizedBox(
+                            SizedBox( //안쓰는게 좋을듯! icon으로받을거
                               width: 40,
                               height: 40,
                               // width: double.infinity, // <-- match_parent
@@ -99,7 +99,7 @@ class _State extends State<TermsPage> {
                                 child: Image.asset('asset/disagree.png'),
                               ),
                             ),
-                            TermText("이용약관 동의"),
+                            TermText(content: '이용약관 동의'),
                             // Container(
                             //   margin: EdgeInsets.only(top: 10),
                             //   height: 30,

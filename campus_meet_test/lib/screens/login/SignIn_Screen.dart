@@ -5,6 +5,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import '../../main.dart';
 import 'University_setting_screen_test.dart';
+import 'University_setting_screen_test2.dart';
 import 'findPassword_screen.dart';
 import 'University_setting_screen.dart';
 import 'package:http/http.dart' as http;
@@ -156,14 +157,14 @@ class _State extends State<SignInPage> {
                       //print(nameController.text);
                       //print(passwordController.text);
 
-                      isLogined = true;
+                      // isLogined = true;
                       // requestLogIn(
                       //     emailController.text, passwordController.text);
 
                       requestLogIn(
                           emailController.text, passwordController.text);
                       isLogined = true;
-                      MaterialPageRoute(builder: (context) => HomeScreen());
+                      MaterialPageRoute(builder: (context) => const HomeScreen());
                       // if (formkey.currentState!.validate()) {
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (_) => MyApp()));
