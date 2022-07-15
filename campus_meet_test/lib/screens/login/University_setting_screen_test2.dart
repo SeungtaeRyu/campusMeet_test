@@ -23,7 +23,8 @@ class _State extends State<SettingUnivPage> {
 
   //List<String> univ_addressList = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대"];
   Universities universities =
-  Universities.fromJson( [
+  Universities.fromJson(
+      [
         {
           "id": 0,
           "name": "명지대 인문캠퍼스",
@@ -42,7 +43,8 @@ class _State extends State<SettingUnivPage> {
           "domainAddress": "www.단국.ac.kr",
           "address": "단국대주소"
         }
-      ]) ;
+      ]
+  );
   // universities.fromJson(jsonDecode(universitiesFromJson));
 
   // String name = Universities.get(0).get("name").toString();
@@ -161,7 +163,7 @@ class _State extends State<SettingUnivPage> {
                                 // print("input한 학교 잘 나오니?");
                                 // print(values);
                                 print(univController.text);
-                                print(universities);
+                                print(Universities);
                                 // print(Universities.length);
 
                                 search_univ_result = [];
