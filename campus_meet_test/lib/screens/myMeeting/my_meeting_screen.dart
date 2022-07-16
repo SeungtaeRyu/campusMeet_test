@@ -1,7 +1,8 @@
 import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/screens/home/homeWriting.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:flutter/material.dart';
-
+import 'package:campus_meet_test/screens/home/home.dart';
 import 'check_my_writing.dart';
 
 // 페이지 2분할
@@ -76,7 +77,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
               Container(
 //                여기가 위 컨텐츠
-                child: noMeetingMyPropose(), // 위
+                child: noMeetingPropose(), // 위
 //                 child: existRequestMeeting(),
               )
             ],
@@ -92,8 +93,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           // color: Colors.,
           child: myMeeting
               ? BmeetingPropose
-                  ? existRequestMeeting()
-                  : noMeetingPropose()
+                  ? noMeetingPost()
+                  : noMeetingPost()
               : noMeetingPost(),
         ),
       ],
@@ -109,11 +110,11 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           children: [
             // 내가 신청한 미팅이 없을때
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 30.0),
               child: Center(
                 child: Container(
-                    width: 63,
-                    height: 63,
+                    width: MediaQuery.of(context).size.width * 0.90,
+                    height: MediaQuery.of(context).size.width * 0.19,
                     child: Image.asset('images/하트비행기.png')),
               ), //캠퍼스밋이미지가져와
             ),
@@ -133,17 +134,24 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             )),
             Container(
               // color:const Color(0xffffe7eb),
-              width: 229,
-              height: 38,
+              width: MediaQuery.of(context).size.width * 0.60,
+              height: MediaQuery.of(context).size.width * 0.1,
               decoration: BoxDecoration(
                   color: Color(0xffffe7eb),
                   borderRadius: BorderRadius.circular(5)),
               margin: EdgeInsets.only(top: 20),
               alignment: Alignment(0.0, 0.0),
-              child: Text(
-                '미팅 글 살펴보러 가기',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+              child: FlatButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
+                child: Text(
+                  '미팅 글 살펴보러 가기',
+                  style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+                ),
               ),
             )
           ],
@@ -189,18 +197,26 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           style: TextStyle(color: Colors.black, fontSize: 13),
         )),
         Container(
-            width: 229,
-            height: 38,
-            decoration: BoxDecoration(
-                color: Color(0xffffe7eb),
-                borderRadius: BorderRadius.circular(5)),
-            margin: EdgeInsets.only(top: 20),
-            alignment: Alignment(0.0, 0.0),
+          height: MediaQuery.of(context).size.width * 0.1,
+          width: MediaQuery.of(context).size.width * 0.6,
+          decoration: BoxDecoration(
+              color: Color(0xffffe7eb), borderRadius: BorderRadius.circular(5)),
+          margin: EdgeInsets.only(top: 20),
+          alignment: Alignment(0.0, 0.0),
+          child: FlatButton(
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => checkMyWritingScreen()),
+              );
+            },
             child: Text(
               '내가 쓴 미팅 글 확인하기',
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xffff375c), fontSize: 13),
-            )),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -226,8 +242,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             padding: const EdgeInsets.only(top: 60.0),
             child: Center(
               child: Container(
-                  width: 63,
-                  height: 63,
+                  height: MediaQuery.of(context).size.width * 0.18,
+                  width: MediaQuery.of(context).size.width * 0.18,
                   color: Colors.grey,
                   child: Image.asset('images/미작성아이콘.png')),
             ), //캠퍼스밋이미지가져와
@@ -247,16 +263,23 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           style: TextStyle(color: Colors.black, fontSize: 14),
         )),
         Container(
-          width: 229,
-          height: 38,
+          height: MediaQuery.of(context).size.width * 0.1,
+          width: MediaQuery.of(context).size.width * 0.6,
           decoration: BoxDecoration(
               color: Color(0xffffe7eb), borderRadius: BorderRadius.circular(5)),
           margin: EdgeInsets.only(top: 20),
           alignment: Alignment(0.0, 0.0),
-          child: Text(
-            '미팅 글 작성하러 가기',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+          child: FlatButton(
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WritingScreen()),
+              );
+            },
+            child: Text(
+              '미팅 글 작성하러 가기',
+              style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+            ),
           ),
         )
       ],
@@ -273,12 +296,12 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             children: [
               Container(
                   child: Text(
-                    '받은 미팅 신청',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
-                  )),
+                '받은 미팅 신청',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18),
+              )),
               Container(
                 child: Row(
                   children: [
@@ -294,21 +317,21 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                     //여기 눌리면 내가 쓴 글 페이지로 넘어가
                     SizedBox(
                         child: IconButton(
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
-                          icon: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Color(0xffff375c),
-                            size: 17,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => checkMyWritingScreen()),
-                            );
-                          },
-                        )),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xffff375c),
+                        size: 17,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => checkMyWritingScreen()),
+                        );
+                      },
+                    )),
                   ],
                 ),
               ),
@@ -379,21 +402,21 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                           child: Stack(
                               children: List.generate(
                                   proposer.length,
-                                      (index) => Positioned(
-                                    left: index * 35, //!!!!!!!!
-                                    child: new CircleAvatar(
-                                      radius: 25,
-                                      backgroundColor: Colors.white,
-                                      child: new CircleAvatar(
-                                        radius: 23,
-                                        backgroundColor: Colors.pink,
-                                      ),
-                                    ),
-                                  ))),
+                                  (index) => Positioned(
+                                        left: index * 35, //!!!!!!!!
+                                        child: new CircleAvatar(
+                                          radius: 25,
+                                          backgroundColor: Colors.white,
+                                          child: new CircleAvatar(
+                                            radius: 23,
+                                            backgroundColor: Colors.pink,
+                                          ),
+                                        ),
+                                      ))),
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            // color:Colors.grey ,
+                              // color:Colors.grey ,
                               border: Border(
                                   bottom: BorderSide(
                                       color: index + 1 == meetingPropose.length
@@ -410,5 +433,3 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     );
   }
 }
-
-

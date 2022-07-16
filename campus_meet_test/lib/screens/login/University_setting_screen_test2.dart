@@ -21,30 +21,30 @@ class SettingUnivPage extends StatefulWidget {
 class _State extends State<SettingUnivPage> {
   TextEditingController univController = TextEditingController();
 
-  //List<String> univ_addressList = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대"];
-  // Universities universities =
-  // Universities.fromJson(
-  //     [
-  //       {
-  //         "id": 0,
-  //         "name": "명지대 인문캠퍼스",
-  //         "domainAddress": "www.mju.ac.kr",
-  //         "address": "서울특별시 서대문구 거북골로34"
-  //       },
-  //       {
-  //         "id": 1,
-  //         "name": "명지대 자연캠퍼스",
-  //         "domainAddress": "www.mju.ac.kr",
-  //         "address": "경기도 용인시 처인구 남동 명지로 116"
-  //       },
-  //       {
-  //         "id": 2,
-  //         "name": "단국대",
-  //         "domainAddress": "www.단국.ac.kr",
-  //         "address": "단국대주소"
-  //       }
-  //     ]
-  // );
+ // List<String> univ_addressList = ['명지대 인문캠퍼스', "명지대 자연캠퍼스", "단국대", "용인대"];
+ //  University university =
+ //  University.fromJson(
+ //      [
+ //        {
+ //          "id": 0,
+ //          "name": "명지대 인문캠퍼스",
+ //          "domainAddress": "www.mju.ac.kr",
+ //          "address": "서울특별시 서대문구 거북골로34"
+ //        },
+ //        {
+ //          "id": 1,
+ //          "name": "명지대 자연캠퍼스",
+ //          "domainAddress": "www.mju.ac.kr",
+ //          "address": "경기도 용인시 처인구 남동 명지로 116"
+ //        },
+ //        {
+ //          "id": 2,
+ //          "name": "단국대",
+ //          "domainAddress": "www.단국.ac.kr",
+ //          "address": "단국대주소"
+ //        }
+ //      ]
+ //  );
   // universities.fromJson(jsonDecode(universitiesFromJson));
 
   // String name = Universities.get(0).get("name").toString();
