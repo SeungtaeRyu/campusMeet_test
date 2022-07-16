@@ -1,6 +1,6 @@
 import 'dart:convert';
 // import 'package:campus_meet_test/models/University/allUniv_model.dart';
-import 'package:campus_meet_test/models/University/oneUniv_model.dart';
+import 'package:campus_meet_test/models/University/univ_model.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/routes.dart';
 import 'package:flutter/services.dart';

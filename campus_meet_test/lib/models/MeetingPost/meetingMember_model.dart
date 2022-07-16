@@ -1,22 +1,5 @@
-
 class MeetingMember {
   MeetingMember({
-    required this.members,
-  });
-
-  List<Member> members;
-
-  factory MeetingMember.fromJson(Map<String, dynamic> json) => MeetingMember(
-    members: List<Member>.from(json["members"].map((x) => Member.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "members": List<dynamic>.from(members.map((x) => x.toJson())),
-  };
-}
-
-class Member {
-  Member({
     required this.id,
     required this.univ,
     required this.entryYear,
@@ -30,7 +13,7 @@ class Member {
   String name;
   List<String> profileImages;
 
-  factory Member.fromJson(Map<String, dynamic> json) => Member(
+  factory MeetingMember.fromJson(Map<String, dynamic> json) => MeetingMember(
     id: json["id"],
     univ: json["univ"],
     entryYear: json["entryYear"],

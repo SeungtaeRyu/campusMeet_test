@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/Post_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';

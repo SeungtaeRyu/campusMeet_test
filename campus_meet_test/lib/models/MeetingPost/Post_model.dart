@@ -1,8 +1,8 @@
 //meetingPost도 이거 쓰기로 했음
 //modifyPost도 이거 쓴다
 // 수정사항 있다!!!!!!!!!!!!!!!
-import '../Location/oneLocation_model.dart';
-import '../Tag/oneTag_model.dart';
+import '../Location/location_model.dart';
+import 'tag_model.dart';
 
 class Post {
   Post({

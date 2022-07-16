@@ -290,7 +290,7 @@ Widget renderMeetingPost(MeetingPostTest post) {
         // post.location.cityStateName // post.location.cityCountryName // post.createAt 출력 예정
 
         Text(
-          "지역 : ${post.location.city} · n분전{createAt}",
+          "지역 : ${post.location.cityStateName} · n분전{createAt}",
           style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
         ),
         Padding(padding: EdgeInsets.only(bottom: 20)),

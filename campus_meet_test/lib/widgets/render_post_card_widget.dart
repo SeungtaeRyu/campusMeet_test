@@ -1,5 +1,5 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/models/MeetingPost/onePost_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/Post_model.dart';
 import 'package:flutter/material.dart';
 
 class RenderPostCard extends StatefulWidget {
