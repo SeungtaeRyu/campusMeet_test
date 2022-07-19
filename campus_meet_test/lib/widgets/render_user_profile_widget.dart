@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/models/user_model.dart';
+import 'package:campus_meet_test/models/User/user_model.dart';
 import 'package:flutter/material.dart';
 
 class RenderUserProfileInfo extends StatelessWidget {
@@ -21,7 +21,7 @@ class RenderUserProfileInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _renderTextType1('학교'),
-                _renderTextType2('${user.university} ${user.studentId}학번'),
+                _renderTextType2('${user.univ} ${user.entryYear}학번'),
               ],
             ),
           ),
@@ -35,7 +35,7 @@ class RenderUserProfileInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _renderTextType1('생일'),
-                _renderTextType2(user.birthday),
+                _renderTextType2(user.birthDate.toString()),
               ],
             ),
           ),
@@ -52,7 +52,7 @@ class RenderUserProfileInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _renderTextType1('한줄 자기소개'),
-                    _renderTextType2(user.introduction),
+                    _renderTextType2(user.introText),
                   ],
                 ),
                 _renderArrowIcon(),

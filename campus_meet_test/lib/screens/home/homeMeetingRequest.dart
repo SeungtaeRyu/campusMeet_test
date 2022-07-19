@@ -1,17 +1,22 @@
-import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:flutter/material.dart';
 
 import 'homeMeetingRequest2.dart';
 
 class MeetingRequest extends StatefulWidget {
-  const MeetingRequest({Key? key, required this.data}) : super(key: key);
-  final MeetingPost data;
+  const MeetingRequest({Key? key, required this.post}) : super(key: key);
+  final Post post;
 
   @override
   _MeetingRequestState createState() => _MeetingRequestState();
 }
 
 class _MeetingRequestState extends State<MeetingRequest> {
+  // late Future<List<User>> myFriend;
+
+
+
+
   List<String> friendName = [
     "도진",
     "해수",
@@ -48,6 +53,8 @@ class _MeetingRequestState extends State<MeetingRequest> {
     for (var i = 0; i < friendName.length; i++) {
       selected.add(false);
     }
+
+    // myFriend = getMyFriend()
   }
 
   @override
@@ -71,7 +78,7 @@ class _MeetingRequestState extends State<MeetingRequest> {
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
                   onPressed: () {
-                    if(selectedFriendName.length + 1 == widget.data.numMember) {
+                    if(selectedFriendName.length + 1 == widget.post.numOfMember) {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => MeetingRequest2(memberData: selectedFriendName)));
                     }
                   },
@@ -206,7 +213,7 @@ class _MeetingRequestState extends State<MeetingRequest> {
                               }
 
                               // 5명째에는 동작하지 않음
-                              if(count == widget.data.numMember-1 && !selected[index]){
+                              if(count == widget.post.numOfMember-1 && !selected[index]){
                               } else {
                                 setState(() {
                                   if (!selected[index]) {
