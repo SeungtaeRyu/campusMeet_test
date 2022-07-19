@@ -1,7 +1,8 @@
 import 'package:campus_meet_test/Controller/meetingPostController.dart';
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/models/MeetingPost/Post_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/meetingMember_model.dart';
+import 'package:campus_meet_test/screens/home/homeMeetingRequest.dart';
 import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -123,6 +124,8 @@ class _RenderPostState extends State<RenderPostCard> {
                         decoration: BoxDecoration(border: Border(bottom: BorderSide(color: snapshot.data!.length == index + 1 ? Colors.white : Colors.grey.shade300))),
                         child: Row(
                           children: [
+
+                            // 상대방 프로필 써클 이미지
                             Container(
                               padding: EdgeInsets.only(right: 10),
                               child: CircleAvatar(
@@ -133,6 +136,8 @@ class _RenderPostState extends State<RenderPostCard> {
                                   backgroundColor: Colors.pink,
                                   child: Align(
                                     alignment: Alignment.bottomRight,
+
+                                    // 이 부분은 접속 여부인데 삭제될 수도?
                                     child: CircleAvatar(
                                       radius: 5,
                                       backgroundColor: Colors.grey.shade500,
@@ -141,6 +146,8 @@ class _RenderPostState extends State<RenderPostCard> {
                                 ),
                               ),
                             ),
+
+                            // 이름, 대학교, 학번 렌더링
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,6 +166,9 @@ class _RenderPostState extends State<RenderPostCard> {
                                 ],
                               ),
                             ),
+
+
+                            // 상대방 프로필 상세보기
                             Container(
                               child: IconButton(
                                 padding: EdgeInsets.zero, // 아이콘 패딩 설정
@@ -192,35 +202,33 @@ class _RenderPostState extends State<RenderPostCard> {
         ],
       ),
       actions: <Widget>[
-        // 홈, 필터에서 부를 시
-
-        // Container(
-        //   color: Colors.white,
-        //   height: 30,
-        //   // padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       OutlinedButton(
-        //         onPressed: () {
-        //           Navigator.push(
-        //             context,
-        //             MaterialPageRoute(builder: (context) => MeetingRequest(data: meetingPosts[index])),
-        //           );
-        //         },
-        //         style: OutlinedButton.styleFrom(
-        //             shape: RoundedRectangleBorder(
-        //               borderRadius: BorderRadius.circular(20),
-        //             ),
-        //             side: BorderSide(color: Colors.pink)),
-        //         child: Text(
-        //           " 미팅 신청 ",
-        //           style: TextStyle(color: Colors.pink, height: 1),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // )
+        // 미팅 신청이 가능한 게시글일 때
+        Container(
+          color: Colors.white,
+          height: 30,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MeetingRequest(post: widget.post),
+                  ));
+                },
+                style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    side: BorderSide(color: Colors.pink)),
+                child: Text(
+                  " 미팅 신청 ",
+                  style: TextStyle(color: Colors.pink, height: 1),
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
