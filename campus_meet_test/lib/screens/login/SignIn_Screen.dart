@@ -38,14 +38,14 @@ class _State extends State<SignInPage> {
 
     SignIn responseBody =
         SignIn.fromJson({'email': email, 'password': password});
-    print("email11111");
+    print(email);
     final url = Uri.parse(
       // 'http://localhost:3000/api/v1/auth/signIn',
     'https://jsonplaceholder.typicode.com/users'
     );
 
     final response = await http.post(url, body: responseBody.toJson());
-    print("email222222");
+    print(password);
 
     if (response.statusCode == 201) { //코드 201 맞는지 확인하기
       // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
