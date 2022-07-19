@@ -1,9 +1,8 @@
-import 'package:campus_meet_test/models/MeetingPost/Post_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/homeWriting.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
 import 'check_my_writing.dart';
@@ -23,6 +22,28 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   String currentPage = "home";
   List<Post> posts = [
     Post.fromJson({
+      "id": 0,
+      "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
+      "writer": {
+        "id": 0,
+        "univ": "명지대학교",
+        "entryYear": 20,
+        "name": "홍길동",
+        "profileImages": ["http://hostaddress/path"]
+      },
+      "title": "방학 3일남은 한량들입니다",
+      "createdAt": "2020-02-11 13:01:12",
+      "updatedAt": "2020-02-11 13:01:12",
+      "numOfMember": 3,
+      "tags": [
+        {"id": 0, "text": "얼굴천재"},
+        {"id": 1, "text": "마네킹비율"},
+        {"id": 2, "text": "보기보다 동안"},
+        {"id": 3, "text": "나름 귀여울지도"},
+        {"id": 4, "text": "사람 냄새나는 스타일"},
+      ],
+      "members": "http://localhost:3000/api/v1/post/0/member"
+    }), Post.fromJson({
       "id": 0,
       "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
       "writer": {
@@ -133,60 +154,41 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
       ],
     );
   }
-  final PageController controller = PageController(initialPage: 1, );
-  int _currentPage = 0;
+
+  final PageController controller = PageController(
+    initialPage: 1,
+  );
+
 //내가 신청한 미팅 있을때 위
   Widget meetingMyPropose() {
     // return Expanded(child: Container(
     return Container(
+
       margin: EdgeInsets.symmetric(vertical: 20.0),
       height: MediaQuery.of(context).size.width * 0.64,
+      child: SingleChildScrollView(
+        // scrollDirection: Axis.horizontal,
 
-      child: CarouselSlider(
-        options: CarouselOptions(height: 400.0),
-        items: List.generate(proposer.length, (index) {
-          return Container(
-            margin: EdgeInsets.only(right: 10, left: 10),
-            // width: 800.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          );
-        }),  ));
-
-    //   child: PageView(
-    //       controller: PageController(
-    //         initialPage: 0, //시작 페이지
-    //       ),
-    //       itemCount: bearList!.list!.length,
-    //       itemBuilder: (BuildContext context, int index) {
-    //         return Container(
-    //           color: Colors.blue[200],
-    //           child: Image.asset(
-    //             bearList!.list!.elementAt(index).image!,
-    //           ),  );
-    //
-    // );
-
-
-
-
-    //   PageView(
-    //     scrollDirection: Axis.vertical,
-    //     controller: controller,
-    //     children: <Widget>[
-    //       // padding: EdgeInsets.only(top: 40),
-    //        RenderPostCard(
-    //         post: posts[0],
-    //         currentPage: 'currentPage',
-    //       )],
-    //
-    // );
-    // ),
-
-    // );
+        child: SizedBox(
+          height: MediaQuery.of(context).size.width * 0.84,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.all(8),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width * 0.84,
+                  margin: EdgeInsets.only(right: 10),
+                  child:  RenderPostCard( // 이거말고 이거랑 비슷하게 다시 만들어서 넣기
+                        post: posts[index],
+                        currentPage: 'currentPage',
+                      )
+                );
+              }
+                    ),
+        )));
   }
+  
 
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {

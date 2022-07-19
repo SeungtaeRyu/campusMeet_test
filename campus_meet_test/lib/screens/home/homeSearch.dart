@@ -20,7 +20,7 @@ Future<List<MeetingPostTest>> fetchPost(String searchText) async {
     Iterable l = json.decode(response.body);
     return List<MeetingPostTest>.from(l.map((model) => MeetingPostTest.fromJson(model)));
   } else {
-    // 만약 요청이 실패하면, 에러를 던집니다.
+    // 만약 요청이 실패하면, 에러를 던집니다.fut
     throw Exception('Failed to load post');
   }
 }
