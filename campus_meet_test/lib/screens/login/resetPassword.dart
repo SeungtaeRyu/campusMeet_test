@@ -11,7 +11,6 @@ class ResetPassword extends StatefulWidget {
 class _State extends State<ResetPassword> {
   TextEditingController passwordEController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Pattern pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$';
   @override
   void initState() {
     super.initState();
@@ -88,14 +87,8 @@ class _State extends State<ResetPassword> {
                                   if (value == null || value.isEmpty) {
                                     return null;
                                   } else {
-
-                                    // RegExp regExp = new RegExp(pattern);
-                                    // if(!regExp.hasMatch(value)){
-                                    //   return '특수문자, 대소문자, 숫자 포함 8자 이상 15자 이내로 입력하세요.';
-                                    // }else{
-                                    //   return null;
-                                    // }
-
+                                    final RegExp regex = RegExp(
+                                        r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$');
                                   }
                                 },
                               ),
