@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/screens/login/resetPasswordConfirmation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
@@ -161,7 +162,7 @@ class _State extends State<ResetPassword> {
                   if (formkey.currentState!.validate() &&
                       passwordController.text == passwordEController.text) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => SignInPage()));
+                        MaterialPageRoute(builder: (_) => ResetPasswordConfirmation()));
                     print("Validated");
                   } else {
                     print("Not Validated");
