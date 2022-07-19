@@ -1,6 +1,8 @@
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
+import 'package:campus_meet_test/models/User/user_model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'homeMeetingRequest2.dart';
 
 class MeetingRequest extends StatefulWidget {
@@ -12,8 +14,28 @@ class MeetingRequest extends StatefulWidget {
 }
 
 class _MeetingRequestState extends State<MeetingRequest> {
-  // late Future<List<User>> myFriend;
+  late Future<List<User>> myFriend;
 
+  Future<List<User>> getMyFriend(int myId) async {
+
+    // 추후에 users 대신 searchText 사용하기!!
+    final response = await http.get(Uri.parse("http://localhost:3000/api/v1/users/$myId/friends"));
+
+
+    if (response.statusCode == 200) {
+      // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
+
+      // 단일 객체 일때
+      // return MeetingPostTest.fromJson(json.decode(response.body));
+
+      // 복수 객체 일때
+      Iterable l = json.decode(response.body);
+      return List<User>.from(l.map((model) => User.fromJson(model)));
+    } else {
+      // 만약 요청이 실패하면, 에러를 던집니다.
+      throw Exception('Failed to load post');
+    }
+  }
 
 
 
@@ -53,8 +75,8 @@ class _MeetingRequestState extends State<MeetingRequest> {
     for (var i = 0; i < friendName.length; i++) {
       selected.add(false);
     }
-
-    // myFriend = getMyFriend()
+    int myId = 1;
+    myFriend = getMyFriend(myId);
   }
 
   @override
@@ -92,52 +114,50 @@ class _MeetingRequestState extends State<MeetingRequest> {
 
         body: Column(
           children: [
+
+            // 이름 검색용 컨테이너
             Container(
               color: Colors.white,
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: TextFormField(
-                      cursorColor: Colors.grey,
-                      keyboardType: TextInputType.name,
-                      controller: _search,
-                      decoration: InputDecoration(
-                        hintText: "이름을 입력하세요...",
-                        fillColor: Colors.white,
-                        suffixIcon: IconButton(
-                            color: Colors.pink,
-                            icon: Icon(Icons.search),
-                            onPressed: () {}),
-                        contentPadding: EdgeInsets.only(
-                            left: 18, bottom: 5, top: 5, right: 5),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.pink,
-                            width: 1.0,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: Colors.pink,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: TextFormField(
+                cursorColor: Colors.grey,
+                keyboardType: TextInputType.name,
+                controller: _search,
+                decoration: InputDecoration(
+                  hintText: "이름을 입력하세요...",
+                  fillColor: Colors.white,
+                  suffixIcon: IconButton(
+                      color: Colors.pink,
+                      icon: Icon(Icons.search),
+                      onPressed: () {}),
+                  contentPadding: EdgeInsets.only(
+                      left: 18, bottom: 5, top: 5, right: 5),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Colors.pink,
+                      width: 1.0,
                     ),
                   ),
-                ],
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: Colors.pink,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
               ),
             ),
 
-            Container(
-                color: Colors.white,
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                alignment: Alignment.centerLeft,
-                child: selected.indexOf(true) == -1 ? SizedBox.shrink() : Container(
+
+            // 선택한 구성원 있을 시
+            Visibility(
+              visible: selected.indexOf(true) != -1,
+                child: Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   height: 100,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
