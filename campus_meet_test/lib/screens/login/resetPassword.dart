@@ -3,7 +3,6 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 
 import 'SignIn_Screen.dart';
 
-
 class ResetPassword extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
@@ -12,7 +11,7 @@ class ResetPassword extends StatefulWidget {
 class _State extends State<ResetPassword> {
   TextEditingController passwordEController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  Pattern pattern = r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$';
   @override
   void initState() {
     super.initState();
@@ -48,72 +47,110 @@ class _State extends State<ResetPassword> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        // color: Colors.grey,
-                          width: 380,
-                          height: 60,
-                          alignment: Alignment(-1.0, 0.0),
-                          padding: EdgeInsets.all(10),
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: MediaQuery.of(context).size.width * 0.15,
                           child: Text(
                             '비밀번호 재설정',
-                            //textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w800,
                                 fontSize: 22),
                           )),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        // margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "새 비밀번호 입력",
+                              style: TextStyle(
+                                  // backgroundColor: Colors.red,
+                                  color: Colors.black,
+                                  fontSize: 15),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.08,
+                              child: TextFormField(
+                                //비밀번호 조건
+                                obscureText: true,
+                                controller: passwordController,
+                                // // decoration: InputDecoration(
+                                // //     //border: OutlineInputBorder(),
+                                // //     labelText: '새 비밀번호 입력'),
+                                // validator: Validators.compose([
+                                //   Validators.required('Password is required'),
+                                //   Validators.patternString(
+                                //       r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                                //       null;)
+                                // ]),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return null;
+                                  } else {
 
-                      Container(
-                        //  color: Colors.grey,
-                          width: 380,
-                          //height: 60,
-                          //  alignment: Alignment(-1.0, 0.0),
-                          margin: EdgeInsets.only(top: 40, left: 10),
-                          child: Text(
-                            '새 비밀번호 입력',
-                            //textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Colors.black,
-                                // fontWeight: FontWeight.w500,
-                                fontSize: 14),
-                          )),
-                      Container(
-                        //  color: Colors.grey,
-                        //signin 65
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: TextFormField(
-                          //비밀번호 조건
-                          obscureText: true,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            //border: OutlineInputBorder(),
-                              labelText: 'Password'),
-                          validator: Validators.compose([
-                            Validators.required('Password is required'),
-                            Validators.patternString(
-                                r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                                '8자리이상,숫자,특수문자를 포함해주세요.')
-                          ]),
+                                    // RegExp regExp = new RegExp(pattern);
+                                    // if(!regExp.hasMatch(value)){
+                                    //   return '특수문자, 대소문자, 숫자 포함 8자 이상 15자 이내로 입력하세요.';
+                                    // }else{
+                                    //   return null;
+                                    // }
+
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
-                        //비밀번호확
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextFormField(
-                          obscureText: true,
-                          controller: passwordEController,
-                          decoration: InputDecoration(
-                            // border: OutlineInputBorder(),
-                              labelText: 'Password'),
-                          //validateEPassword:
-                          validator: (value) {
-                            //애러메세지 띄워
-                            if (value == passwordController.text) {
-                              //print("비밀번호가 일치합니다");
-                            } else {
-                              //print('비밀번호가 일치하지 않습니다벨');
-                            }
-                          },
-                        ),
+                          //  color: Colors.grey,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          //height: 60,
+                          //  alignment: Alignment(-1.0, 0.0),
+                          margin: EdgeInsets.only(top: 10, left: 10),
+                          child: Text(
+                            '- 8자 이상 입력 \n- 영문/숫자/특수문자(공백 제외)만 허용하며, 2개 이상 조합',
+                            //textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                // fontWeight: FontWeight.w500,
+                                fontSize: 12),
+                          )),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        padding: EdgeInsets.only(top: 30),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "새 비밀번호 확인",
+                                style: TextStyle(
+                                    // backgroundColor: Colors.red,
+                                    color: Colors.black,
+                                    fontSize: 15),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.width * 0.08,
+                                child: TextFormField(
+                                  obscureText: true,
+                                  controller: passwordEController,
+                                  // decoration: InputDecoration(
+                                  //     // border: OutlineInputBorder(),
+                                  //     labelText: '새 비밀번호 확인'),
+                                  //validateEPassword:
+                                  validator: (value) {
+                                    //애러메세지 띄워
+                                    if (value == passwordController.text) {
+                                      print("비밀번호가 일치합니다");
+                                    } else {
+                                      print('비밀번호가 일치하지 않습니다벨');
+                                    }
+                                  },
+                                ),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
@@ -121,11 +158,11 @@ class _State extends State<ResetPassword> {
               ),
             ),
             Container(
-              height: 50,
-              width: 250,
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.width * 0.13,
               decoration: BoxDecoration(
                   color: Color(0xffff375c),
-                  borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(10)),
               child: FlatButton(
                 onPressed: () {
                   if (formkey.currentState!.validate() &&
@@ -138,8 +175,8 @@ class _State extends State<ResetPassword> {
                   }
                 },
                 child: Text(
-                  '회원가입',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
+                  '확인',
+                  style: TextStyle(color: Colors.white, fontSize: 21),
                 ),
               ),
             ),
