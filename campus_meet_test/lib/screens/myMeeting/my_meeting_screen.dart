@@ -188,7 +188,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                     ),
         )));
   }
-  
+
 
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {

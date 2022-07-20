@@ -1,6 +1,6 @@
-import 'package:campus_meet_test/screens/login/resetPassword.dart';
+import 'package:campus_meet_test/screens/login/SignIn_Screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 
 class ResetPasswordConfirmation extends StatefulWidget {
   @override
@@ -50,13 +50,33 @@ class _State extends State<ResetPasswordConfirmation> {
             Container(
               padding: EdgeInsets.only(top: 20),
               child: Text(
-                '앱으로 돌아가 다시 로그인해주세요',
+                '다시 로그인해주세요',
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 14),
               ),
             ),
 
+            Container(
+              height: MediaQuery.of(context).size.width * 0.12,
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: EdgeInsets.only(top: 20),
+              decoration: BoxDecoration(
+                  color: Color(0xffff375c),
+                  borderRadius: BorderRadius.circular(10)),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInPage()),
+                  );
+                },
+                child: Text(
+                  '로그인 페이지로 이동',
+                  style: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+              ),
+            ),
 
           ],
         ),
