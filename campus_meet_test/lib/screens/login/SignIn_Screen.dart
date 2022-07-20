@@ -157,14 +157,10 @@ class _State extends State<SignInPage> {
                       //print(nameController.text);
                       //print(passwordController.text);
 
-                      // isLogined = true;
-                      // requestLogIn(
-                      //     emailController.text, passwordController.text);
-
+                      MaterialPageRoute(builder: (context) => const HomeScreen());
+                      isLogined = true;
                       requestLogIn(
                           emailController.text, passwordController.text);
-                      isLogined = true;
-                      MaterialPageRoute(builder: (context) => const HomeScreen());
                       // if (formkey.currentState!.validate()) {
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (_) => MyApp()));

@@ -3,6 +3,7 @@ import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/homeWriting.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
+import 'package:campus_meet_test/widgets/render_request_post_card.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
 import 'check_my_writing.dart';
@@ -19,7 +20,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   bool myMeeting = false;
   bool BmeetingPropose = false;
 
-  String currentPage = "home";
   List<Post> posts = [
     Post.fromJson({
       "id": 0,
@@ -170,18 +170,19 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
         // scrollDirection: Axis.horizontal,
 
         child: SizedBox(
-          height: MediaQuery.of(context).size.width * 0.84,
+          height: MediaQuery.of(context).size.width * 1,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(3),
               itemCount: posts.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: MediaQuery.of(context).size.width * 0.84,
-                  margin: EdgeInsets.only(right: 10),
-                  child:  RenderPostCard( // 이거말고 이거랑 비슷하게 다시 만들어서 넣기
-                        post: posts[index],
-                        currentPage: 'currentPage',
+                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  // margin: EdgeInsets.only(right: 0.9),
+                  // padding: EdgeInsets.only(right: 0),
+                  child:  RenderRequestPostCard(
+                        post: posts[index]
                       )
                 );
               }
