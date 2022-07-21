@@ -27,10 +27,11 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return InkWell(
       child: Container(
         margin: EdgeInsets.fromLTRB(9, 0, 9, 8),
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(width * 0.03),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -42,82 +43,111 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
             )
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.post.title,
-              style: TextStyle(fontSize: 16),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 5)),
-            Text(
-              "${widget.post.location.cityStateName} ${widget.post.location.cityCountryName} · ${widget.post.createdAt}",
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: <Widget>[
-                for (int i = 0; i < widget.post.tags.length; i++)
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(255, 231, 235, 1),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color.fromRGBO(255, 124, 148, 10),
                     ),
+                    height: MediaQuery.of(context).size.width * 0.058,
+                    width: MediaQuery.of(context).size.width * 0.16,
                     child: Text(
-                      "${widget.post.tags[i].text} ",
-                      style: TextStyle(color: Color.fromRGBO(255, 124, 148, 1)),
+                      '->대기중',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: width * 0.03,
+                          height: 1.9),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            Row(
-              children: [
-                Text(
-                  "${widget.post.writer.univ} ${widget.post.writer.entryYear}학번 ${widget.post.writer.name} ",
-                  style: TextStyle(fontSize: 14),
-                ),
-                Icon(
-                  CustomIcons.my_page,
-                  size: 14,
-                  color: Colors.pink,
-                ),
-                Text(
-                  "${widget.post.numOfMember}",
-                  style: TextStyle(color: Colors.pink),
-                )
-              ],
-            ),
-            Container(
-              height: MediaQuery.of(context).size.width * 0.1,
-              width: MediaQuery.of(context).size.width * 0.8,
-              margin: EdgeInsets.only(top: 20),
-              child: DottedBorder(
-                // strokeCap: StrokeCap.round,
-                dashPattern: [4, 4, 4, 4],
-                // radius: Radius.circular(30),
-                color: Color.fromRGBO(228, 228, 228, 1),
-                strokeWidth: 2,
-                child: Container(
-                  height: MediaQuery.of(context).size.width * 0.1,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: TextButton(
-                    onPressed: () {
-                      print("삭제");
-                    },
-                    child: Text(
-                      '리스트에서 삭제',
-                      style: TextStyle(
-                          color: Color.fromRGBO(255, 55, 92, 1), fontSize: 13),
+                  Padding(padding: EdgeInsets.only(right: width * 0.1)),
+                  Text(
+                    "${widget.post.location.cityStateName} ${widget.post.location.cityCountryName} · ${widget.post.createdAt}",
+                    style: TextStyle(
+                      fontSize: width * 0.028,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: width * 0.03)),
+              Text(
+                widget.post.title,
+                style: TextStyle(fontSize: width * 0.04),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: width * 0.03)),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: <Widget>[
+                  for (int i = 0; i < widget.post.tags.length; i++)
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color.fromRGBO(255, 231, 235, 1),
+                      ),
+                      child: Text(
+                        "${widget.post.tags[i].text} ",
+                        style: TextStyle(
+                            color: Color.fromRGBO(255, 124, 148, 1),
+                            fontSize: width * 0.03),
+                      ),
+                    ),
+                ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: width * 0.033)),
+              Row(
+                children: [
+                  Text(
+                    "${widget.post.writer.univ} ${widget.post.writer.entryYear}학번 ${widget.post.writer.name} ",
+                    style: TextStyle(fontSize: width * 0.03),
+                  ),
+                  Icon(
+                    CustomIcons.my_page,
+                    size: 14,
+                    color: Colors.pink,
+                  ),
+                  Text(
+                    "${widget.post.numOfMember}",
+                    style: TextStyle(color: Colors.pink),
+                  )
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.width * 0.08,
+                width: MediaQuery.of(context).size.width * 0.8,
+                margin: EdgeInsets.only(top: width * 0.03),
+                child: DottedBorder(
+                  // strokeCap: StrokeCap.round,
+                  dashPattern: [4, 4, 4, 4],
+                  // radius: Radius.circular(30),
+                  color: Color.fromRGBO(228, 228, 228, 1),
+                  strokeWidth: 2,
+                  child: Container(
+                    height: MediaQuery.of(context).size.width * 0.08,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextButton(
+                      onPressed: () {
+                        print("삭제");
+                      },
+                      child: Text(
+                        '대기 취소하기',
+                        style: TextStyle(
+                            color: Color.fromRGBO(255, 55, 92, 1),
+                            fontSize: width * 0.03),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       onTap: () {

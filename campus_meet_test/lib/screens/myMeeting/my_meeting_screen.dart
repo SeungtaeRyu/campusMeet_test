@@ -43,7 +43,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
         {"id": 4, "text": "사람 냄새나는 스타일"},
       ],
       "members": "http://localhost:3000/api/v1/post/0/member"
-    }), Post.fromJson({
+    }),
+    Post.fromJson({
       "id": 0,
       "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
       "writer": {
@@ -96,62 +97,68 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     // Color colorPink = Color(0xffe7eb);
     // print(meetingPropose.length);
     // print(proposer.length);
-    return ListView(
-      children: [
-        Container(
-          height: (MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).viewPadding.top -
-                  MediaQuery.of(context).size.width * 0.2) *
-              0.5,
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-          color: Colors.grey.shade200,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      '이름',
-                      style: TextStyle(
-                          color: Color(0xffff375c),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22),
-                    ),
-                    Text(
-                      '님의 미팅',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22),
-                    ),
-                  ],
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      body: ListView(
+        children: [
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
+                0.5,
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+            color: Colors.grey.shade200,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '이름',
+                        style: TextStyle(
+                            color: Color(0xffff375c),
+                            fontWeight: FontWeight.w700,
+                            fontSize: width * 0.059),
+                      ),
+                      Text(
+                        '님의 미팅',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: width * 0.059),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
-              Container(
+                //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
+                Container(
 //                여기가 위 컨텐츠
-                child: meetingMyPropose(), // 위
+                  child: meetingMyPropose(), // 위
 //                 child: existRequestMeeting(),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-        //아래 컨텐츠
-        Container(
-          height: (MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).viewPadding.top -
-                  MediaQuery.of(context).size.width * 0.2) *
-              0.5,
-          padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
-          // color: Colors.,
-          child: myMeeting
-              ? BmeetingPropose
-                  ? existRequestMeeting()
-                  : existRequestMeeting()
-              : existRequestMeeting(),
-        ),
-      ],
+          //아래 컨텐츠
+          Container(
+            color: Colors.white,
+            height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
+                0.5,
+            padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+            // color: Colors.,
+            child: myMeeting
+                ? BmeetingPropose
+                    ? existRequestMeeting()
+                    : existRequestMeeting()
+                : existRequestMeeting(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -162,34 +169,35 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 //내가 신청한 미팅 있을때 위
   Widget meetingMyPropose() {
     // return Expanded(child: Container(
+    double width = MediaQuery.of(context).size.width;
     return Container(
-
-      margin: EdgeInsets.symmetric(vertical: 20.0),
-      height: MediaQuery.of(context).size.width * 0.64,
-      child: SingleChildScrollView(
-        // scrollDirection: Axis.horizontal,
-
+      color: Colors.red,
+        margin: EdgeInsets.only(top: width * 0.001),
+        height: (MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
+                0.5 - width * 0.19,
+        // margin: EdgeInsets.only(top: 20.0),
+        // height: MediaQuery.of(context).size.width * 0.29, // 여기 0.64로 두면 SE에서 난감해진다
         child: SizedBox(
-          height: MediaQuery.of(context).size.width * 1,
+          // height: (MediaQuery.of(context).size.height -
+          //         MediaQuery.of(context).viewPadding.top -
+          //         MediaQuery.of(context).size.width * 0.2) *
+          //     0.5 - width * 0.05,
           child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(3),
-              itemCount: posts.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  // margin: EdgeInsets.only(right: 0.9),
-                  // padding: EdgeInsets.only(right: 0),
-                  child:  RenderRequestPostCard(
-                        post: posts[index]
-                      )
-                );
-              }
-                    ),
-        )));
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.only(top: width * 0.03, left:  width * 0.03),
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
+            return Container(
+                // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
+                width: MediaQuery.of(context).size.width * 0.85,
+                // margin: EdgeInsets.only(right: 0.9),
+                // padding: EdgeInsets.only(right: 0),
+                child: RenderRequestPostCard(post: posts[index]));
+          }),
+        ));
   }
-
 
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
