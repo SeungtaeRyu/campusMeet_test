@@ -3,6 +3,7 @@ import 'package:campus_meet_test/models/Location/Location_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/meetingMember_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 Future<List<Post>> getAllPost() async {
 
