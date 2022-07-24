@@ -1,5 +1,3 @@
-import 'package:campus_meet_test/models/Location/location_model.dart';
-
 class MeetingPostTest {
   final int id;
   final String userName;
@@ -22,16 +20,16 @@ class MeetingPostTest {
   }
 }
 
-// class Location {
-//   final String city;
-//   final String street;
-//
-//   Location({required this.city, required this.street});
-//
-//   factory Location.fromJson(Map<String, dynamic> json) {
-//     return Location(
-//       city: json['city'],
-//       street: json['street'],
-//     );
-//   }
-// }
+class Location {
+  final String cityStateName;
+  final String cityCountryName;
+
+  Location({required this.cityStateName, required this.cityCountryName});
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      cityStateName: json['city'],
+      cityCountryName: json['street'],
+    );
+  }
+}

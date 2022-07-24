@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 Future<List<MeetingPostTest>> fetchPost(String searchText) async {
 
   // 추후에 users 대신 searchText 사용하기!!
-  final response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users=${searchText}"));
+  final response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/users"));
 
   if (response.statusCode == 200) {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
@@ -18,6 +18,7 @@ Future<List<MeetingPostTest>> fetchPost(String searchText) async {
 
     // 복수 객체 일때
     Iterable l = json.decode(response.body);
+    print(l);
     return List<MeetingPostTest>.from(l.map((model) => MeetingPostTest.fromJson(model)));
   } else {
     // 만약 요청이 실패하면, 에러를 던집니다.fut

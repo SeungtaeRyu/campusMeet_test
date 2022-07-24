@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String currentPage = "home";
   List<Post> posts = [
     Post.fromJson({
-      "id": 0,
+      "id": 1,
       "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
       "writer": {
         "id": 0,
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "members": "http://localhost:3000/api/v1/post/0/member"
     }),
     Post.fromJson({
-      "id": 0,
+      "id": 2,
       "location": {"id": 0, "cityStateName": "서울", "cityCountryName": "전체"},
       "writer": {
         "id": 0,
