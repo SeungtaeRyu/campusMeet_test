@@ -6,9 +6,8 @@ import 'package:campus_meet_test/widgets/post_member_popup.dart';
 import 'package:flutter/material.dart';
 
 class RenderPostCard extends StatefulWidget {
-  const RenderPostCard({Key? key, required this.post, required this.currentPage}) : super(key: key);
+  const RenderPostCard({Key? key, required this.post}) : super(key: key);
   final Post post;
-  final String currentPage;
 
   @override
   _RenderPostState createState() => _RenderPostState();

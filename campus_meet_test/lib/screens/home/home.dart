@@ -20,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String currentPage = "home";
   List<Post> posts = [
     Post.fromJson({
       "id": 1,
@@ -259,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return RenderPostCard(post: posts[index], currentPage: 'currentPage',);
+                return RenderPostCard(post: posts[index]);
               },
             ),
           ),
