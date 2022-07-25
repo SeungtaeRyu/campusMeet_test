@@ -8,7 +8,6 @@ class TermText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
       margin: EdgeInsets.only(top: 5),
       height: MediaQuery.of(context).size.width * 0.07,
       width: MediaQuery.of(context).size.width * 0.38,

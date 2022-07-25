@@ -1,5 +1,6 @@
 import 'package:campus_meet_test/models/Auth/SiginIn_model.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
+import 'package:campus_meet_test/screens/login/terms%20_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -201,7 +202,27 @@ class _State extends State<SignInPage> {
                           },
                         )
                       ],
-                    ))
+                    )),
+                Container(
+                   child: TextButton(
+                      //textColor: Colors.pinkAccent,
+                      child: Text(
+                        'terms',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TermsPage()),
+                        );
+                        //SignUpScreen
+                        //요기서 화면 바 SettingUnivPage() RadioApp() DropDown()
+                        //signup screen
+                      },
+                    )
+                )
+
               ],
             )),
       ),

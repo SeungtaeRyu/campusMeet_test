@@ -51,47 +51,75 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                                alignment:
-                                    Alignment(-0.8, -1.0), //x축이 안먹히는 이유는?!?!?
-                                // // insetPadding: EdgeInsets.only(bottom: 1520),
-                                insetPadding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.3),
-                                // actionsPadding: EdgeInsets.only(bottom: 10),
-                                contentPadding: EdgeInsets.zero,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                content: Wrap(children: [
-                                  Column(
-                                    children: [
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle:
-                                              const TextStyle(fontSize: 20),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ReviseScreen()),
-                                          );
-                                        },
-                                        child: const Text('수정'),
+                            return Container(
+                              // color: Colors.red,
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: AlertDialog(
+                                  alignment:
+                                      Alignment(0.0, -1.0), //x축이 안먹히는 이유는?!?!?
+                                  insetPadding:
+                                      EdgeInsets.only(left: width * 0.3),
+                                  // insetPadding: EdgeInsets.symmetric(
+                                  //     horizontal: width * 0.3),
+                                  // actionsPadding: EdgeInsets.only(bottom: 10),
+                                  contentPadding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  content: Wrap(children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 20),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ReviseScreen()),
+                                                );
+                                              },
+                                              child: const Text(
+                                                '수정',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 13),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 20),
+                                              ),
+                                              onPressed: () {
+                                                //삭제api
+                                              },
+                                              child: const Text('삭제'),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      TextButton(
-                                        style: TextButton.styleFrom(
-                                          textStyle:
-                                              const TextStyle(fontSize: 20),
-                                        ),
-                                        onPressed: () {
-                                          //삭제api
-                                        },
-                                        child: const Text('삭제'),
-                                      ),
-                                    ],
-                                  )
-                                ]));
+                                    )
+                                  ])),
+                            );
                           });
                     })
               ],

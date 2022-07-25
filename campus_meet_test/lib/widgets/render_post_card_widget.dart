@@ -15,7 +15,6 @@ class RenderPostCard extends StatefulWidget {
 
 class _RenderPostState extends State<RenderPostCard> {
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

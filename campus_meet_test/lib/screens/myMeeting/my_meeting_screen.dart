@@ -97,16 +97,17 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     // Color colorPink = Color(0xffe7eb);
     // print(meetingPropose.length);
     // print(proposer.length);
+    // print(  MediaQuery.of(context).viewPadding.top);
     double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: ListView(
+          physics: const NeverScrollableScrollPhysics(),
         children: [
           Container(
             height: (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).viewPadding.top -
-                    MediaQuery.of(context).size.width * 0.2) *
+                MediaQuery.of(context).viewPadding.top -
+                MediaQuery.of(context).size.width * 0.2) *
                 0.5,
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
             color: Colors.grey.shade200,
@@ -146,15 +147,15 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           Container(
             color: Colors.white,
             height: (MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).viewPadding.top -
-                    MediaQuery.of(context).size.width * 0.2) *
+                MediaQuery.of(context).viewPadding.top -
+                MediaQuery.of(context).size.width * 0.2) *
                 0.5,
             padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
             // color: Colors.,
             child: myMeeting
                 ? BmeetingPropose
-                    ? existRequestMeeting()
-                    : existRequestMeeting()
+                ? existRequestMeeting()
+                : existRequestMeeting()
                 : existRequestMeeting(),
           ),
         ],
@@ -169,14 +170,16 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 //내가 신청한 미팅 있을때 위
   Widget meetingMyPropose() {
     // return Expanded(child: Container(
+    //MediaQuery.of(context).size.width 크기 몇 이하면 다른 화면(작은 화면 보여줘야함)
     double width = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.red,
+        color: Colors.red,
         margin: EdgeInsets.only(top: width * 0.001),
         height: (MediaQuery.of(context).size.height -
                     MediaQuery.of(context).viewPadding.top -
                     MediaQuery.of(context).size.width * 0.2) *
-                0.5 - width * 0.19,
+                0.5 -
+            width * 0.19,
         // margin: EdgeInsets.only(top: 20.0),
         // height: MediaQuery.of(context).size.width * 0.29, // 여기 0.64로 두면 SE에서 난감해진다
         child: SizedBox(
@@ -185,17 +188,17 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           //         MediaQuery.of(context).size.width * 0.2) *
           //     0.5 - width * 0.05,
           child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.only(top: width * 0.03, left:  width * 0.03),
-          itemCount: posts.length,
-          itemBuilder: (context, index) {
-            return Container(
-                // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
-                width: MediaQuery.of(context).size.width * 0.85,
-                // margin: EdgeInsets.only(right: 0.9),
-                // padding: EdgeInsets.only(right: 0),
-                child: RenderRequestPostCard(post: posts[index]));
-          }),
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    // margin: EdgeInsets.only(right: 0.9),
+                    // padding: EdgeInsets.only(right: 0),
+                    child: RenderRequestPostCard(post: posts[index]));
+              }),
         ));
   }
 
@@ -231,8 +234,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               style: TextStyle(color: Colors.black, fontSize: 14),
             )),
             Container(
-
-
               // color:const Color(0xffffe7eb),
               width: MediaQuery.of(context).size.width * 0.60,
               height: MediaQuery.of(context).size.width * 0.1,

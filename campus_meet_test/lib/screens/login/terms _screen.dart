@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'SignIn_Screen.dart';
-
+//   controlF 찾아서 봐면 생성하고 연결-->여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
+// (필수)(선택) 예쁘게 정렬 mediaQuery로
+// 전체 동의합니다. 의
 class TermsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
@@ -94,26 +96,16 @@ class _State extends State<TermsPage> {
                         Row(
                           children: [
                             SizedBox(
-                              //안쓰는게 좋을듯! icon으로받을거
                               height: MediaQuery.of(context).size.width * 0.11,
                               width: MediaQuery.of(context).size.width * 0.11,
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
-                                onPressed: () {
-                                  //밑에 애들까지 다 색 바꾸고 동의함
-                                },
-                                child: IconButton(
-                                    icon: Icon(
-                                      Icons.check_circle_outline,
-                                      color: Colors.grey,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    }),
+                                onPressed: () {},
+                                child: Image.asset('images/disagree.png'),
                               ),
                             ),
-                            TermText(content: '이용약관 동의'), //얘 왜 빨강....?
+                            TermText(content: '이용약관 동의'),
 
                             Container(
                               margin: EdgeInsets.only(top: 5),
@@ -134,7 +126,7 @@ class _State extends State<TermsPage> {
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                               //여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
                                 }),
                           ],
                         ),
@@ -227,7 +219,7 @@ class _State extends State<TermsPage> {
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  //여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
                                 }),
                           ],
                         ),
