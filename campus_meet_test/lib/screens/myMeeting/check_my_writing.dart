@@ -1,6 +1,7 @@
 import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/screens/home/homeWritingAddMember.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 
 import 'edit_my_writing.dart';
 
@@ -16,13 +17,10 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
   String addressData = ""; // 지역선택창에서 리턴될 데이터
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   // List<bool> selectedKeywords = [];
-  List<String> selectedKeywords = [
-    "인간 댕댕이",
-    "회색 아기 고양이",
-    "매력쟁이"
-  ];
+  List<String> selectedKeywords = ["인간 댕댕이", "회색 아기 고양이", "매력쟁이"];
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -37,29 +35,65 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
           backgroundColor: Colors.white,
           toolbarHeight: MediaQuery.of(context).size.width * 0.1,
           elevation: 0.0,
-
-          // actions 버튼 패딩 어쩔꺼?
           actions: [
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ReviseScreen()),
-                  );
-                },
-                child: Text(
-                  "수정",
-                  style: TextStyle(fontSize: 16),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.pink,
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  minimumSize: Size.zero,
-                ),
-              ),
-            ),
+            SizedBox(
+                // width: MediaQuery.of(context).size.width * 0.4,
+                child: Column(
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.more_horiz,
+                      color: Colors.black,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                                alignment:
+                                    Alignment(-0.8, -1.0), //x축이 안먹히는 이유는?!?!?
+                                // // insetPadding: EdgeInsets.only(bottom: 1520),
+                                insetPadding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.3),
+                                // actionsPadding: EdgeInsets.only(bottom: 10),
+                                contentPadding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                content: Wrap(children: [
+                                  Column(
+                                    children: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          textStyle:
+                                              const TextStyle(fontSize: 20),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ReviseScreen()),
+                                          );
+                                        },
+                                        child: const Text('수정'),
+                                      ),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          textStyle:
+                                              const TextStyle(fontSize: 20),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text('삭제'),
+                                      ),
+                                    ],
+                                  )
+                                ]));
+                          });
+                    })
+              ],
+            )),
             Padding(padding: EdgeInsets.only(right: 20))
           ],
         ),
@@ -79,7 +113,6 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
                   key: formkey,
                   child: Column(
                     children: <Widget>[
-
                       // 제목
                       inputTitle(),
 
@@ -118,14 +151,14 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
           Text(
             "개강 싫은 사람 모여",
             style: TextStyle(
-                fontSize: 16,
-             ),
+              fontSize: 16,
+            ),
           ),
         ],
-
       ),
     );
   }
+
   // 지역 입력
   Widget inputAddress() {
     return Container(
@@ -148,9 +181,7 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
             children: [
               Container(
                 padding: EdgeInsets.only(bottom: 10),
-                child: Text(
-                    '서울 강서구'
-                ),
+                child: Text('서울 강서구'),
               ),
             ],
           ),
@@ -158,10 +189,10 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
       ),
     );
   }
+
   // 멤버 추가
   Widget addMember() {
     return Container(
-
       padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -220,7 +251,7 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
             ),
           ),
           Container(
-            height:45,
+            height: 45,
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -236,7 +267,6 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
                       color: Colors.grey.shade500,
                       fontSize: 15,
                     ),
-
                   ),
                 )
               ],
@@ -263,33 +293,28 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
             ),
           ),
 
-
           // keywords 나열하자!
           Wrap(
             runSpacing: 10,
             spacing: 10,
             children: List<Widget>.generate(
               selectedKeywords.length,
-                  (index) => Container(
+              (index) => Container(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 0,
-                    primary:
-                         Colors.pink
-                        ,
+                    primary: Colors.pink,
                     padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  onPressed: () {  },
+                  onPressed: () {},
                   child: Text(
                     "# ${selectedKeywords[index]}",
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white),
+                    style: TextStyle(fontSize: 13, color: Colors.white),
                   ),
                 ),
               ),

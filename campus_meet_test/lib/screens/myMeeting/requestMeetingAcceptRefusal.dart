@@ -11,8 +11,10 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
   List<String> proposer = ['1', '2', '3'];
   List<bool> like = [false, false, false];
   int _currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,40 +39,65 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
                 style: TextStyle(
                   color: Color(0xff333333),
                   fontWeight: FontWeight.w700,
-                  fontSize: 21,
+                  fontSize: width*0.06,
                 ),
               ),
             ),
             Container(
               alignment: Alignment(-0.8, -0.6),
-              margin: EdgeInsets.only(left: 20, top: 10),
+              margin: EdgeInsets.only(left: width*0.03, top: width*0.02),
               child: Text(
                 '미팅 신청은 거절 후 되돌릴 수 없으며\n'
                 '승낙 시 받으신 미팅 신청은 모두 자동으로 삭제됩니다 😊',
                 style: TextStyle(
                   color: Color(0xff7C7C7C),
-                  fontSize: 14,
+                  fontSize: width*0.033,
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 30.0),
-              height: 280,
+              margin: const EdgeInsets.symmetric(vertical: 30.0),
+              height: MediaQuery.of(context).size.width * 0.8,
               //color: Colors.red,
               child: CarouselSlider(
                 items: List.generate(proposer.length, (index) {
                   return Container(
-                    margin: EdgeInsets.only(right: 20, left: 20),
-                    width: 200.0,
+                    child: Column(
+                      children: [
+                        Container(
+                          // width: MediaQuery.of(context).size.width * 0.46,
+                          height: MediaQuery.of(context).size.width * 0.49,
+                          decoration: const BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        Container(),
+                      ],
+                    ),
+                    // width: MediaQuery.of(context).size.width * 0.9,
+                    margin: EdgeInsets.only(
+                        right: width * 0.01, left: width * 0.01),
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          offset: const Offset(8, 14),
+                          blurRadius: 5.0,
+                        )
+                      ],
                     ),
                   );
                 }),
                 options: CarouselOptions(
+                  height: MediaQuery.of(context).size.width * 0.8,
                   enlargeCenterPage: true,
-                  viewportFraction: 0.5,
+                  viewportFraction: 0.68, //width
                   onPageChanged: (index, reason) {
                     setState(() {
                       _currentPage = index;
@@ -80,37 +107,38 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
               ),
             ),
             Container(
+              // color: Colors.red,
               width: MediaQuery.of(context).size.width,
               child: Row(
-                mainAxisAlignment:MainAxisAlignment.center ,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: makeIndicator(like, _currentPage),
               ),
             ),
             Container(
               alignment: Alignment(0.0, -0.6),
-              margin: EdgeInsets.only(top: 20, bottom: 10),
+              margin: EdgeInsets.only(top: width*0.01, bottom: width*0.01),
               child: Text(
                 '어필문구',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: width*0.05,
                 ),
               ),
             ),
             Container(
-              width: 320,
+              width: MediaQuery.of(context).size.width * 0.8,
               decoration: BoxDecoration(
                   // color:Colors.grey ,
                   border:
                       Border(bottom: BorderSide(color: Colors.grey.shade300))),
             ),
             Container(
-              margin: EdgeInsets.only(top: 40),
+              margin: EdgeInsets.only(top: width * 0.12),
               child: Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 20),
-                    height: 46,
-                    width: 162,
+                    margin: EdgeInsets.only(left: width * 0.047),
+                    height: MediaQuery.of(context).size.width * 0.12,
+                    width: MediaQuery.of(context).size.width * 0.42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
@@ -124,15 +152,15 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
                         '다음 기회에!',
                         style: TextStyle(
                           color: Color(0xffff375c),
-                          fontSize: 16,
+                          fontSize: width * 0.043,
                         ),
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10),
-                    height: 46,
-                    width: 162,
+                    margin: EdgeInsets.only(left: width * 0.04),
+                    height: MediaQuery.of(context).size.width * 0.12,
+                    width: MediaQuery.of(context).size.width * 0.42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
@@ -146,7 +174,7 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
                         '네 좋아요!',
                         style: TextStyle(
                           color: Color(0xffff375c),
-                          fontSize: 16,
+                          fontSize: width * 0.043,
                         ),
                       ),
                     ),
@@ -165,8 +193,8 @@ class _requestMeetingARScreenState extends State<requestMeetingARScreen> {
     for (var i = 0; i < list.length; i++) {
       results.add(
         Container(
-          width: 8,
-          height: 8,
+          height: MediaQuery.of(context).size.width * 0.02,
+          width: MediaQuery.of(context).size.width * 0.02,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,

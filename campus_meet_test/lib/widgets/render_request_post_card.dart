@@ -53,16 +53,33 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color.fromRGBO(255, 124, 148, 10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 4,
+                          offset: Offset(2, 5), // Shadow position
+                        ),
+                      ],
                     ),
                     height: MediaQuery.of(context).size.width * 0.058,
                     width: MediaQuery.of(context).size.width * 0.16,
-                    child: Text(
-                      '->대기중',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: width * 0.03,
-                          height: 1.9),
-                      textAlign: TextAlign.center,
+                    child: Row(
+                      children: [
+                        Padding(padding: EdgeInsets.only(right: width * 0.008)),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.03,
+                            height: MediaQuery.of(context).size.width * 0.03,
+                            child: Image.asset('images/play.png')),
+                        Padding(padding: EdgeInsets.only(right: width * 0.01)),
+                        Text(
+                          '대기 중',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.03,
+                              height: 1.6),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(right: width * 0.1)),

@@ -231,6 +231,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               style: TextStyle(color: Colors.black, fontSize: 14),
             )),
             Container(
+
+
               // color:const Color(0xffffe7eb),
               width: MediaQuery.of(context).size.width * 0.60,
               height: MediaQuery.of(context).size.width * 0.1,
