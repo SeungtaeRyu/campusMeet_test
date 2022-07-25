@@ -1,3 +1,5 @@
+import 'package:campus_meet_test/controller/friendController.dart';
+import 'package:campus_meet_test/models/Friend/friendList.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/User/user_model.dart';
 import 'package:flutter/material.dart';
@@ -14,30 +16,7 @@ class MeetingRequest extends StatefulWidget {
 }
 
 class _MeetingRequestState extends State<MeetingRequest> {
-  late Future<List<User>> myFriend;
-
-  Future<List<User>> getMyFriend(int myId) async {
-
-    // 추후에 users 대신 searchText 사용하기!!
-    final response = await http.get(Uri.parse("http://localhost:3000/api/v1/users/$myId/friends"));
-
-
-    if (response.statusCode == 200) {
-      // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
-
-      // 단일 객체 일때
-      // return MeetingPostTest.fromJson(json.decode(response.body));
-
-      // 복수 객체 일때
-      Iterable l = json.decode(response.body);
-      return List<User>.from(l.map((model) => User.fromJson(model)));
-    } else {
-      // 만약 요청이 실패하면, 에러를 던집니다.
-      throw Exception('Failed to load post');
-    }
-  }
-
-
+  late Future<List<FriendList>> myFriends;
 
   List<String> friendName = [
     "도진",
@@ -75,8 +54,7 @@ class _MeetingRequestState extends State<MeetingRequest> {
     for (var i = 0; i < friendName.length; i++) {
       selected.add(false);
     }
-    int myId = 1;
-    myFriend = getMyFriend(myId);
+    myFriends = getMyFriend();
   }
 
   @override
@@ -206,58 +184,85 @@ class _MeetingRequestState extends State<MeetingRequest> {
             Divider(height: 5, thickness: 5),
 
             // 친구 목록 렌더링 컬럼 > 로우 > 이미지, 이름, 아이콘버튼
-            Expanded(
-              child: _search.text.length != 0 ? buildSearchList() : Container(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                color: Colors.white,
-                child: ListView.builder(
-                  itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.pink,
-                            radius: 25,
-                          ),
-                        ),
-                        Text("${friendName[index]}"),
-                        Expanded(child: Container()),
-                        IconButton(
-                            onPressed: () {
-                              // 선택한 친구 수 count
-                              int count = 0;
-                              for(int i = 0; i < friendName.length ; i++){
-                                if(selected[i]) count++;
-                              }
 
-                              // 5명째에는 동작하지 않음
-                              if(count == widget.post.numOfMember-1 && !selected[index]){
-                              } else {
-                                setState(() {
-                                  if (!selected[index]) {
-                                    selected[index] = !selected[index];
-                                    selectedFriendName.add(friendName[index]);
-                                  } else {
-                                    selected[index] = !selected[index];
-                                    selectedFriendName.remove(friendName[index]);
-                                  }
-                                });
-                              }
-                            },
-                            icon: selected[index]
-                                ? Icon(
-                              Icons.check_circle_rounded,
-                              color: Colors.pink,
-                            )
-                                : Icon(Icons.circle_outlined)),
-                      ],
+            // 퓨처빌더 써야함
+            Expanded(
+              child: FutureBuilder<List<FriendList>>(
+                future: myFriends,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index){
+                          return Container(
+                            child: Text("${snapshot.data![index].friend.nickname}"),
+                          );
+                        }
+                      )
                     );
-                  },
-                ),
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
-            ),
+            )
+
+            //
+            // Expanded(
+            //   child: _search.text.length != 0 ? buildSearchList() : Container(
+            //     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            //     color: Colors.white,
+            //     child: ListView.builder(
+            //       itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return Row(
+            //           children: [
+            //             Container(
+            //               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            //               child: CircleAvatar(
+            //                 backgroundColor: Colors.pink,
+            //                 radius: 25,
+            //               ),
+            //             ),
+            //             Text("${friendName[index]}"),
+            //             Expanded(child: Container()),
+            //             IconButton(
+            //                 onPressed: () {
+            //                   // 선택한 친구 수 count
+            //                   int count = 0;
+            //                   for(int i = 0; i < friendName.length ; i++){
+            //                     if(selected[i]) count++;
+            //                   }
+            //
+            //                   // 5명째에는 동작하지 않음
+            //                   if(count == widget.post.numOfMember-1 && !selected[index]){
+            //                   } else {
+            //                     setState(() {
+            //                       if (!selected[index]) {
+            //                         selected[index] = !selected[index];
+            //                         selectedFriendName.add(friendName[index]);
+            //                       } else {
+            //                         selected[index] = !selected[index];
+            //                         selectedFriendName.remove(friendName[index]);
+            //                       }
+            //                     });
+            //                   }
+            //                 },
+            //                 icon: selected[index]
+            //                     ? Icon(
+            //                   Icons.check_circle_rounded,
+            //                   color: Colors.pink,
+            //                 )
+            //                     : Icon(Icons.circle_outlined)),
+            //           ],
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
