@@ -42,10 +42,11 @@ class _State extends State<TermsPage> {
                             height: MediaQuery.of(context).size.width * 0.18,
                             width: MediaQuery.of(context).size.width * 0.9,
                             // alignment: Alignment(-1.0, 0.0),
-                            margin: EdgeInsets.only(right: 1, bottom: 10, top: 10),
+                            margin:
+                                EdgeInsets.only(right: 1, bottom: 10, top: 10),
                             child: Text(
                               '이제 정말 끝! \n'
-                                  '이용 약관 동의 부탁드립니다🤗',
+                              '이용 약관 동의 부탁드립니다🤗',
                               //textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Colors.black,
@@ -55,20 +56,19 @@ class _State extends State<TermsPage> {
                         Row(
                           children: [
                             SizedBox(
-                              width: 40,
-                              height: 40,
+                              height: MediaQuery.of(context).size.width * 0.11,
+                              width: MediaQuery.of(context).size.width * 0.11,
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
                                 onPressed: () {},
-                                child: Image.asset('asset/disagree.png'),
+                                child: Image.asset('images/disagree.png'),
                               ),
                             ),
-
                             Container(
                               margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 155,
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.38,
                               child: Text(
                                 '전체 동의합니다.',
                                 style: TextStyle(
@@ -76,48 +76,35 @@ class _State extends State<TermsPage> {
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15),
                               ),
-                            ), ],
+                            ),
+                          ],
                         ),
-
                         Container(
-                          margin:
-                          EdgeInsets.only(top: 10, right: 7, left: 7, bottom: 10),
+                          margin: EdgeInsets.only(
+                              top: 10, right: 7, left: 7, bottom: 10),
                           height: MediaQuery.of(context).size.width * 0.002,
                           width: MediaQuery.of(context).size.width * 1,
-
                           color: Colors.grey,
                         ),
                         Row(
                           children: [
-                            SizedBox( //안쓰는게 좋을듯! icon으로받을거
-                              width: 40,
-                              height: 40,
+                            SizedBox(
+                              //안쓰는게 좋을듯! icon으로받을거
+                              height: MediaQuery.of(context).size.width * 0.11,
+                              width: MediaQuery.of(context).size.width * 0.11,
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
                                 onPressed: () {},
-                                child: Image.asset('asset/disagree.png'),
+                                child: Image.asset('images/disagree.png'),
                               ),
                             ),
                             TermText(content: '이용약관 동의'),
-                            // Container(
-                            //   margin: EdgeInsets.only(top: 10),
-                            //   height: 30,
-                            //   width: 85,
-                            //   child: Text(
-                            //     '이용약관 동의',
-                            //     style: TextStyle(
-                            //         color: Colors.black,
-                            //         fontWeight: FontWeight.w500,
-                            //         fontSize: 15),
-                            //   ),
-                            // ),
+
                             Container(
-                              // color: Colors.red,
                               margin: EdgeInsets.only(top: 5),
                               height: MediaQuery.of(context).size.width * 0.07,
-                              width: MediaQuery.of(context).size.width * 0.52,
-
+                              width: MediaQuery.of(context).size.width * 0.3,
                               child: Text(
                                 '(필수)',
                                 style: TextStyle(
@@ -126,38 +113,30 @@ class _State extends State<TermsPage> {
                                     fontSize: 15),
                               ),
                             ),
-                            Container(
-                              // color: Colors.red,
-                              margin: EdgeInsets.only(top: 5),
-                              height: MediaQuery.of(context).size.width * 0.05,
-                              width: MediaQuery.of(context).size.width * 0.05,
-                              child: Text( //아이콘으로 바꿔
-                                '>',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15),
-                              ),
 
-                            ),
-
+                            IconButton(
+                                icon: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ),
                         Row(
                           children: [
                             SizedBox(
-                              width: 40,
-                              height: 40,
+                              height: MediaQuery.of(context).size.width * 0.11,
+                              width: MediaQuery.of(context).size.width * 0.11,
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
                                 onPressed: () {},
-                                child: Image.asset('asset/disagree.png'),
+                                child: Image.asset('images/disagree.png'),
                               ),
                             ),
-
                             Container(
-                              color: Colors.red,
                               margin: EdgeInsets.only(top: 5),
                               height: MediaQuery.of(context).size.width * 0.07,
                               width: MediaQuery.of(context).size.width * 0.38,
@@ -171,8 +150,8 @@ class _State extends State<TermsPage> {
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 140,
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.3,
                               child: Text(
                                 '(필수)',
                                 style: TextStyle(
@@ -181,38 +160,33 @@ class _State extends State<TermsPage> {
                                     fontSize: 15),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 10,
-                              child: Text( //아이콘으로 바꿔
-                                '>',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15),
-                              ),
-                            ),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ),
                         Row(
                           children: [
                             SizedBox(
-                              width: 40,
-                              height: 40,
+                              height: MediaQuery.of(context).size.width * 0.11,
+                              width: MediaQuery.of(context).size.width * 0.11,
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
                                 onPressed: () {},
-                                child: Image.asset('asset/disagree.png'),
+                                child: Image.asset('images/disagree.png'),
                               ),
                             ),
-
                             Container(
                               // color: Colors.blue,
                               margin: EdgeInsets.only(top: 5),
                               height: MediaQuery.of(context).size.width * 0.07,
-                              width: MediaQuery.of(context).size.width * 0.45,
+                              width: MediaQuery.of(context).size.width * 0.48,
                               child: Text(
                                 'SNS / 이메일 정보 수신 동의',
                                 style: TextStyle(
@@ -222,10 +196,9 @@ class _State extends State<TermsPage> {
                               ),
                             ),
                             Container(
-                              color: Colors.red,
                               margin: EdgeInsets.only(top: 5),
                               height: MediaQuery.of(context).size.width * 0.07,
-                              width: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.2,
                               child: Text(
                                 '(선택)',
                                 style: TextStyle(
@@ -234,21 +207,16 @@ class _State extends State<TermsPage> {
                                     fontSize: 15),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              height: 30,
-                              width: 10,
-                              child: Text( //아이콘으로 바꿔
-                                '>',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15),
-                              ),
-                            ),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                }),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -294,8 +262,7 @@ class _State extends State<TermsPage> {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
 //

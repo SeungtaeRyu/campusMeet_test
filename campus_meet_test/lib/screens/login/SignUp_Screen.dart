@@ -5,7 +5,7 @@ import 'package:wc_form_validators/wc_form_validators.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-
+import 'package:http/http.dart' as http;
 enum Gender { WOMEN, MAN }
 
 class SignUpScreen extends StatefulWidget {
@@ -38,6 +38,28 @@ var _selectedValue = '24';8*/
     super.initState();
 
     name = TextEditingController();
+  }
+  void _signUpPost() async {
+    var url = Uri.parse(
+      'https://raw.githubusercontent.com/dev-yakuza/users/master/api.json',
+    );
+    var response = await http.get(url);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    url = Uri.parse('https://reqbin.com/sample/post/json');
+    response = await http.post(url, body: {
+      "email":id.toString(),
+      "name": name.toString(),
+      "entryYear" : entry_year.toString(),
+      "nickname" : nick_name.toString(),
+      "pwd" : pwd.toString(),
+      "birthDate" : "2000-01-01", //전처리 born_year + '-' + ..
+      "sex" : "M",// "성별, F/M"
+      "univ_id" : 1
+    });
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
   }
 
   @override
@@ -350,21 +372,20 @@ var _selectedValue = '24';8*/
                 decoration: BoxDecoration(
                     color: Color(0xffff375c),
                     borderRadius: BorderRadius.circular(10)),
-                child: FlatButton(
+                child: ElevatedButton(
                   // padding: EdgeInsets.only(top: 20),
                   onPressed: () {
-                    //print(name.text);
-                    //print(pwd.text);
-                    print('이름: ' + name.text);
+                    _signUpPost();
+                    // print('이름: ' + name.text);
                     print('학교: ' + univ_id.text);
-                    print('학번: ' + entry_year.text);
-                    print('성별: ' + sex.text);
-                    print('아이디없음' + id.text);
-                    print('비밀번호: ' + pwd.text);
-                    print('비밀번호확인: ' + passwordEController.text);
-                    print('별명: ' + nick_name.text);
-                    print('한줄소개: ' + introduce_text.text);
-                    print('출생년: ' + born_year.text);
+                    // print('학번: ' + entry_year.text);
+                    // print('성별: ' + sex.text);
+                    // print('아이디없음' + id.text);
+                    // print('비밀번호: ' + pwd.text);
+                    // print('비밀번호확인: ' + passwordEController.text);
+                    // print('별명: ' + nick_name.text);
+                    // print('한줄소개: ' + introduce_text.text);
+                    // print('출생년: ' + born_year.text);
                     if (formkey.currentState!.validate() &&
                         pwd.text == passwordEController.text) {
                       Navigator.push(context,

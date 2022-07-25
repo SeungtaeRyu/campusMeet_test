@@ -2,7 +2,7 @@ import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/screens/home/homeWritingAddMember.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
-
+import 'package:http/http.dart' as http;
 import 'edit_my_writing.dart';
 
 class checkMyWritingScreen extends StatefulWidget {
@@ -84,7 +84,9 @@ class _checkMyWritingScreenState extends State<checkMyWritingScreen> {
                                           textStyle:
                                               const TextStyle(fontSize: 20),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          //삭제api
+                                        },
                                         child: const Text('삭제'),
                                       ),
                                     ],
