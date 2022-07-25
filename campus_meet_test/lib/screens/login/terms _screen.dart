@@ -12,8 +12,10 @@ class TermsPage extends StatefulWidget {
 class _State extends State<TermsPage> {
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formkey = GlobalKey<FormState>();
+    //static const IconData check_mark_circled = IconData(0xf3fe, fontFamily: iconFont, fontPackage: iconFontPackage);
 
+    GlobalKey<FormState> formkey = GlobalKey<FormState>();
+    double width = MediaQuery.of(context).size.width;
     Color color = Color(0xffff375c);
     return Scaffold(
         appBar: AppBar(
@@ -50,7 +52,7 @@ class _State extends State<TermsPage> {
                               //textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 25),
                             )),
                         Row(
@@ -61,7 +63,9 @@ class _State extends State<TermsPage> {
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  //색 바꿔
+                                },
                                 child: Image.asset('images/disagree.png'),
                               ),
                             ),
@@ -72,9 +76,10 @@ class _State extends State<TermsPage> {
                               child: Text(
                                 '전체 동의합니다.',
                                 style: TextStyle(
+                                    height: 1,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: width * 0.046),
                               ),
                             ),
                           ],
@@ -95,11 +100,20 @@ class _State extends State<TermsPage> {
                               // width: double.infinity, // <-- match_parent
                               // height: double.infinity, // <-- match-parent
                               child: TextButton(
-                                onPressed: () {},
-                                child: Image.asset('images/disagree.png'),
+                                onPressed: () {
+                                  //밑에 애들까지 다 색 바꾸고 동의함
+                                },
+                                child: IconButton(
+                                    icon: Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
                               ),
                             ),
-                            TermText(content: '이용약관 동의'),
+                            TermText(content: '이용약관 동의'), //얘 왜 빨강....?
 
                             Container(
                               margin: EdgeInsets.only(top: 5),
@@ -141,11 +155,11 @@ class _State extends State<TermsPage> {
                               height: MediaQuery.of(context).size.width * 0.07,
                               width: MediaQuery.of(context).size.width * 0.38,
                               child: Text(
-                                '개인정보 수집.이용 동의',
+                                '개인정보 수집.이용 동의 ',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 15),
+                                    fontSize: width * 0.04),
                               ),
                             ),
                             Container(
@@ -192,7 +206,7 @@ class _State extends State<TermsPage> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 15),
+                                    fontSize: width * 0.04),
                               ),
                             ),
                             Container(
