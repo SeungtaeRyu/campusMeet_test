@@ -51,7 +51,6 @@ class _State extends State<TermsPage> {
                             child: Text(
                               '이제 정말 끝! \n'
                               '이용 약관 동의 부탁드립니다🤗',
-                              //textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -172,6 +171,7 @@ class _State extends State<TermsPage> {
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
+                                  //textAlign: TextAlign.left,
                                   Navigator.pop(context);
                                 }),
                           ],

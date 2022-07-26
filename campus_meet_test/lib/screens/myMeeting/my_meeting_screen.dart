@@ -4,6 +4,7 @@ import 'package:campus_meet_test/screens/home/homeWriting.dart';
 import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
 import 'package:campus_meet_test/widgets/render_request_post_card.dart';
+import 'package:campus_meet_test/widgets/render_request_post_card_SE.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
 import 'check_my_writing.dart';
@@ -99,15 +100,16 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     // print(proposer.length);
     // print(  MediaQuery.of(context).viewPadding.top);
     double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: ListView(
-          physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           Container(
             height: (MediaQuery.of(context).size.height -
-                MediaQuery.of(context).viewPadding.top -
-                MediaQuery.of(context).size.width * 0.2) *
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
                 0.5,
             padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
             color: Colors.grey.shade200,
@@ -135,11 +137,14 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   ),
                 ),
                 //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
+                //                여기가 위 컨텐츠
+
                 Container(
 //                여기가 위 컨텐츠
                   child: meetingMyPropose(), // 위
 //                 child: existRequestMeeting(),
                 )
+//                 child: existRequestMeeting(),
               ],
             ),
           ),
@@ -147,15 +152,15 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
           Container(
             color: Colors.white,
             height: (MediaQuery.of(context).size.height -
-                MediaQuery.of(context).viewPadding.top -
-                MediaQuery.of(context).size.width * 0.2) *
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
                 0.5,
             padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
             // color: Colors.,
             child: myMeeting
                 ? BmeetingPropose
-                ? existRequestMeeting()
-                : existRequestMeeting()
+                    ? existRequestMeeting()
+                    : existRequestMeeting()
                 : existRequestMeeting(),
           ),
         ],
@@ -172,8 +177,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     // return Expanded(child: Container(
     //MediaQuery.of(context).size.width 크기 몇 이하면 다른 화면(작은 화면 보여줘야함)
     double width = MediaQuery.of(context).size.width;
+    double viewPaddingTop = MediaQuery.of(context).viewPadding.top;
     return Container(
-        color: Colors.red,
         margin: EdgeInsets.only(top: width * 0.001),
         height: (MediaQuery.of(context).size.height -
                     MediaQuery.of(context).viewPadding.top -
@@ -194,6 +199,58 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               itemBuilder: (context, index) {
                 return Container(
                     // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
+
+                    // margin: EdgeInsets.only(right: 0.9),
+                    // padding: EdgeInsets.only(right: 0),
+
+                    // width > 21
+                    //     ? Container(
+                    //   child: meetingMyPropose(),
+                    // )
+                    //     : Container(
+                    //   child: meetingMyProposeSE(),
+                    // ),
+                    //
+                    child: viewPaddingTop > 21.0
+                        ? Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        child: RenderRequestPostCard(post: posts[index]),
+                    )
+                        : Container(
+                       width: MediaQuery.of(context).size.width * 0.85,
+                       child: RenderRequestPostCardSE(post: posts[index])
+                    ),
+
+                );
+              }),
+        ));
+  }
+//내가 신청한 미팅 있을때 위 SE
+  Widget meetingMyProposeSE() {
+    // return Expanded(child: Container(
+    //MediaQuery.of(context).size.width 크기 몇 이하면 다른 화면(작은 화면 보여줘야함)
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+        color: Colors.red,
+        margin: EdgeInsets.only(top: width * 0.001),
+        height: (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).viewPadding.top -
+            MediaQuery.of(context).size.width * 0.2) *
+            0.5 - width * 0.19,
+        // margin: EdgeInsets.only(top: 20.0),
+        // height: MediaQuery.of(context).size.width * 0.29, // 여기 0.64로 두면 SE에서 난감해진다
+        child: SizedBox(
+          // height: (MediaQuery.of(context).size.height -
+          //         MediaQuery.of(context).viewPadding.top -
+          //         MediaQuery.of(context).size.width * 0.2) *
+          //     0.5 - width * 0.05,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
                     width: MediaQuery.of(context).size.width * 0.85,
                     // margin: EdgeInsets.only(right: 0.9),
                     // padding: EdgeInsets.only(right: 0),
@@ -201,7 +258,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               }),
         ));
   }
-
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
     return Expanded(

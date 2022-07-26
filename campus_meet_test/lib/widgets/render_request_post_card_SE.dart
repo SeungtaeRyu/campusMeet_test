@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/rendering.dart';
 
-class RenderRequestPostCard extends StatefulWidget {
-  const RenderRequestPostCard({Key? key, required this.post}) : super(key: key);
+class RenderRequestPostCardSE extends StatefulWidget {
+  const RenderRequestPostCardSE({Key? key, required this.post}) : super(key: key);
   final Post post;
 
   @override
   _RenderRequestPostState createState() => _RenderRequestPostState();
 }
 
-class _RenderRequestPostState extends State<RenderRequestPostCard> {
+class _RenderRequestPostState extends State<RenderRequestPostCardSE> {
   late Future<List<MeetingMember>> meetingMember;
 
   @override
@@ -30,7 +30,7 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
     double width = MediaQuery.of(context).size.width;
     return InkWell(
       child: Container(
-        margin: EdgeInsets.fromLTRB(9, 0, 9, 8),
+        margin: EdgeInsets.fromLTRB(9, 0, 8, 8),
         padding: EdgeInsets.all(width * 0.03),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -61,32 +61,32 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                         ),
                       ],
                     ),
-                    height: MediaQuery.of(context).size.width * 0.058,
+                    height: MediaQuery.of(context).size.width * 0.055,
                     width: MediaQuery.of(context).size.width * 0.16,
                     child: Row(
                       children: [
-                        Padding(padding: EdgeInsets.only(right: width * 0.008, top:width * 0.3 )),
+                        Padding(padding: EdgeInsets.only(right: width * 0.008)),
                         SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.03,
-                            height: MediaQuery.of(context).size.width * 0.03,
+                            width: MediaQuery.of(context).size.width * 0.025,
+                            height: MediaQuery.of(context).size.width * 0.025,
                             child: Image.asset('images/play.png')),
                         Padding(padding: EdgeInsets.only(right: width * 0.01)),
                         Text(
                           '대기 중',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: width * 0.03,
+                              fontSize: width * 0.028,
                               height: 1.6),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(right: width * 0.1, top:width * 0.09)),
+                  Padding(padding: EdgeInsets.only(right: width * 0.1)),
                   Text(
                     "${widget.post.location.cityStateName} ${widget.post.location.cityCountryName} · ${widget.post.createdAt}",
                     style: TextStyle(
-                      fontSize: width * 0.028,
+                      fontSize: width * 0.026,
                       color: Colors.grey.shade500,
                     ),
                   ),
@@ -95,16 +95,16 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
               Padding(padding: EdgeInsets.only(bottom: width * 0.03)),
               Text(
                 widget.post.title,
-                style: TextStyle(fontSize: width * 0.04),
+                style: TextStyle(fontSize: width * 0.037),
               ),
-              Padding(padding: EdgeInsets.only(bottom: width * 0.03)),
+              Padding(padding: EdgeInsets.only(bottom: width * 0.028)),
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
                 children: <Widget>[
                   for (int i = 0; i < widget.post.tags.length; i++)
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      padding: EdgeInsets.fromLTRB(10, 3, 10, 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Color.fromRGBO(255, 231, 235, 1),
@@ -113,21 +113,21 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                         "${widget.post.tags[i].text} ",
                         style: TextStyle(
                             color: Color.fromRGBO(255, 124, 148, 1),
-                            fontSize: width * 0.03),
+                            fontSize: width * 0.028),
                       ),
                     ),
                 ],
               ),
-              Padding(padding: EdgeInsets.only(bottom: width * 0.06)),
+              Padding(padding: EdgeInsets.only(bottom: width * 0.021)),
               Row(
                 children: [
                   Text(
                     "${widget.post.writer.univ} ${widget.post.writer.entryYear}학번 ${widget.post.writer.name} ",
-                    style: TextStyle(fontSize: width * 0.03),
+                    style: TextStyle(fontSize: width * 0.028),
                   ),
                   Icon(
                     CustomIcons.my_page,
-                    size: 14,
+                    size: 12,
                     color: Colors.pink,
                   ),
                   Text(
@@ -137,9 +137,9 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                 ],
               ),
               Container(
-                height: MediaQuery.of(context).size.width * 0.09,
+                height: MediaQuery.of(context).size.width * 0.07,
                 width: MediaQuery.of(context).size.width * 0.8,
-                margin: EdgeInsets.only(top: width * 0.07),
+                margin: EdgeInsets.only(top: width * 0.024),
                 child: DottedBorder(
                   // strokeCap: StrokeCap.round,
                   dashPattern: [4, 4, 4, 4],
@@ -147,6 +147,7 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                   color: Color.fromRGBO(228, 228, 228, 1),
                   strokeWidth: 2,
                   child: Container(
+                    // color: Colors.red,
                     height: MediaQuery.of(context).size.width * 0.08,
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextButton(
@@ -156,8 +157,11 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                       child: Text(
                         '대기 취소하기',
                         style: TextStyle(
+                            height: MediaQuery.of(context).size.width * 0.0009,
+
+                           // backgroundColor: Colors.red,
                             color: Color.fromRGBO(255, 55, 92, 1),
-                            fontSize: width * 0.035),
+                            fontSize: width * 0.03),
                       ),
                     ),
                   ),
@@ -263,7 +267,7 @@ class _RenderRequestPostState extends State<RenderRequestPostCard> {
                                         builder: (context) =>
                                             OtherPersonProfileScreen(
                                                 userId:
-                                                    snapshot.data![index].id)),
+                                                snapshot.data![index].id)),
                                   );
                                 },
                                 icon: Icon(
