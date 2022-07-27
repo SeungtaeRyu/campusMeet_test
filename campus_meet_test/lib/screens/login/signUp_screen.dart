@@ -31,8 +31,6 @@ class _State extends State<SignUpScreen> {
   String dayDropdownvalue = '1';
   Gender? _gender = Gender.MAN;
 
-/*var _ageList = ['19', '20', '21', '22', '23', '24', '25'];
-var _selectedValue = '24';8*/
   @override
   void initState() {
     super.initState();
@@ -219,12 +217,16 @@ var _selectedValue = '24';8*/
                       decoration: InputDecoration(
                         //  border: OutlineInputBorder(),
                           labelText: '비밀번호'),
-                      validator: Validators.compose([
-                        Validators.required('Password is required'),
-                        Validators.patternString(
-                            r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
-                            '8자리이상,숫자,특수문자를 포함해주세요.')
-                      ]),
+                      // validator: Validators.compose([
+                      //   Validators.required('Password is required'),
+                      //   Validators.patternString(
+                      //       r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                      //       '8자리이상,숫자,특수문자를 포함해주세요.')
+                      // ]),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")), //수정
+                        // LengthLimitingTextInputFormatter(7)
+                      ],
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 8, 0, 1),

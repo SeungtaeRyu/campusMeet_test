@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/login/resetPassword.dart';
+import 'package:campus_meet_test/screens/login/reset_password.dart';
 import 'package:flutter/material.dart';
 
 class FindPasswordConfirmation extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:campus_meet_test/routes.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
-import 'findPasswordConfirmation_screen.dart';
+import 'find_password_confirmation_screen.dart';
 
 
 // void main() {

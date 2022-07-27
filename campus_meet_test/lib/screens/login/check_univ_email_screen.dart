@@ -5,7 +5,7 @@ import 'package:campus_meet_test/routes.dart';
 import 'package:flutter/services.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
-import 'SignUp_Screen.dart';
+import 'signUp_screen.dart';
 
 class CheckUnivPage extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _State extends State<CheckUnivPage> {
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
+    double width = MediaQuery.of(context).size.width;
     Color color = Color(0xffff375c);
     // var select_univ;
     return Scaffold(
@@ -61,11 +61,11 @@ class _State extends State<CheckUnivPage> {
                         child: Column(
                   children: <Widget>[
                     Container(
-                      // color: Colors.red,
+                        // color: Colors.red,
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: MediaQuery.of(context).size.width * 0.25,
                         alignment: Alignment(-1.0, 0.0),
-                        padding: EdgeInsets.only(left: 10,bottom: 30),
+                        padding: EdgeInsets.only(left: 10, bottom: 30),
                         child: Text(
                           '대학교 확인을 위해 \n'
                           '학교 이메일 인증이 필요해요!',
@@ -144,7 +144,7 @@ class _State extends State<CheckUnivPage> {
                                 String userUnivEmail =
                                     userUnivEmailController.text +
                                         '@$univEmail.ac.kr';
-                                print(userUnivEmail);
+                                print(userUnivEmail); //얘를 뒤페이지로 보내야한다는거쥐
                                 //userUnivEmail 로 확인 이메일 보내기
                                 //인증번호 입력칸 뜨기
                               },
@@ -154,6 +154,7 @@ class _State extends State<CheckUnivPage> {
                                   color: userUnivEmailController.text != ""
                                       ? Colors.white
                                       : Colors.grey,
+                                  fontSize: width * 0.035
                                 ),
                               ),
                             ),
@@ -163,77 +164,91 @@ class _State extends State<CheckUnivPage> {
                     ),
                     Visibility(
                       visible: visibility,
-                      child: Form(
-                        autovalidateMode: AutovalidateMode.always,
-                        key: formkey,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
-                          margin: const EdgeInsets.only(
-                              left: 0.0, right: 0.0, bottom: 10.0),
-                          child: TextFormField(
-                              //autofocus: true,
-                              onChanged: (text_2) {
-                                if (certificationNumber.text.length > 5) {
-                                  setState(() {});
-                                }
-                              },
-                              // onEditingComplete:(){
-                              //  onChan
-                              // }
-                              //   ,
-                              controller: certificationNumber,
-                              decoration: InputDecoration(
-                                suffixIcon: Container(
-                                  padding: EdgeInsets.only(top: 10, right: 10),
-                                  child: TweenAnimationBuilder<Duration>(
-                                      duration: Duration(minutes: 3),
-                                      tween: Tween(
-                                          begin: Duration(minutes: 3),
-                                          end: Duration.zero),
-                                      onEnd: () {
-                                        setState(() {
-                                          visibility = false;
-                                        });
-                                      },
-                                      builder: (BuildContext context,
-                                          Duration value, Widget? child) {
-                                        final minutes = value.inMinutes;
-                                        var seconds = value.inSeconds % 60;
-                                        var underTenSecond = seconds.toString();
-                                        if (seconds < 10) {
-                                          underTenSecond =
-                                              ("0" + underTenSecond) as String;
-                                        }
-                                        ;
-                                        return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 5),
-                                            child: Text(
-                                                '0$minutes:$underTenSecond',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Color(0xffff375c),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15)));
-                                      }),
+                      child: Column(
+                        children: [
+                          Form(
+                            autovalidateMode: AutovalidateMode.always,
+                            key: formkey,
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              margin: const EdgeInsets.only(
+                                  left: 0.0, right: 0.0, bottom: 10.0),
+                              child: TextFormField(
+                                //autofocus: true,
+                                onChanged: (text_2) {
+                                  if (certificationNumber.text.length > 5) {
+                                    setState(() {});
+                                  }
+                                },
+                                controller: certificationNumber,
+                                decoration: InputDecoration(
+                                  suffixIcon: Container(
+                                    padding: EdgeInsets.only(top: 10, right: 10),
+                                    child: TweenAnimationBuilder<Duration>(
+                                        duration: Duration(minutes: 3),
+                                        tween: Tween(
+                                            begin: Duration(minutes: 3),
+                                            end: Duration.zero),
+                                        onEnd: () {
+                                          setState(() {
+                                            visibility = false;
+                                          });
+                                        },
+                                        builder: (BuildContext context,
+                                            Duration value, Widget? child) {
+                                          final minutes = value.inMinutes;
+                                          var seconds = value.inSeconds % 60;
+                                          var underTenSecond = seconds.toString();
+                                          if (seconds < 10) {
+                                            underTenSecond =
+                                                ("0" + underTenSecond) as String;
+                                          }
+                                          ;
+                                          return Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 5),
+                                              child: Text(
+                                                  '0$minutes:$underTenSecond',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Color(0xffff375c),
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15)));
+                                        }),
+                                  ),
+                                  isDense: true,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 10.0),
+                                  // contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                                  border: OutlineInputBorder(),
                                 ),
-                                isDense: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
-                                // contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-                                border: OutlineInputBorder(),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15),
+                                // validator: Validators.compose([
+                                //   Validators.required(
+                                //       ''),
+                                //   Validators.patternString(
+                                //       r'^(?=.*?[0-9]).{6,6}$', '인증번호는 6자리 입니다.')
+                                // ]),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9]')), //숫자만 가능
+                                  LengthLimitingTextInputFormatter(6)
+                                ],
                               ),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15),
-                              validator: Validators.compose([
-                                Validators.required(
-                                    '인증번호를 발송했습니다.\n인증번호가 오지 않는다면 입력하신 정보가 정확한지 확인헤 주세요.\n이미 가입된 이메일이거나 가상 이메일은 인증번호를 받을 수 없습니다.'),
-                                Validators.patternString(
-                                    r'^(?=.*?[0-9]).{6,6}$', '인증번호는 6자리 입니다.')
-                              ])),
+                            ),
+                          ),
+                        Container(
+                          height: MediaQuery.of(context).size.width * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Text("인증번호를 발송했습니다.\n인증번호가 오지 않는다면 입력하신 정보가 정확한지 확인해 주세요."
+                              "\n이미 가입된 이메일이거나, 가상 이메일은 인증번호를 받을 수 없습니다."
+                          ,  style: TextStyle(fontSize: width*0.032,color: Colors.pinkAccent)
+                          ),
                         ),
+                        ],
                       ),
                     ),
                   ],

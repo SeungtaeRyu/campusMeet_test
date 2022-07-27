@@ -91,7 +91,7 @@ class _State extends State<SettingUnivPage> {
                             child: TextFormField(
                               cursorColor: color,
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅎ|가-힣|ㆍ|ᆢ]')),
+                                FilteringTextInputFormatter.allow(RegExp('[ㄱ-ㅎ|가-힣|ㆍ|ᆢ]')), //일단 한글만 가능하게했음
                                 LengthLimitingTextInputFormatter(7)
                               ],
                               controller: univController,

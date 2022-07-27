@@ -1,8 +1,8 @@
-import 'package:campus_meet_test/widgets/terms_Widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'SignIn_Screen.dart';
+import 'signIn_screen.dart';
+
 //   controlF 찾아서 봐면 생성하고 연결-->여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
 // (필수)(선택) 예쁘게 정렬 mediaQuery로
 // 전체 동의합니다. 의
@@ -104,8 +104,18 @@ class _State extends State<TermsPage> {
                                 child: Image.asset('images/disagree.png'),
                               ),
                             ),
-                            TermText(content: '이용약관 동의'),
-
+                            Container(
+                              margin: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.width * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.38,
+                              child: Text(
+                                '이용약관 동의',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15),
+                              ),
+                            ),
                             Container(
                               margin: EdgeInsets.only(top: 5),
                               height: MediaQuery.of(context).size.width * 0.07,
@@ -118,14 +128,13 @@ class _State extends State<TermsPage> {
                                     fontSize: 15),
                               ),
                             ),
-
                             IconButton(
                                 icon: Icon(
                                   Icons.chevron_right,
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
-                               //여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
+                                  //여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
                                 }),
                           ],
                         ),

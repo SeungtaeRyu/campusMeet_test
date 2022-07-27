@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import '../../main.dart';
-import 'University_setting_screen_test.dart';
-import 'University_setting_screen_test2.dart';
-import 'findPassword_screen.dart';
-import 'University_setting_screen.dart';
+import 'find_password_screen.dart';
+import 'university_setting_screen.dart';
 import 'package:http/http.dart' as http;
 
 //에러 url 없어서 그런건지
