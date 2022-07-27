@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
+import 'check_validate.dart';
 enum Gender { WOMEN, MAN }
 
 class SignUpScreen extends StatefulWidget {
@@ -223,16 +225,14 @@ class _State extends State<SignUpScreen> {
                       //       r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
                       //       '8자리이상,숫자,특수문자를 포함해주세요.')
                       // ]),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")), //수정
-                        // LengthLimitingTextInputFormatter(7)
-                      ],
+
+                      validator: (value) => CheckValidate().validatePassword(value!),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 8, 0, 1),
                       alignment: Alignment(-0.9, 0.0),
                       child: Text(
-                        "- 8자 이상 입력 \n- 영문/숫자/특수문자(공백제외)만 허용하며, 2개 이상 조합",
+                        "- 8자 이상 20이하 입력 \n- 영문/숫자/특수문자(공백제외)만 허용하며, 2개 이상 조합",
                         //textAlign: TextAlign.left,
                         style: TextStyle(
                             color: Colors.grey,
