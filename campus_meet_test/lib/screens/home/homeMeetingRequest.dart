@@ -1,10 +1,7 @@
 import 'package:campus_meet_test/controller/friendController.dart';
 import 'package:campus_meet_test/models/Friend/friendList.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
-import 'package:campus_meet_test/models/User/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'homeMeetingRequest2.dart';
 
 class MeetingRequest extends StatefulWidget {
@@ -192,15 +189,52 @@ class _MeetingRequestState extends State<MeetingRequest> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
-                      child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index){
-                          return Container(
-                            child: Text("${snapshot.data![index].friend.nickname}"),
-                          );
-                        }
-                      )
-                    );
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.pink,
+                                      radius: 25,
+                                    ),
+                                  ),
+                                  Text("${snapshot.data![index].friend.nickname}"),
+                                  Expanded(child: Container()),
+                                  IconButton(
+                                      onPressed: () {
+                                        // 선택한 친구 수 count
+                                        int count = 0;
+                                        for (int i = 0; i < friendName.length; i++) {
+                                          if (selected[i]) count++;
+                                        }
+
+                                        // 미팅멤버 수 초과는 고르지 않음!
+                                        if (count == widget.post.numOfMember - 1 && !selected[index]) {
+                                        } else {
+                                          setState(() {
+                                            if (!selected[index]) {
+                                              selected[index] = !selected[index];
+                                              selectedFriendName.add(snapshot.data![index].friend.nickname);
+                                            } else {
+                                              selected[index] = !selected[index];
+                                              selectedFriendName.remove(snapshot.data![index].friend.nickname);
+                                            }
+                                          });
+                                        }
+                                      },
+                                      icon: selected[index]
+                                          ? Icon(
+                                              Icons.check_circle_rounded,
+                                              color: Colors.pink,
+                                            )
+                                          : Icon(Icons.circle_outlined)),
+                                ],
+                              );
+                            }));
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   } else {
