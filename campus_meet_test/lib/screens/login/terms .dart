@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'signIn_screen.dart';
+import 'signIn.dart';
 
 //   controlF 찾아서 봐면 생성하고 연결-->여기에 상세 페이지 화면이든 팝업이든 안정해졌네..?..?
 // (필수)(선택) 예쁘게 정렬 mediaQuery로

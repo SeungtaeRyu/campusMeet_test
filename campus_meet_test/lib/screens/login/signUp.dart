@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/login/terms%20_screen.dart';
+import 'package:campus_meet_test/screens/login/terms%20.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/main.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';

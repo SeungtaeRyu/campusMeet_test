@@ -1,12 +1,12 @@
 import 'package:campus_meet_test/models/Auth/SiginIn_model.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
-import 'package:campus_meet_test/screens/login/terms%20_screen.dart';
+import 'package:campus_meet_test/screens/login/terms%20.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import '../../main.dart';
-import 'find_password_screen.dart';
-import 'university_setting_screen.dart';
+import 'find_password.dart';
+import 'university_setting.dart';
 import 'package:http/http.dart' as http;
 
 //에러 url 없어서 그런건지

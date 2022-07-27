@@ -1,9 +1,9 @@
-import 'package:campus_meet_test/screens/login/signIn_screen.dart';
+import 'package:campus_meet_test/screens/login/signIn.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
-import 'package:campus_meet_test/screens/login/check_univ_email_screen.dart';
+import 'package:campus_meet_test/screens/login/check_univ_email.dart';
 import 'package:campus_meet_test/screens/myMeeting/my_meeting_screen.dart';
 import 'package:campus_meet_test/screens/myPage/myPage.dart';
-import 'package:campus_meet_test/screens/myMeeting/requestMeetingAcceptRefusal.dart';
+import 'package:campus_meet_test/screens/myMeeting/request_meeting_response.dart';
 import 'package:campus_meet_test/widgets/bottom_bar_widget.dart';
 import 'package:flutter/material.dart';
 
