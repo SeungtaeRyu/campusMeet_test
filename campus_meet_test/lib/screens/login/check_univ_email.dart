@@ -5,7 +5,7 @@ import 'package:campus_meet_test/routes.dart';
 import 'package:flutter/services.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
-import 'signUp.dart';
+import 'signup.dart';
 
 class CheckUnivPage extends StatefulWidget {
   @override

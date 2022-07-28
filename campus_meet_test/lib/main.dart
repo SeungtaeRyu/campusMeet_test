@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/login/signIn.dart';
+import 'package:campus_meet_test/screens/login/signin.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
 import 'package:campus_meet_test/screens/login/check_univ_email.dart';
 import 'package:campus_meet_test/screens/myMeeting/my_meeting.dart';
