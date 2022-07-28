@@ -155,9 +155,13 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                     MediaQuery.of(context).viewPadding.top -
                     MediaQuery.of(context).size.width * 0.2) *
                 0.5,
-            padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+            padding: EdgeInsets.fromLTRB(20, width * 0.02, 20, 0),
             // color: Colors.,
-            child: myMeeting ? BmeetingPropose ? noMeetingPropose() : noMeetingPropose() : noMeetingPropose(),
+            child: myMeeting
+                ? BmeetingPropose
+                    ? existRequestMeeting()
+                    : existRequestMeeting()
+                : existRequestMeeting(),
           ),
         ],
       ),
@@ -186,20 +190,19 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               itemCount: posts.length,
               itemBuilder: (context, index) {
                 return Container(
-                    child: viewPaddingTop > 21.0
-                        ? Container(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        child: RenderRequestPostCard(post: posts[index]),
-                    )
-                        : Container(
-                       width: MediaQuery.of(context).size.width * 0.85,
-                       child: RenderRequestPostCardSE(post: posts[index])
-                    ),
-
+                  child: viewPaddingTop > 21.0
+                      ? Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: RenderRequestPostCard(post: posts[index]),
+                        )
+                      : Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          child: RenderRequestPostCardSE(post: posts[index])),
                 );
               }),
         ));
   }
+
 //내가 신청한 미팅 있을때 위 SE
   Widget meetingMyProposeSE() {
     double width = MediaQuery.of(context).size.width;
@@ -207,9 +210,10 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
         color: Colors.red,
         margin: EdgeInsets.only(top: width * 0.001),
         height: (MediaQuery.of(context).size.height -
-            MediaQuery.of(context).viewPadding.top -
-            MediaQuery.of(context).size.width * 0.2) *
-            0.5 - width * 0.19,
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).size.width * 0.2) *
+                0.5 -
+            width * 0.19,
         child: SizedBox(
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -222,6 +226,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               }),
         ));
   }
+
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
     return Expanded(
@@ -299,32 +304,43 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18),
+                  fontSize: width * 0.053),
             )),
         Container(
-          margin: EdgeInsets.only(bottom: 40),
+          margin: EdgeInsets.only(bottom: width * 0.02),
           child: Padding(
-            padding: const EdgeInsets.only(top: 60.0),
+            padding: EdgeInsets.only(top: width * 0.13),
             child: Center(
-              child: Container(
-                  width: 63,
-                  height: 63,
-                  child: Image.asset('images/나의미팅신청기다림.png')),
+              child: Column(
+                children: [
+                  Container(
+                      // color: Colors.blue,
+                      height: MediaQuery.of(context).size.width * 0.18,
+                      width: MediaQuery.of(context).size.width * 0.18,
+                      child: Image.asset('images/나의미팅신청기다림.png')),
+                  Container(
+                      // color: Colors.red,
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      height: MediaQuery.of(context).size.width * 0.1,
+                      child: Image.asset('images/dots.png')),
+                ],
+              ),
             ), //캠퍼스밋이미지가져와
           ),
         ),
         Container(
+            // color: Colors.blue,
             child: Text(
           '미팅 신청을 기다리는 중이에요',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black, fontSize: 13),
+          style: TextStyle(color: Colors.black, fontSize: width * 0.033),
         )),
         Container(
           height: MediaQuery.of(context).size.width * 0.1,
           width: MediaQuery.of(context).size.width * 0.6,
           decoration: BoxDecoration(
               color: Color(0xffffe7eb), borderRadius: BorderRadius.circular(5)),
-          margin: EdgeInsets.only(top: 20),
+          margin: EdgeInsets.only(top: width * 0.03),
           alignment: Alignment(0.0, 0.0),
           child: FlatButton(
             onPressed: () async {
@@ -336,7 +352,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             child: Text(
               '개설한 미팅글 확인하기',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+              style:
+                  TextStyle(color: Color(0xffff375c), fontSize: width * 0.037),
             ),
           ),
         ),
@@ -346,51 +363,54 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 
   // 미팅 게시글이 없을 때 하단에 들어가는 컨텐츠임
   Widget noMeetingPost() {
+    double width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Container(
             alignment: Alignment(-1.0, -1.0),
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: width * 0.03),
             child: Text(
               '받은 미팅 신청',
               //textAlign: TextAlign.left,
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18),
+                  fontSize: width * 0.053),
             )),
         Container(
-          margin: EdgeInsets.only(bottom: 40),
+          margin: EdgeInsets.only(bottom: width * 0.02),
           child: Padding(
-            padding: const EdgeInsets.only(top: 60.0),
+            padding: EdgeInsets.only(top: width * 0.13),
             child: Center(
               child: Container(
                   height: MediaQuery.of(context).size.width * 0.18,
                   width: MediaQuery.of(context).size.width * 0.18,
-                  color: Colors.grey,
                   child: Image.asset('images/미작성아이콘.png')),
             ), //캠퍼스밋이미지가져와
           ),
         ),
         Container(
+            padding: EdgeInsets.only(top: width * 0.01),
             child: Text(
-          '아직 아무것도 작성하지 않았어요',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xff7C7C7C), fontSize: 13),
-        )),
+              '아직 아무것도 작성하지 않았어요',
+              textAlign: TextAlign.center,
+              style:
+                  TextStyle(color: Color(0xff7C7C7C), fontSize: width * 0.031),
+            )),
         Container(
             // margin: EdgeInsets.only(top: 3),
+            padding: EdgeInsets.only(top: width * 0.01),
             child: Text(
-          '두근두근 첫 미팅글을 작성해보세요!',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black, fontSize: 14),
-        )),
+              '두근두근 첫 미팅글을 작성해보세요!',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black, fontSize: width * 0.038),
+            )),
         Container(
           height: MediaQuery.of(context).size.width * 0.1,
           width: MediaQuery.of(context).size.width * 0.6,
           decoration: BoxDecoration(
               color: Color(0xffffe7eb), borderRadius: BorderRadius.circular(5)),
-          margin: EdgeInsets.only(top: 20),
+          margin: EdgeInsets.only(top: width * 0.04),
           alignment: Alignment(0.0, 0.0),
           child: FlatButton(
             onPressed: () async {
@@ -401,7 +421,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             },
             child: Text(
               '미팅 글 작성하러 가기',
-              style: TextStyle(color: Color(0xffff375c), fontSize: 13),
+              style:
+                  TextStyle(color: Color(0xffff375c), fontSize: width * 0.033),
             ),
           ),
         )
