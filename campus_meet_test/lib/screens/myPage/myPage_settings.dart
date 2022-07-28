@@ -1,4 +1,4 @@
-import 'package:campus_meet_test/screens/myPage/myPageSettingsResign.dart';
+import 'package:campus_meet_test/screens/myPage/myPage_settings_resign.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

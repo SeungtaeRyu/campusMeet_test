@@ -1,8 +1,8 @@
-import 'package:campus_meet_test/controller/friendController.dart';
-import 'package:campus_meet_test/models/Friend/friendList.dart';
+import 'package:campus_meet_test/controller/friend_controller.dart';
+import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:flutter/material.dart';
-import 'homeMeetingRequest2.dart';
+import 'home_meeting_request2.dart';
 
 class MeetingRequest extends StatefulWidget {
   const MeetingRequest({Key? key, required this.post}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/screens/myPage/myPageMyMeetingHistory.dart';
+import 'package:campus_meet_test/screens/myPage/myPage_myMeeting_history.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'myPageEdit.dart';
-import 'myPageFriend.dart';
-import 'myPageNotice.dart';
-import 'myPageSettings.dart';
+import 'myPage_edit.dart';
+import 'myPage_friend.dart';
+import 'myPage_notice.dart';
+import 'myPage_settings.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);

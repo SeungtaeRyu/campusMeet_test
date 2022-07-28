@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'myPageNoticeDetail.dart';
+import 'myPage_notice_detail.dart';
 
 class MyPageNoticeScreen extends StatefulWidget {
   const MyPageNoticeScreen({Key? key}) : super(key: key);

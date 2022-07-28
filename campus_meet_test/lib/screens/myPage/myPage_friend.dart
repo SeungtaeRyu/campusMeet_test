@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'myPageFriendAdd.dart';
-import 'myPageFriendEdit.dart';
+import 'myPage_friend_add.dart';
+import 'myPage_friend_edit.dart';
 
 class MyPageFriendScreen extends StatefulWidget {
   const MyPageFriendScreen({Key? key}) : super(key: key);

@@ -149,21 +149,6 @@ class _State extends State<SignUpScreen> {
                 ),
               ),
 
-              // padding: EdgeInsets.all(10),
-              // child: TextFormField(
-              //   controller: name,
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(),
-              //     labelText: '이름',
-              //   ),
-              //   validator: Validators.compose([
-              //     Validators.required('Password is required'),
-              //     Validators.patternString(
-              //         r'^(?=.*?[ㄱ-힣]).{2,5}$', //한국어 검사는 없어? 최댓값지정해야하나? //pass
-              //         '이름을 입력해주세요')
-              //   ]),
-              // ),
-              //이름
 
               // 학번 입력받을때 숫자패드만 보이게 아래 참고
               // https://stackoverflow.com/questions/49577781/how-to-create-number-input-field-in-flutter

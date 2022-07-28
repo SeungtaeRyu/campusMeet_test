@@ -1,6 +1,6 @@
 import 'package:blur/blur.dart';
-import 'package:campus_meet_test/widgets/carousel_slider.dart';
-import 'package:campus_meet_test/widgets/renderOtherPersonProfile.dart';
+import 'package:campus_meet_test/widgets/carousel_slider_widget.dart';
+import 'package:campus_meet_test/widgets/render_other_person_profile_widget.dart';
 import 'package:flutter/material.dart';
 
 class OtherPersonProfileScreen extends StatefulWidget {

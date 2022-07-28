@@ -1,10 +1,10 @@
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
-import 'package:campus_meet_test/screens/home/homeWriting.dart';
+import 'package:campus_meet_test/screens/home/home_writing.dart';
 import 'package:campus_meet_test/screens/myMeeting/request_meeting_response.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
-import 'package:campus_meet_test/widgets/render_request_post_card.dart';
-import 'package:campus_meet_test/widgets/render_request_post_card_SE.dart';
+import 'package:campus_meet_test/widgets/render_request_post_card_widget.dart';
+import 'package:campus_meet_test/widgets/render_request_post_card_SE_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_meet_test/screens/home/home.dart';
 import 'check_my_writing.dart';

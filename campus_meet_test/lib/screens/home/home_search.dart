@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
-import 'package:campus_meet_test/models/meetingPostTest.dart';
+import 'package:campus_meet_test/models/meetingPostTest_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,8 +1,8 @@
 import 'package:campus_meet_test/Controller/meetingPostController.dart';
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
-import 'package:campus_meet_test/models/MeetingPost/meetingMember_model.dart';
-import 'package:campus_meet_test/widgets/post_member_popup.dart';
+import 'package:campus_meet_test/models/MeetingPost/meeting_member_model.dart';
+import 'package:campus_meet_test/widgets/post_member_popup_widget.dart';
 import 'package:flutter/material.dart';
 
 class RenderPostCard extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:campus_meet_test/models/address_model.dart';
-import 'package:campus_meet_test/screens/home/homeWritingAddMember.dart';
+import 'package:campus_meet_test/screens/home/home_writing_add_member.dart';
 import 'package:flutter/material.dart';
 
 class ReviseScreen extends StatefulWidget {

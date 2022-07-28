@@ -1,8 +1,8 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/address_model.dart';
 import 'package:flutter/material.dart';
-import 'myPageEditKeyword.dart';
-import 'myPageEditMajor.dart';
+import 'myPage_edit_keyword.dart';
+import 'myPage_edit_major.dart';
 
 class MyPageEditScreen extends StatefulWidget {
   const MyPageEditScreen({Key? key}) : super(key: key);

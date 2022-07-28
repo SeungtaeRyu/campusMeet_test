@@ -1,8 +1,8 @@
-import 'package:campus_meet_test/controller/meetingPostController.dart';
-import 'package:campus_meet_test/models/MeetingPost/meetingMember_model.dart';
+import 'package:campus_meet_test/controller/meetingPost_controller.dart';
+import 'package:campus_meet_test/models/MeetingPost/meeting_member_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
-import 'package:campus_meet_test/screens/home/homeMeetingRequest.dart';
-import 'package:campus_meet_test/screens/home/otherPersonProfile_screen.dart';
+import 'package:campus_meet_test/screens/home/home_meeting_request.dart';
+import 'package:campus_meet_test/screens/home/other_person_profile.dart';
 import 'package:flutter/material.dart';
 
 class MemberPopupScreen extends StatefulWidget {

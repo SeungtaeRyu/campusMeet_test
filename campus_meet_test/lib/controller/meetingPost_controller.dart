@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:campus_meet_test/models/Location/Location_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
-import 'package:campus_meet_test/models/MeetingPost/meetingMember_model.dart';
+import 'package:campus_meet_test/models/MeetingPost/meeting_member_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -74,13 +74,14 @@ Future<List<Post>> getAllPostWithFilter(int numOfMember, List<Location> location
   }
 }
 
+
 Future<List<MeetingMember>> getMeetingMember(int id) async {
 
   final Response response = new Response('[{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}, '
       '{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}, {"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}]', 200,
-    headers: {
-    HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-  });
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
+      });
 
   // 추후에 users 대신 searchText 사용하기!!
   // final response = await http.get(Uri.parse("http://localhost:3000/api/v1/posts/:$id/members"));

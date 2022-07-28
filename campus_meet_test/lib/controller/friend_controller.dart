@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:campus_meet_test/models/Friend/friendList.dart';
+import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
