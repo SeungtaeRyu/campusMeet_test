@@ -157,11 +157,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                 0.5,
             padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
             // color: Colors.,
-            child: myMeeting
-                ? BmeetingPropose
-                    ? existRequestMeeting()
-                    : existRequestMeeting()
-                : existRequestMeeting(),
+            child: myMeeting ? BmeetingPropose ? noMeetingPropose() : noMeetingPropose() : noMeetingPropose(),
           ),
         ],
       ),
@@ -174,8 +170,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 
 //내가 신청한 미팅 있을때 위
   Widget meetingMyPropose() {
-    // return Expanded(child: Container(
-    //MediaQuery.of(context).size.width 크기 몇 이하면 다른 화면(작은 화면 보여줘야함)
     double width = MediaQuery.of(context).size.width;
     double viewPaddingTop = MediaQuery.of(context).viewPadding.top;
     return Container(
@@ -185,32 +179,13 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                     MediaQuery.of(context).size.width * 0.2) *
                 0.5 -
             width * 0.19,
-        // margin: EdgeInsets.only(top: 20.0),
-        // height: MediaQuery.of(context).size.width * 0.29, // 여기 0.64로 두면 SE에서 난감해진다
         child: SizedBox(
-          // height: (MediaQuery.of(context).size.height -
-          //         MediaQuery.of(context).viewPadding.top -
-          //         MediaQuery.of(context).size.width * 0.2) *
-          //     0.5 - width * 0.05,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
               itemCount: posts.length,
               itemBuilder: (context, index) {
                 return Container(
-                    // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
-
-                    // margin: EdgeInsets.only(right: 0.9),
-                    // padding: EdgeInsets.only(right: 0),
-
-                    // width > 21
-                    //     ? Container(
-                    //   child: meetingMyPropose(),
-                    // )
-                    //     : Container(
-                    //   child: meetingMyProposeSE(),
-                    // ),
-                    //
                     child: viewPaddingTop > 21.0
                         ? Container(
                         width: MediaQuery.of(context).size.width * 0.85,
@@ -227,8 +202,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   }
 //내가 신청한 미팅 있을때 위 SE
   Widget meetingMyProposeSE() {
-    // return Expanded(child: Container(
-    //MediaQuery.of(context).size.width 크기 몇 이하면 다른 화면(작은 화면 보여줘야함)
     double width = MediaQuery.of(context).size.width;
     return Container(
         color: Colors.red,
@@ -237,23 +210,14 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             MediaQuery.of(context).viewPadding.top -
             MediaQuery.of(context).size.width * 0.2) *
             0.5 - width * 0.19,
-        // margin: EdgeInsets.only(top: 20.0),
-        // height: MediaQuery.of(context).size.width * 0.29, // 여기 0.64로 두면 SE에서 난감해진다
         child: SizedBox(
-          // height: (MediaQuery.of(context).size.height -
-          //         MediaQuery.of(context).viewPadding.top -
-          //         MediaQuery.of(context).size.width * 0.2) *
-          //     0.5 - width * 0.05,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
               itemCount: posts.length,
               itemBuilder: (context, index) {
                 return Container(
-                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(70)),
                     width: MediaQuery.of(context).size.width * 0.85,
-                    // margin: EdgeInsets.only(right: 0.9),
-                    // padding: EdgeInsets.only(right: 0),
                     child: RenderRequestPostCard(post: posts[index]));
               }),
         ));
@@ -322,12 +286,13 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 //여기부터 아래///////////////////////////////
   // 미팅 신청이 없을 때 아래
   Widget noMeetingPropose() {
+    double width = MediaQuery.of(context).size.width;
     return Column(
       children: [
         Container(
             //color: Colors.red,
             alignment: Alignment(-1.0, -1.0),
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: width * 0.03),
             child: Text(
               '받은 미팅 신청',
               //textAlign: TextAlign.left,
@@ -369,7 +334,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               );
             },
             child: Text(
-              '내가 쓴 미팅 글 확인하기',
+              '개설한 미팅글 확인하기',
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xffff375c), fontSize: 13),
             ),
@@ -465,7 +430,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   children: [
                     Container(
                       child: Text(
-                        '내가 쓴 미팅 글 확인하기',
+                        '개설한 미팅글 확인하기',
                         style: TextStyle(
                             color: Color(0xffff375c),
                             fontWeight: FontWeight.w700,
