@@ -18,13 +18,6 @@ class RenderRequestPostCard extends StatefulWidget {
 }
 
 class _RenderRequestPostState extends State<RenderRequestPostCard> {
-  // late Future<List<MeetingMember>> meetingMember;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   meetingMember = getMeetingMember(widget.post.id);
-  // }
 
   @override
   Widget build(BuildContext context) {
