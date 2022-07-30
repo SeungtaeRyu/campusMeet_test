@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 
 Future<List<FriendList>> getMyFriend() async {
 
-  final Response response = new Response('[{"id" : 1, "friend" : {"id" : 1,"email" : "dojin@mju.ac.kr","name" : "유도진","nickname" : "아무닉네임"}}, {"id" : 1, "friend" : {"id" : 1,"email" : "dojin@mju.ac.kr","name" : "유도진","nickname" : "아무닉네임"}},{"id" : 1, "friend" : {"id" : 1,"email" : "dojin@mju.ac.kr","name" : "유도진","nickname" : "아무닉네임"}},{"id" : 1, "friend" : {"id" : 1,"email" : "dojin@mju.ac.kr","name" : "유도진","nickname" : "아무닉네임"}}]', 200,
+  final Response response = new Response('[{"id" : 1, "friend" : {"id" : 1,"email" : "dojin@mju.ac.kr","name" : "친구1","nickname" : "친구1"}}, {"id" : 2, "friend" : {"id" : 2,"email" : "dojin@mju.ac.kr","name" : "친구2","nickname" : "친구2"}},{"id" : 3, "friend" : {"id" : 3,"email" : "dojin@mju.ac.kr","name" : "친구3","nickname" : "친구3"}},{"id" : 4, "friend" : {"id" : 4,"email" : "dojin@mju.ac.kr","name" : "친구4","nickname" : "친구4"}}]', 200,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       });

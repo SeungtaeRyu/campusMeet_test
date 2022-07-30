@@ -1,8 +1,9 @@
+import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:flutter/material.dart';
 
 class MeetingRequest2 extends StatefulWidget {
   const MeetingRequest2({Key? key, required this.memberData}) : super(key: key);
-  final List<String> memberData;
+  final List<FriendList> memberData;
 
   @override
   _MeetingRequest2State createState() => _MeetingRequest2State();
