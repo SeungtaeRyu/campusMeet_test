@@ -10,7 +10,14 @@ class MeetingRequest2 extends StatefulWidget {
 }
 
 class _MeetingRequest2State extends State<MeetingRequest2> {
+
+  // 포지션
   List<double> position = [];
+
+  //
+  List<int> postIdData = [];
+
+  // 한마디 어필 용 텍스트 컨트롤러
   TextEditingController appealController = TextEditingController();
   final int textMaxLength = 20;
   String textValue = "";
@@ -18,6 +25,7 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
   @override
   void initState() {
     super.initState();
+    // 스택 포지션 위치 할당
     if (widget.memberData.length == 1) {
       position.add(-40);
       position.add(40);
@@ -25,6 +33,12 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
       position.add(-80);
       position.add(0);
       position.add(80);
+    }
+    //
+    int myId = 0;
+    postIdData.add(myId);
+    for(int i = 0; i < widget.memberData.length; i++) {
+      postIdData.add(widget.memberData[i].friend.id);
     }
   }
 
@@ -48,7 +62,7 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
                   onPressed: () {
-                    print("memberData: ${widget.memberData}");
+                    print("postIdData: ${postIdData}");
                     print("appealController.text: ${appealController.text}");
                   },
                   child: Text(
@@ -99,6 +113,7 @@ class _MeetingRequest2State extends State<MeetingRequest2> {
                                 child: CircleAvatar(
                                   radius: 63,
                                   backgroundColor: Colors.grey.shade500,
+                                  child: index == 0 ? Text("my image") : Text("${widget.memberData[index-1].friend.nickname}'s image"),
                                 ),
                               ),
                             );

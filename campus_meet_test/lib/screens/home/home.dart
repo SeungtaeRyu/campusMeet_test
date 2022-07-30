@@ -50,13 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
         "id": 0,
         "univ": "명지대학교",
         "entryYear": 20,
-        "name": "홍길동",
+        "name": "류승태",
         "profileImages": ["http://hostaddress/path"]
       },
       "title": "방학 3일남은 한량들입니다",
       "createdAt": "2020-02-11 13:01:12",
       "updatedAt": "2020-02-11 13:01:12",
-      "numOfMember": 3,
+      "numOfMember": 4,
       "tags": [
         {"id": 0, "text": "얼굴천재"},
         {"id": 1, "text": "마네킹비율"},
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         "id": 0,
         "univ": "명지대학교",
         "entryYear": 20,
-        "name": "홍길동",
+        "name": "서해수",
         "profileImages": ["http://hostaddress/path"]
       },
       "title": "방학 3일남은 한량들입니다",

@@ -78,7 +78,8 @@ Future<List<Post>> getAllPostWithFilter(int numOfMember, List<Location> location
 Future<List<MeetingMember>> getMeetingMember(int id) async {
 
   final Response response = new Response('[{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}, '
-      '{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}, {"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}]', 200,
+      '{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}, {"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]},'
+      '{"id": 10, "univ":"명지대학교", "entryYear": 20, "name": "홍길동", "profileImages":["12345"]}]', 200,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
       });

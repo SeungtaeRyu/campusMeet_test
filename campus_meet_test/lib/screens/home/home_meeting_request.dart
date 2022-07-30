@@ -52,7 +52,6 @@ class _MeetingRequestState extends State<MeetingRequest> {
 
   @override
   Widget build(BuildContext context) {
-    print(count);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
