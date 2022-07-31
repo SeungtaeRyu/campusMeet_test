@@ -1,23 +1,23 @@
 class Location {
   Location({
     required this.id,
-    required this.cityStateName,
-    required this.cityCountryName,
+    required this.stateName,
+    required this.cityName,
   });
 
   int id;
-  String cityStateName;
-  String cityCountryName;
+  String stateName;
+  String cityName;
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
     id: json["id"],
-    cityStateName: json["cityStateName"],
-    cityCountryName: json["cityCountryName"],
+    stateName: json["stateName"],
+    cityName: json["cityName"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "cityStateName": cityStateName,
-    "cityCountryName": cityCountryName,
+    "stateName": stateName,
+    "cityName": cityName,
   };
 }

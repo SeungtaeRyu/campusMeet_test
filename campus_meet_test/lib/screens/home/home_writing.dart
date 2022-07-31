@@ -10,6 +10,10 @@ class WritingScreen extends StatefulWidget {
 }
 
 class _WritingScreenState extends State<WritingScreen> {
+
+  //
+
+
   TextEditingController titleController = TextEditingController();
   TextEditingController openChatLinkController = TextEditingController();
   List<String> memberData = []; // 멤버결성창에서 리턴될 데이터

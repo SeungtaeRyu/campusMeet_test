@@ -99,7 +99,7 @@ class _MemberPopupScreenState extends State<MemberPopupScreen> {
                                       // 상대프로필 페이지로 이동
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => OtherPersonProfileScreen(userId: snapshot.data![index].id)),
+                                        MaterialPageRoute(builder: (context) => PostMemberDetailsScreen(userId: snapshot.data![index].id)),
                                       );
                                     },
                                     icon: Icon(

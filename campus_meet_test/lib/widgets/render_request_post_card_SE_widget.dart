@@ -85,7 +85,7 @@ class _RenderRequestPostState extends State<RenderRequestPostCardSE> {
                   ),
                   Padding(padding: EdgeInsets.only(right: width * 0.1)),
                   Text(
-                    "${widget.post.location.cityStateName} ${widget.post.location.cityCountryName} · ${widget.post.createdAt}",
+                    "${widget.post.location.stateName} ${widget.post.location.cityName} · ${widget.post.createdAt}",
                     style: TextStyle(
                       fontSize: width * 0.026,
                       color: Colors.grey.shade500,

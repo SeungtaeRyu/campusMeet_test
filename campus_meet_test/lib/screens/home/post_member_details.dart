@@ -3,15 +3,15 @@ import 'package:campus_meet_test/widgets/carousel_slider_widget.dart';
 import 'package:campus_meet_test/widgets/render_other_person_profile_widget.dart';
 import 'package:flutter/material.dart';
 
-class OtherPersonProfileScreen extends StatefulWidget {
-  const OtherPersonProfileScreen({Key? key, required this.userId}) : super(key: key);
+class PostMemberDetailsScreen extends StatefulWidget {
+  const PostMemberDetailsScreen({Key? key, required this.userId}) : super(key: key);
   final int userId;
 
   @override
   _OtherPersonProfileScreenState createState() => _OtherPersonProfileScreenState();
 }
 
-class _OtherPersonProfileScreenState extends State<OtherPersonProfileScreen> {
+class _OtherPersonProfileScreenState extends State<PostMemberDetailsScreen> {
   final bool isAddInfo = false;
 
   @override
