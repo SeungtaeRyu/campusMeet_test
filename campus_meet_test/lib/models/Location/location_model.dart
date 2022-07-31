@@ -9,10 +9,12 @@ class Location {
   String stateName;
   String cityName;
 
+
   factory Location.fromJson(Map<String, dynamic> json) => Location(
     id: json["id"],
     stateName: json["state_name"],
     cityName: json["city_name"],
+
   );
 
   Map<String, dynamic> toJson() => {

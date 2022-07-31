@@ -1,4 +1,5 @@
 import 'package:campus_meet_test/models/address_model.dart';
+import 'package:campus_meet_test/widgets/region_selection_popup_widget.dart';
 import 'package:flutter/material.dart';
 import 'home_writing_add_member.dart';
 
@@ -231,7 +232,6 @@ class _WritingScreenState extends State<WritingScreen> {
           toolbarHeight: MediaQuery.of(context).size.width * 0.1,
           elevation: 0.0,
 
-          // actions 버튼 패딩 어쩔꺼?
           actions: [
             Container(
               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -329,30 +329,20 @@ class _WritingScreenState extends State<WritingScreen> {
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
           ),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: 10),
-                child: TextButton(
-                  // TextButton inner padding 삭제하는방법!!
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Row(
-                    children: [
-                      Text(
-                        addressData == "" ? "지역 선택" : addressData,
-                        style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_down,
-                        color: addressData == "" ? Colors.grey.shade500 : Colors.black,
-                        size: 26,
-                      ),
-                    ],
-                  ),
+          Container(
+            padding: EdgeInsets.only(bottom: 10),
+            child:
+            Row(
+              children: [
+                Text(
+                  addressData == "" ? "지역 선택" : addressData,
+                  style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
+                ),
+                // RegionSelectionPopupScreen()
+                IconButton(
+                  padding: EdgeInsets.zero, // 아이콘 패딩 설정
+                  constraints: BoxConstraints(), // constraints
+                  icon: Icon(Icons.keyboard_arrow_down),
                   onPressed: () {
                     showModalBottomSheet(
                       backgroundColor: Colors.white,
@@ -408,7 +398,7 @@ class _WritingScreenState extends State<WritingScreen> {
                                           alignment: Alignment.center,
                                           width: MediaQuery.of(context).size.width * 0.3,
                                           decoration:
-                                              BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
+                                          BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
                                           child: renderFirstAddress(mystate),
                                         ),
                                         Expanded(
@@ -483,8 +473,160 @@ class _WritingScreenState extends State<WritingScreen> {
                     );
                   },
                 ),
-              ),
-            ],
+                // RegionSelectionPopupScreen()
+              ],
+            )
+
+            // TextButton(
+            //   // TextButton inner padding 삭제하는방법!!
+            //   style: TextButton.styleFrom(
+            //     padding: EdgeInsets.zero,
+            //     minimumSize: Size.zero,
+            //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Text(
+            //         addressData == "" ? "지역 선택" : addressData,
+            //         style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
+            //       ),
+            //       Icon(
+            //         Icons.keyboard_arrow_down,
+            //         color: addressData == "" ? Colors.grey.shade500 : Colors.black,
+            //         size: 26,
+            //       ),
+            //     ],
+            //   ),
+            //   onPressed: () {
+            //     showModalBottomSheet(
+            //       backgroundColor: Colors.white,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+            //       ),
+            //       isScrollControlled: true,
+            //       context: context,
+            //       builder: (context) {
+            //         return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
+            //           return SingleChildScrollView(
+            //             child: Container(
+            //               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            //               height: MediaQuery.of(context).size.width * 1.5,
+            //               child: Column(
+            //                 children: [
+            //                   Container(
+            //                     padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            //                     decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+            //                     child: Row(
+            //                       crossAxisAlignment: CrossAxisAlignment.center,
+            //                       children: [
+            //                         Container(
+            //                           // color: Colors.pink,
+            //                           alignment: Alignment.center,
+            //                           width: MediaQuery.of(context).size.width * 0.3,
+            //                           child: Text(
+            //                             "시/도",
+            //                             style: TextStyle(fontSize: 16),
+            //                           ),
+            //                         ),
+            //                         Container(
+            //                           // color: Colors.blue,
+            //                           padding: EdgeInsets.only(left: 30),
+            //                           alignment: Alignment.centerLeft,
+            //                           width: MediaQuery.of(context).size.width * 0.3,
+            //                           child: Text(
+            //                             "시/구/군",
+            //                             style: TextStyle(fontSize: 16),
+            //                           ),
+            //                         ),
+            //                         Expanded(
+            //                           child: Container(),
+            //                         )
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Expanded(
+            //                     child: Row(
+            //                       children: [
+            //                         Container(
+            //                           padding: EdgeInsets.only(top: 10),
+            //                           alignment: Alignment.center,
+            //                           width: MediaQuery.of(context).size.width * 0.3,
+            //                           decoration:
+            //                               BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
+            //                           child: renderFirstAddress(mystate),
+            //                         ),
+            //                         Expanded(
+            //                           child: Container(
+            //                             alignment: Alignment.centerLeft,
+            //                             width: MediaQuery.of(context).size.width * 0.3,
+            //                             decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+            //                             child: renderSecondAddress(mystate),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                   Container(
+            //                     height: MediaQuery.of(context).size.width * 0.25,
+            //                     padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            //                     child: Row(
+            //                       children: [
+            //                         Expanded(
+            //                           child: Container(
+            //                             height: MediaQuery.of(context).size.width * 0.1,
+            //                             child: OutlinedButton(
+            //                               child: Text(
+            //                                 "닫기",
+            //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+            //                               ),
+            //                               style: OutlinedButton.styleFrom(
+            //                                   shape: RoundedRectangleBorder(
+            //                                     borderRadius: BorderRadius.circular(10),
+            //                                   ),
+            //                                   side: BorderSide(color: Colors.pink)),
+            //                               onPressed: () {
+            //                                 Navigator.pop(context);
+            //                               },
+            //                             ),
+            //                           ),
+            //                         ),
+            //                         Padding(padding: EdgeInsets.only(right: 15)),
+            //                         Expanded(
+            //                           child: Container(
+            //                             height: MediaQuery.of(context).size.width * 0.1,
+            //                             child: OutlinedButton(
+            //                               child: Text(
+            //                                 "확인",
+            //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
+            //                               ),
+            //                               style: OutlinedButton.styleFrom(
+            //                                   shape: RoundedRectangleBorder(
+            //                                     borderRadius: BorderRadius.circular(10),
+            //                                   ),
+            //                                   side: BorderSide(color: Colors.pink)),
+            //                               onPressed: () {
+            //                                 setState(() {
+            //                                   addressData = "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
+            //                                   // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
+            //                                   // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
+            //                                 });
+            //                                 Navigator.pop(context);
+            //                               },
+            //                             ),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           );
+            //         });
+            //       },
+            //     );
+            //   },
+            // ),
           ),
         ],
       ),
