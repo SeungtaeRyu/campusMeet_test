@@ -1,12 +1,9 @@
 import 'package:badges/badges.dart';
-import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
-import 'package:campus_meet_test/models/metting_post_model.dart';
+import 'package:campus_meet_test/widgets/popup_region_selection_widget.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
-import 'package:campus_meet_test/widgets/render_request_post_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'home_filter.dart';
-import 'home_meeting_request.dart';
 import 'home_notice.dart';
 import 'home_search.dart';
 import 'home_writing.dart';
@@ -91,72 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
     })
   ];
 
-  List<MeetingPost> meetingPosts = [
-    MeetingPost.fromMap({
-      'id': 1,
-      'title': '방학 3일남은 한량들입니다.',
-      'location': '서울 강남구',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 3,
-    }),
-    MeetingPost.fromMap({
-      'id': 2,
-      'title': '개강의 슬픔을 술로 달래실 분들',
-      'location': '서울 전체',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 4,
-    }),
-    MeetingPost.fromMap({
-      'id': 3,
-      'title': '개강 기념 미팅할 사람 구해요!',
-      'location': '서울 전체',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2', 'keyword3', 'keyword4'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 4,
-    }),
-    MeetingPost.fromMap({
-      'id': 4,
-      'title': '미팅 너무 재밌겠다 그죠잉',
-      'location': '경기도 파주시',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 2,
-    }),
-    MeetingPost.fromMap({
-      'id': 4,
-      'title': '미팅 너무 재밌겠다 그죠잉',
-      'location': '경기도 파주시',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 2,
-    }),
-    MeetingPost.fromMap({
-      'id': 4,
-      'title': '미팅 너무 재밌겠다 그죠잉',
-      'location': '경기도 파주시',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 2,
-    }),
-    MeetingPost.fromMap({
-      'id': 4,
-      'title': '미팅 너무 재밌겠다 그죠잉',
-      'location': '경기도 파주시',
-      'createdAt': 'createdAt',
-      'keyword': ['keyword1', 'keyword2'],
-      'writerId': '작성자 학교/학번/닉네임',
-      'numMember': 2,
-    }),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,7 +127,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          IconButton(icon: Icon(Icons.close, color: Colors.black, size: 26), padding: EdgeInsets.fromLTRB(0, 0, 20, 0), constraints: BoxConstraints(), onPressed: () {}),
+          IconButton(icon: Icon(Icons.close, color: Colors.black, size: 26), padding: EdgeInsets.fromLTRB(0, 0, 20, 0), constraints: BoxConstraints(), onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => RegionSelectionPopupScreen()));
+          }),
         ],
       ),
       backgroundColor: Colors.grey.shade100,
