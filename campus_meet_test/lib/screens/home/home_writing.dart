@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/models/Location/location_model.dart';
 import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/widgets/popup_region_selection_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,134 +13,15 @@ class WritingScreen extends StatefulWidget {
 
 class _WritingScreenState extends State<WritingScreen> {
 
-  //
+  // 선택된 지역 변수
+  List<Location> selectedLocation = [];
 
 
   TextEditingController titleController = TextEditingController();
   TextEditingController openChatLinkController = TextEditingController();
   List<String> memberData = []; // 멤버결성창에서 리턴될 데이터
-  String addressData = ""; // 지역선택창에서 리턴될 데이터
-  List<Address> addresses = [
-    Address.fromMap(
-      {
-        'id': 1,
-        'firstAddress': '서울',
-        'secondAddress': '강남구',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 2,
-        'firstAddress': '서울',
-        'secondAddress': '강동구',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 3,
-        'firstAddress': '서울',
-        'secondAddress': '강북구',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 4,
-        'firstAddress': '서울',
-        'secondAddress': '강서구',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 5,
-        'firstAddress': '서울',
-        'secondAddress': '관악구',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 6,
-        'firstAddress': '경기',
-        'secondAddress': '가평군',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 7,
-        'firstAddress': '경기',
-        'secondAddress': '구리시',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 8,
-        'firstAddress': '경기',
-        'secondAddress': '김포시',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 9,
-        'firstAddress': '경기',
-        'secondAddress': '파주시',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 10,
-        'firstAddress': '경기',
-        'secondAddress': '평택시',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 11,
-        'firstAddress': '경기',
-        'secondAddress': '평택시2',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 12,
-        'firstAddress': '경기',
-        'secondAddress': '평택시3',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 13,
-        'firstAddress': '경기',
-        'secondAddress': '평택시4',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 14,
-        'firstAddress': '경남',
-        'secondAddress': '거제시',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 15,
-        'firstAddress': '경남',
-        'secondAddress': '거제시2',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 16,
-        'firstAddress': '경남',
-        'secondAddress': '거제시3',
-      },
-    ),
-    Address.fromMap(
-      {
-        'id': 17,
-        'firstAddress': '경남',
-        'secondAddress': '거제시4',
-      },
-    ),
-  ];
+
+
   List<String> firstAddress = [];
   List<String> filteredFirstAddress = [];
   List<bool> selectedFirstAddress = [];
@@ -183,32 +65,6 @@ class _WritingScreenState extends State<WritingScreen> {
   void initState() {
     super.initState();
 
-    for (int i = 0; i < addresses.length; i++) {
-      firstAddress.add(addresses[i].firstAddress);
-    }
-    filteredFirstAddress = firstAddress.toSet().toList();
-    for (int i = 0; i < filteredFirstAddress.length; i++) {
-      if (i == 0) {
-        selectedFirstAddress.add(true);
-      } else {
-        selectedFirstAddress.add(false);
-      }
-    }
-
-    // secondAddress 초기화
-    for (int i = 0; i < addresses.length; i++) {
-      if (addresses[i].firstAddress == filteredFirstAddress[selectedFirstAddress.indexOf(true)]) {
-        secondAddress.add(addresses[i].secondAddress);
-      }
-    }
-    // selectedSecondAddress 초기화
-    for (int i = 0; i < secondAddress.length; i++) {
-      if (i == 0) {
-        selectedSecondAddress.add(true);
-      } else {
-        selectedSecondAddress.add(false);
-      }
-    }
     // selectedKeywords
     for (int i = 0; i < keywords.length; i++) {
       selectedKeywords.add(false);
@@ -237,12 +93,12 @@ class _WritingScreenState extends State<WritingScreen> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ElevatedButton(
                 onPressed: () {
-                  print("titleController.text : ${titleController.text}");
-                  print("address data: ${addressData}");
-                  print("member data: ${memberData}");
-                  print("openChatLinkController.text : ${openChatLinkController.text}");
-                  print("keywords 선택된 건 selectedKeywords의 true값");
-                  print(selectedKeywords);
+                  // print("titleController.text : ${titleController.text}");
+                  // print("Location data: ${selectedLocation[0].id}");
+                  // print("member data: ${memberData}");
+                  // print("openChatLinkController.text : ${openChatLinkController.text}");
+                  // print("keywords 선택된 건 selectedKeywords의 true값");
+                  // print(selectedKeywords);
                 },
                 child: Text(
                   "등록",
@@ -335,395 +191,39 @@ class _WritingScreenState extends State<WritingScreen> {
             Row(
               children: [
                 Text(
-                  addressData == "" ? "지역 선택" : addressData,
-                  style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
+                  selectedLocation.length == 0 ? "지역 선택" : "${selectedLocation[0].stateName} ${selectedLocation[0].cityName}",
+                  style: TextStyle(fontSize: 16, color: selectedLocation == [] ? Colors.grey.shade500 : Colors.black, height: 1),
                 ),
-                RegionSelectionPopupScreen()
+                IconButton(
+                  onPressed: (){
+                    showModalBottomSheet(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                        ),
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) =>
+                            RegionSelectionPopupScreen()
+                    ).then((value){
+                      setState((){
+                        if (value.length == 0) {
+                        } else {
+                          selectedLocation = value;
+                        }
+                      });
+                    });
+                  },
+                  padding: EdgeInsets.zero, // 아이콘 패딩 설정
+                  constraints: BoxConstraints(), // constraints
+                  icon: Icon(Icons.keyboard_arrow_down),
+                ),
 
-                // IconButton(
-                //   padding: EdgeInsets.zero, // 아이콘 패딩 설정
-                //   constraints: BoxConstraints(), // constraints
-                //   icon: Icon(Icons.keyboard_arrow_down),
-                //   onPressed: () {
-                //     showModalBottomSheet(
-                //       backgroundColor: Colors.white,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-                //       ),
-                //       isScrollControlled: true,
-                //       context: context,
-                //       builder: (context) {
-                //         return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
-                //           return SingleChildScrollView(
-                //             child: Container(
-                //               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                //               height: MediaQuery.of(context).size.width * 1.5,
-                //               child: Column(
-                //                 children: [
-                //                   Container(
-                //                     padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                //                     decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                //                     child: Row(
-                //                       crossAxisAlignment: CrossAxisAlignment.center,
-                //                       children: [
-                //                         Container(
-                //                           // color: Colors.pink,
-                //                           alignment: Alignment.center,
-                //                           width: MediaQuery.of(context).size.width * 0.3,
-                //                           child: Text(
-                //                             "시/도",
-                //                             style: TextStyle(fontSize: 16),
-                //                           ),
-                //                         ),
-                //                         Container(
-                //                           // color: Colors.blue,
-                //                           padding: EdgeInsets.only(left: 30),
-                //                           alignment: Alignment.centerLeft,
-                //                           width: MediaQuery.of(context).size.width * 0.3,
-                //                           child: Text(
-                //                             "시/구/군",
-                //                             style: TextStyle(fontSize: 16),
-                //                           ),
-                //                         ),
-                //                         Expanded(
-                //                           child: Container(),
-                //                         )
-                //                       ],
-                //                     ),
-                //                   ),
-                //                   Expanded(
-                //                     child: Row(
-                //                       children: [
-                //                         Container(
-                //                           padding: EdgeInsets.only(top: 10),
-                //                           alignment: Alignment.center,
-                //                           width: MediaQuery.of(context).size.width * 0.3,
-                //                           decoration:
-                //                           BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
-                //                           child: renderFirstAddress(mystate),
-                //                         ),
-                //                         Expanded(
-                //                           child: Container(
-                //                             alignment: Alignment.centerLeft,
-                //                             width: MediaQuery.of(context).size.width * 0.3,
-                //                             decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-                //                             child: renderSecondAddress(mystate),
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                   Container(
-                //                     height: MediaQuery.of(context).size.width * 0.25,
-                //                     padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-                //                     child: Row(
-                //                       children: [
-                //                         Expanded(
-                //                           child: Container(
-                //                             height: MediaQuery.of(context).size.width * 0.1,
-                //                             child: OutlinedButton(
-                //                               child: Text(
-                //                                 "닫기",
-                //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
-                //                               ),
-                //                               style: OutlinedButton.styleFrom(
-                //                                   shape: RoundedRectangleBorder(
-                //                                     borderRadius: BorderRadius.circular(10),
-                //                                   ),
-                //                                   side: BorderSide(color: Colors.pink)),
-                //                               onPressed: () {
-                //                                 Navigator.pop(context);
-                //                               },
-                //                             ),
-                //                           ),
-                //                         ),
-                //                         Padding(padding: EdgeInsets.only(right: 15)),
-                //                         Expanded(
-                //                           child: Container(
-                //                             height: MediaQuery.of(context).size.width * 0.1,
-                //                             child: OutlinedButton(
-                //                               child: Text(
-                //                                 "확인",
-                //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
-                //                               ),
-                //                               style: OutlinedButton.styleFrom(
-                //                                   shape: RoundedRectangleBorder(
-                //                                     borderRadius: BorderRadius.circular(10),
-                //                                   ),
-                //                                   side: BorderSide(color: Colors.pink)),
-                //                               onPressed: () {
-                //                                 setState(() {
-                //                                   addressData = "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
-                //                                   // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
-                //                                   // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
-                //                                 });
-                //                                 Navigator.pop(context);
-                //                               },
-                //                             ),
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           );
-                //         });
-                //       },
-                //     );
-                //   },
-                // ),
               ],
             )
-
-            // TextButton(
-            //   // TextButton inner padding 삭제하는방법!!
-            //   style: TextButton.styleFrom(
-            //     padding: EdgeInsets.zero,
-            //     minimumSize: Size.zero,
-            //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       Text(
-            //         addressData == "" ? "지역 선택" : addressData,
-            //         style: TextStyle(fontSize: 16, color: addressData == "" ? Colors.grey.shade500 : Colors.black, height: 1),
-            //       ),
-            //       Icon(
-            //         Icons.keyboard_arrow_down,
-            //         color: addressData == "" ? Colors.grey.shade500 : Colors.black,
-            //         size: 26,
-            //       ),
-            //     ],
-            //   ),
-            //   onPressed: () {
-            //     showModalBottomSheet(
-            //       backgroundColor: Colors.white,
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-            //       ),
-            //       isScrollControlled: true,
-            //       context: context,
-            //       builder: (context) {
-            //         return StatefulBuilder(builder: (BuildContext context, StateSetter mystate) {
-            //           return SingleChildScrollView(
-            //             child: Container(
-            //               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-            //               height: MediaQuery.of(context).size.width * 1.5,
-            //               child: Column(
-            //                 children: [
-            //                   Container(
-            //                     padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-            //                     decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-            //                     child: Row(
-            //                       crossAxisAlignment: CrossAxisAlignment.center,
-            //                       children: [
-            //                         Container(
-            //                           // color: Colors.pink,
-            //                           alignment: Alignment.center,
-            //                           width: MediaQuery.of(context).size.width * 0.3,
-            //                           child: Text(
-            //                             "시/도",
-            //                             style: TextStyle(fontSize: 16),
-            //                           ),
-            //                         ),
-            //                         Container(
-            //                           // color: Colors.blue,
-            //                           padding: EdgeInsets.only(left: 30),
-            //                           alignment: Alignment.centerLeft,
-            //                           width: MediaQuery.of(context).size.width * 0.3,
-            //                           child: Text(
-            //                             "시/구/군",
-            //                             style: TextStyle(fontSize: 16),
-            //                           ),
-            //                         ),
-            //                         Expanded(
-            //                           child: Container(),
-            //                         )
-            //                       ],
-            //                     ),
-            //                   ),
-            //                   Expanded(
-            //                     child: Row(
-            //                       children: [
-            //                         Container(
-            //                           padding: EdgeInsets.only(top: 10),
-            //                           alignment: Alignment.center,
-            //                           width: MediaQuery.of(context).size.width * 0.3,
-            //                           decoration:
-            //                               BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300), right: BorderSide(color: Colors.grey.shade300))),
-            //                           child: renderFirstAddress(mystate),
-            //                         ),
-            //                         Expanded(
-            //                           child: Container(
-            //                             alignment: Alignment.centerLeft,
-            //                             width: MediaQuery.of(context).size.width * 0.3,
-            //                             decoration: BoxDecoration(color: Colors.white, border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
-            //                             child: renderSecondAddress(mystate),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                   ),
-            //                   Container(
-            //                     height: MediaQuery.of(context).size.width * 0.25,
-            //                     padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-            //                     child: Row(
-            //                       children: [
-            //                         Expanded(
-            //                           child: Container(
-            //                             height: MediaQuery.of(context).size.width * 0.1,
-            //                             child: OutlinedButton(
-            //                               child: Text(
-            //                                 "닫기",
-            //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
-            //                               ),
-            //                               style: OutlinedButton.styleFrom(
-            //                                   shape: RoundedRectangleBorder(
-            //                                     borderRadius: BorderRadius.circular(10),
-            //                                   ),
-            //                                   side: BorderSide(color: Colors.pink)),
-            //                               onPressed: () {
-            //                                 Navigator.pop(context);
-            //                               },
-            //                             ),
-            //                           ),
-            //                         ),
-            //                         Padding(padding: EdgeInsets.only(right: 15)),
-            //                         Expanded(
-            //                           child: Container(
-            //                             height: MediaQuery.of(context).size.width * 0.1,
-            //                             child: OutlinedButton(
-            //                               child: Text(
-            //                                 "확인",
-            //                                 style: TextStyle(color: Colors.pink, fontWeight: FontWeight.bold),
-            //                               ),
-            //                               style: OutlinedButton.styleFrom(
-            //                                   shape: RoundedRectangleBorder(
-            //                                     borderRadius: BorderRadius.circular(10),
-            //                                   ),
-            //                                   side: BorderSide(color: Colors.pink)),
-            //                               onPressed: () {
-            //                                 setState(() {
-            //                                   addressData = "${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}";
-            //                                   // 여기 재활용 해야함!! 필터 페이지 지역선택에 쓸꺼임!!
-            //                                   // addressData.add("${filteredFirstAddress[selectedFirstAddress.indexOf(true)]} ${secondAddress[selectedSecondAddress.indexOf(true)]}");
-            //                                 });
-            //                                 Navigator.pop(context);
-            //                               },
-            //                             ),
-            //                           ),
-            //                         ),
-            //                       ],
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           );
-            //         });
-            //       },
-            //     );
-            //   },
-            // ),
           ),
         ],
       ),
-    );
-  }
-
-  renderFirstAddress(StateSetter mystate) {
-    return ListView.builder(
-      itemCount: filteredFirstAddress.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: selectedFirstAddress[index] ? Colors.pink : Colors.white,
-            child: InkWell(
-              onTap: () {
-                // selectedFirstAddress 새로 담을 변수 설정
-                List<bool> result = [];
-                for (int i = 0; i < filteredFirstAddress.length; i++) {
-                  if (i == index) {
-                    result.add(true);
-                  } else {
-                    result.add(false);
-                  }
-                }
-
-                // secondAddress 초기화
-                secondAddress = [];
-                for (int i = 0; i < addresses.length; i++) {
-                  if (addresses[i].firstAddress == filteredFirstAddress[result.indexOf(true)]) {
-                    secondAddress.add(addresses[i].secondAddress);
-                  }
-                }
-
-                // selectedSecondAddress 초기화
-                selectedSecondAddress = [];
-                for (int i = 0; i < secondAddress.length; i++) {
-                  if (i == 0) {
-                    selectedSecondAddress.add(true);
-                  } else {
-                    selectedSecondAddress.add(false);
-                  }
-                }
-
-                mystate(() {
-                  selectedFirstAddress = result;
-                });
-              },
-              child: Text(
-                filteredFirstAddress[index],
-                style: TextStyle(color: selectedFirstAddress[index] ? Colors.white : Colors.black, fontSize: 14),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  renderSecondAddress(StateSetter mystate) {
-    return ListView.builder(
-      itemCount: secondAddress.length, // 첫번째선택된주소의 개수
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          padding: EdgeInsets.only(left: 30),
-          alignment: Alignment.centerLeft,
-          child: TextButton(
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-              // backgroundColor: Colors.pink
-            ),
-            child: Text(
-              secondAddress[index],
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: selectedSecondAddress[index] ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-            onPressed: () {
-              // selectedSecondAddress 초기화
-              List<bool> result = [];
-              for (int i = 0; i < secondAddress.length; i++) {
-                if (i == index) {
-                  result.add(true);
-                } else {
-                  result.add(false);
-                }
-              }
-              mystate(() {
-                selectedSecondAddress = result;
-              });
-            },
-          ),
-        );
-      },
     );
   }
 
