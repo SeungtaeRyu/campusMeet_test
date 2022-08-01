@@ -12,14 +12,14 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
     id: json["id"],
-    stateName: json["state_name"],
-    cityName: json["city_name"],
+    stateName: json["stateName"],
+    cityName: json["cityName"],
 
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "state_name": stateName,
-    "city_name": cityName,
+    "stateName": stateName,
+    "cityName": cityName,
   };
 }

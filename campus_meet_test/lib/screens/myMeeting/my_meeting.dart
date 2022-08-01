@@ -24,7 +24,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   List<Post> posts = [
     Post.fromJson({
       "id": 0,
-      "location": {"id": 0, "state_name": "서울", "city_name": "전체"},
+      "location": {"id": 0, "stateName": "서울", "cityName": "전체"},
       "writer": {
         "id": 0,
         "univ": "명지대학교",
@@ -47,7 +47,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
     }),
     Post.fromJson({
       "id": 0,
-      "location": {"id": 0, "state_name": "서울", "city_name": "전체"},
+      "location": {"id": 0, "stateName": "서울", "cityName": "전체"},
       "writer": {
         "id": 0,
         "univ": "명지대학교",
