@@ -73,7 +73,7 @@ class _RenderRequestPostState extends State<RenderRequestPostCardSE> {
                             child: Image.asset('images/play.png')),
                         Padding(padding: EdgeInsets.only(right: width * 0.01)),
                         Text(
-                          '대기 중',
+                          '대기중',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: width * 0.028,

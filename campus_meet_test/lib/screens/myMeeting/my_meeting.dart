@@ -475,7 +475,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             // margin: EdgeInsets.only(top: 3),
             padding: EdgeInsets.only(top: width * 0.01),
             child: Text(
-              '두근두근 첫 미팅글을 작성해보세요!',
+              '두근두근 첫 미팅글을 개설해보세요!',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black, fontSize: width * 0.038),
             )),
@@ -494,7 +494,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
               );
             },
             child: Text(
-              '미팅 글 작성하러 가기',
+              '미팅 글 개설하러 가기',
               style:
                   TextStyle(color: Color(0xffff375c), fontSize: width * 0.033),
             ),
