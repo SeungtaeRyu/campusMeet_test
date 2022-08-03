@@ -8,7 +8,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import 'package:http/http.dart' as http;
 
-
 class SettingUnivPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
@@ -16,7 +15,8 @@ class SettingUnivPage extends StatefulWidget {
 
 class _State extends State<SettingUnivPage> {
   TextEditingController univController = TextEditingController();
-
+//이거 아니래
+  bool visibility = false;
   List<University> universities = [
     University.fromJson({
       "id": 0,
@@ -42,15 +42,24 @@ class _State extends State<SettingUnivPage> {
       "domainAddress": "www.yongin.ac.kr",
       "address": "경기도 용인시 처인구 삼가동 용인대학로 134",
     }),
+    University.fromJson({
+      "id": 4,
+      "name": "명지대3",
+      "domainAddress": "ddd",
+      "address": "dd",
+    })
   ];
 
   List<String> for_all_univ_name_list = [];
   Map map_univ = {};
   List search_univ_index_list = [];
+  late int a_univ_index;
   @override
   Widget build(BuildContext context) {
     Color color = Color(0xffff375c);
     print('build');
+    print("search_univ_index_list$search_univ_index_list");
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -134,34 +143,43 @@ class _State extends State<SettingUnivPage> {
 
                                 if (univController.text == "") {
                                 } else {
-                                  for (int i = 0; i < universities.length; i++) {
-                                    for_all_univ_name_list.add(universities[i].name);
+                                  for (int i = 0;
+                                      i < universities.length;
+                                      i++) {
+                                    for_all_univ_name_list
+                                        .add(universities[i].name);
                                   }
-                                  print("for_search_univ_name_list$for_all_univ_name_list");
+                                  print(
+                                      "for_search_univ_name_list$for_all_univ_name_list");
 
                                   for (var value in for_all_univ_name_list) {
-
                                     if (value.contains(univController.text)) {
-
-                                      for (int i = 0; i < universities.length; i++) {
+                                      for (int i = 0;
+                                          i < universities.length;
+                                          i++) {
                                         map_univ['id'] = universities[i].id;
                                         map_univ['name'] = universities[i].name;
-                                        map_univ['domainAddress'] = universities[i].domainAddress;
-                                        map_univ['address'] = universities[i].address;
+                                        map_univ['domainAddress'] =
+                                            universities[i].domainAddress;
+                                        map_univ['address'] =
+                                            universities[i].address;
 
                                         if (map_univ.values.contains(value)) {
-                                          search_univ_index_list.add(map_univ['id']);
-                                          print("search_univ_index_list$search_univ_index_list");
-                                          print(universities);
+                                          search_univ_index_list
+                                              .add(map_univ['id']);
+                                          print(
+                                              "search_univ_index_list$search_univ_index_list");
                                         }
                                       }
                                     }
                                   }
-
+                                  // print("mida_univ_index$a_univ_index");
                                 }
                                 setState(() {
                                   search_univ_index_list =
                                       search_univ_index_list;
+                                  visibility = true;
+                                  // a_univ_index = map_univ['id'] ;
                                 });
                               },
                               child: Text(
@@ -175,84 +193,13 @@ class _State extends State<SettingUnivPage> {
                       ),
                       //saerch_univ 를 한줄씩 보여줘
                       Container(
-                        height: MediaQuery.of(context).size.width * 1.3,
-                        // padding: EdgeInsets.only(bottom: 200),
-                        child: ListView.builder(
-                          itemCount: search_univ_index_list.length,
-                          itemBuilder: (context, index) {
-                            //이거!!!
-                             return SearchUnivResult(university: universities[index]);
-                            // return Container(
-                            //   // color: Colors.red,
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.stretch,
-                            //     children: [
-                            //       Container(
-                            //         //요소간 실선
-                            //         decoration: BoxDecoration(
-                            //             // color:Colors.grey ,
-                            //             border: Border(
-                            //                 bottom: BorderSide(
-                            //                     color: index + 1 ==
-                            //                             //
-                            //                             search_univ_index_list
-                            //                                 .length
-                            //                         ? Colors.white
-                            //                         : Colors.grey.shade300))),
-                            //         child: TextButton(
-                            //           onPressed: () async {
-                            //             Map<String, dynamic>
-                            //                 map_univ_real_font = {};
-                            //             for (int i = 0; i < universities.length; i++) {
-                            //
-                            //             }
-                            //             print(universities[0]);
-                            //             print("map_univ_real_font $map_univ_real_font");
-                            //
-                            //           },
-                            //           child:
-                            //               Column(
-                            //                 children: [
-                            //                   Text("학교이름",
-                            //                       style: const TextStyle(
-                            //                           color: Colors.grey,
-                            //                           fontWeight: FontWeight.bold,
-                            //                           fontSize: 15),
-                            //                       textAlign: TextAlign.left),
-                            //                   Text("주소",
-                            //                       style: const TextStyle(
-                            //                           color: Colors.grey,
-                            //                           fontWeight: FontWeight.bold,
-                            //                           fontSize: 13),
-                            //                       textAlign: TextAlign.left),
-                            //                 ],
-                            //               ),
-                            //         ),
-                            //       ),
-                            //       // Container(
-                            //       //   margin:
-                            //       //   EdgeInsets.only(top: 10, right: 7, left: 7, bottom: 10),
-                            //       //   height: 1,
-                            //       //   width: 355,
-                            //       //   color: Colors.grey,
-                            //       // ),
-                            //     ],
-                            //   ),
-                            // );
-                          },
-                        ),
-                      ),
+                          child: SearchUnivResult(
+                              universities: universities,
+                              search_univ_index_list: search_univ_index_list))
                     ],
                   ),
                 ),
               ),
-              // Container(
-              //   //다음 버튼
-              //   padding: EdgeInsets.only(bottom: 20),
-              //   child: Container(
-              //     height: MediaQuery.of(context).size.width * 0.14,
-              //     width: MediaQuery.of(context).size.width * 0.9,
-              //     decoration: BoxDecoration(
               //         color: Color(0xffff375c),
               //         borderRadius: BorderRadius.circular(10)),
               //     child: FlatButton(
@@ -274,59 +221,84 @@ class _State extends State<SettingUnivPage> {
             ]),
       ),
     );
+    // Container(
+    //   //다음 버튼
+    //   padding: EdgeInsets.only(bottom: 20),
+    //   child: Container(
+    //     height: MediaQuery.of(context).size.width * 0.14,
+    //     width: MediaQuery.of(context).size.width * 0.9,
+    //     decoration: BoxDecoration(
   }
 }
+
 //검색한 학교 뽑는 위젯
 class SearchUnivResult extends StatefulWidget {
-  const SearchUnivResult({Key? key,  required this.university}) : super(key: key);
-  final University university;
+  const SearchUnivResult(
+      {Key? key,
+      required this.universities,
+      required this.search_univ_index_list})
+      : super(key: key);
+
+  final List<University> universities;
+  final List search_univ_index_list;
   @override
   _SearchUnivResultState createState() => _SearchUnivResultState();
 }
-class _SearchUnivResultState extends State<SearchUnivResult> {
 
+class _SearchUnivResultState extends State<SearchUnivResult> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // decoration: BoxDecoration(
-      //   // color:Colors.grey ,
-      //     border: Border(
-      //         bottom: BorderSide(
-      //             color: index + 1 == search_univ_index_list.length
-      //                 ? Colors.white
-      //                 : Colors.grey.shade300))),
-        child: TextButton(
-          onPressed: () async {
-
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.university.name,
-              style: const TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-              textAlign: TextAlign.left),
-
-              Padding(padding: EdgeInsets.only(bottom: 5)),
-              Text(
-                "${widget.university.address}",
-                  style: const TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13),
-                  textAlign: TextAlign.left),
-
-            ],
-          ),
-        ),
-
-
-    );
-    }
-
+    print('sdf');
+    return widget.search_univ_index_list.isNotEmpty
+        ? Container(
+            height: MediaQuery.of(context).size.width * 1.3,
+            // padding: EdgeInsets.only(bottom: 200),
+            child: Column(
+              children: [
+                for (int i = 0; i < widget.search_univ_index_list.length; i++)
+                  (Container(
+                      child: Column(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          print('here');
+                          print(widget.universities[widget.search_univ_index_list[i]].id
+                              .toString());
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                                widget
+                                    .universities[
+                                        widget.search_univ_index_list[i]]
+                                    .name
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                                textAlign: TextAlign.left),
+                            Text(
+                                widget
+                                    .universities[
+                                        widget.search_univ_index_list[i]]
+                                    .address
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13),
+                                textAlign: TextAlign.left),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )))
+              ],
+            ),
+          )
+        : Container(
+            color: Colors.red,
+          );
   }
-
-
+}
