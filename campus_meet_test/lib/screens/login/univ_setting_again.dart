@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 import 'package:http/http.dart' as http;
-
+List select_univ = [];
 class SettingUnivPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _State();
@@ -54,6 +54,8 @@ class _State extends State<SettingUnivPage> {
   Map map_univ = {};
   List search_univ_index_list = [];
   late int a_univ_index;
+
+
   @override
   Widget build(BuildContext context) {
     Color color = Color(0xffff375c);
@@ -200,34 +202,35 @@ class _State extends State<SettingUnivPage> {
                   ),
                 ),
               ),
-              //         color: Color(0xffff375c),
-              //         borderRadius: BorderRadius.circular(10)),
-              //     child: FlatButton(
-              //       onPressed: () async {
-              //         // print(select_univ);
-              //         List univEmail = select_univ[0].split('.');
-              //         print(univEmail); //학교 url중 학교 이름 들어간애만 잘라서 보내@
-              //         Navigator.of(context).pushNamed(
-              //             Routes.checkUnivEmailScreen,
-              //             arguments: {"univEmail": univEmail[1]});
-              //       },
-              //       child: Text(
-              //         '다음',
-              //         style: TextStyle(color: Colors.white, fontSize: 25),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Container(
+                //다음 버튼
+                padding: EdgeInsets.only(bottom: 20),
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.14,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: BoxDecoration(
+                      color: Color(0xffff375c),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: FlatButton(
+                    onPressed: () async {
+                      // print(select_univ);
+                      List univEmail = select_univ[0].split('.');
+                      print(univEmail); //학교 url중 학교 이름 들어간애만 잘라서 보내@
+                      Navigator.of(context).pushNamed(
+                          Routes.checkUnivEmailScreen,
+                          arguments: {"univEmail": univEmail[1]});
+                    },
+                    child: Text(
+                      '다음',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+              ),
             ]),
       ),
     );
-    // Container(
-    //   //다음 버튼
-    //   padding: EdgeInsets.only(bottom: 20),
-    //   child: Container(
-    //     height: MediaQuery.of(context).size.width * 0.14,
-    //     width: MediaQuery.of(context).size.width * 0.9,
-    //     decoration: BoxDecoration(
+
   }
 }
 
@@ -246,6 +249,7 @@ class SearchUnivResult extends StatefulWidget {
 }
 
 class _SearchUnivResultState extends State<SearchUnivResult> {
+  // List select_univ = [];
   @override
   Widget build(BuildContext context) {
     print('sdf');
@@ -261,10 +265,18 @@ class _SearchUnivResultState extends State<SearchUnivResult> {
                     children: [
                       TextButton(
                         onPressed: () {
+                          select_univ = [];
                           print('here');
-                          print(widget.universities[widget.search_univ_index_list[i]].id
+                          print(widget.universities[widget.search_univ_index_list[i]].id.toString());
+                          print(widget.universities[widget.search_univ_index_list[i]].domainAddress
                               .toString());
-                        },
+                          select_univ.add(widget.universities[widget.search_univ_index_list[i]].domainAddress);
+                          setState(() {
+                            select_univ=select_univ;
+                            // a_univ_index = map_univ['id'] ;
+                          });
+                          },
+
                         child: Column(
                           children: [
                             Text(
