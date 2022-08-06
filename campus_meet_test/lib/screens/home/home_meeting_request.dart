@@ -232,59 +232,6 @@ class _MeetingRequestState extends State<MeetingRequest> {
                           },
                         )),
                   )
-
-                  // Expanded(
-                  //   child: _search.text.length != 0 ? buildSearchList() : Container(
-                  //     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  //     color: Colors.white,
-                  //     child: ListView.builder(
-                  //       itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
-                  //       itemBuilder: (BuildContext context, int index) {
-                  //         return Row(
-                  //           children: [
-                  //             Container(
-                  //               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  //               child: CircleAvatar(
-                  //                 backgroundColor: Colors.pink,
-                  //                 radius: 25,
-                  //               ),
-                  //             ),
-                  //             Text("${friendName[index]}"),
-                  //             Expanded(child: Container()),
-                  //             IconButton(
-                  //                 onPressed: () {
-                  //                   // 선택한 친구 수 count
-                  //                   int count = 0;
-                  //                   for(int i = 0; i < friendName.length ; i++){
-                  //                     if(selected[i]) count++;
-                  //                   }
-                  //
-                  //                   // 5명째에는 동작하지 않음
-                  //                   if(count == widget.post.numOfMember-1 && !selected[index]){
-                  //                   } else {
-                  //                     setState(() {
-                  //                       if (!selected[index]) {
-                  //                         selected[index] = !selected[index];
-                  //                         selectedFriendName.add(friendName[index]);
-                  //                       } else {
-                  //                         selected[index] = !selected[index];
-                  //                         selectedFriendName.remove(friendName[index]);
-                  //                       }
-                  //                     });
-                  //                   }
-                  //                 },
-                  //                 icon: selected[index]
-                  //                     ? Icon(
-                  //                   Icons.check_circle_rounded,
-                  //                   color: Colors.pink,
-                  //                 )
-                  //                     : Icon(Icons.circle_outlined)),
-                  //           ],
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               );
             } else if (snapshot.hasError) {

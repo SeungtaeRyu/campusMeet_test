@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:campus_meet_test/models/Location/location_model.dart';
 import 'package:campus_meet_test/models/address_model.dart';
 import 'package:campus_meet_test/widgets/popup_region_selection_widget.dart';
@@ -19,7 +20,8 @@ class _WritingScreenState extends State<WritingScreen> {
 
   TextEditingController titleController = TextEditingController();
   TextEditingController openChatLinkController = TextEditingController();
-  List<String> memberData = []; // 멤버결성창에서 리턴될 데이터
+
+  List<FriendList> selectedFriends = []; // 멤버결성창에서 리턴될 데이터
 
 
   List<String> firstAddress = [];
@@ -247,7 +249,7 @@ class _WritingScreenState extends State<WritingScreen> {
             padding: EdgeInsets.only(bottom: 10),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: memberData.length + 2,
+              itemCount: selectedFriends.length + 2,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
                   return Container(
@@ -265,14 +267,14 @@ class _WritingScreenState extends State<WritingScreen> {
                       ),
                     ),
                   );
-                } else if (index < memberData.length + 1) {
+                } else if (index < selectedFriends.length + 1) {
                   return Container(
                     padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: CircleAvatar(
                       backgroundColor: Colors.pink,
                       radius: 25,
                       child: Text(
-                        "${memberData[index - 1]}",
+                        "${selectedFriends[index - 1].friend.nickname}",
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
@@ -289,9 +291,9 @@ class _WritingScreenState extends State<WritingScreen> {
                           icon: Icon(Icons.add, color: Colors.grey),
                           padding: EdgeInsets.zero,
                           onPressed: () async {
-                            final data = await Navigator.push(context, MaterialPageRoute(builder: (context) => MemberFomationScreen()));
+                            final data = await Navigator.push(context, MaterialPageRoute(builder: (context) => WritingAddFriendScreen()));
                             setState(() {
-                              memberData = data;
+                              selectedFriends = data;
                             });
                           },
                         ),

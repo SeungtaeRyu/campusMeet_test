@@ -739,7 +739,7 @@ class _ReviseScreenState extends State<ReviseScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        MemberFomationScreen()));
+                                        WritingAddFriendScreen()));
                             setState(() {
                               memberData = data;
                             });

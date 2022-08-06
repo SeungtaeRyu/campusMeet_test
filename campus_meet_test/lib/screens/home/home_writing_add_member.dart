@@ -1,22 +1,38 @@
+import 'package:campus_meet_test/controller/friend_controller.dart';
+import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:flutter/material.dart';
 
-class MemberFomationScreen extends StatefulWidget {
-  const MemberFomationScreen({Key? key}) : super(key: key);
+class WritingAddFriendScreen extends StatefulWidget {
+  const WritingAddFriendScreen({Key? key}) : super(key: key);
 
   @override
-  State<MemberFomationScreen> createState() => _MemberFomationScreenState();
+  State<WritingAddFriendScreen> createState() => _WritingAddFriendScreenState();
 }
 
-class _MemberFomationScreenState extends State<MemberFomationScreen> {
-  List<String> friendName = ["도진", "해수", "해수2", "해수3", "해수4", "승태", "현재", "준우", "한비", "경민", "경진", "현민", "수진"]; // 추후 친구목록 DB.length 로 수정
-  List<bool> selected = []; // 친구 추가 아이콘 true/false
-  List<String> selectedFriendName = []; // 친구 추가 아이콘 true인 친구 list, Navigator.pop에 담을 데이터
+class _WritingAddFriendScreenState extends State<WritingAddFriendScreen> {
+  late Future<List<FriendList>> myFriends;
 
+  // 첫번째 빌드 확인여부
+  bool isInit = false;
+
+  // 선택된 친구 데이터 확인할 boolean
+  List<bool> selected = [];
+
+  // 선택한 친구 count
+  int count = 0;
+
+  // 선택된 친구 데이터 저장할 변수
+  List<FriendList> selectedFriends = [];
+
+  int myId = 0;
+  List<int> selectedFriendId = []; // 친구 추가 아이콘 true인 친구 list, Navigator.pop에 담을 데이터
   List<String> nullData = [];
-  final TextEditingController _search = TextEditingController();
-  String _searchText = "";
 
-  _MemberFomationScreenState() {
+  // 여기는 검색 엔진 구간
+  final TextEditingController _search = TextEditingController();
+  List<String> friendNameList = [];
+  String _searchText = "";
+  _WritingAddFriendScreenState() {
     _search.addListener(() {
       setState(() {
         _searchText = _search.text;
@@ -27,9 +43,8 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < friendName.length; i++) {
-      selected.add(false);
-    }
+
+    myFriends = getMyFriend();
   }
 
   @override
@@ -53,7 +68,12 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
                   onPressed: () {
-                    Navigator.pop(context, selectedFriendName);
+                    // if(selectedFriends.length + 1 == widget.post.numOfMember) {
+                    //   Navigator.push(context, MaterialPageRoute(builder: (context) => MeetingRequest2(memberData: selectedFriends)));
+                    // }
+                    if (count >= 1) {
+                      Navigator.pop(context, selectedFriends);
+                    }
                   },
                   child: Text(
                     "완료",
@@ -62,15 +82,24 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
             )
           ],
         ),
-        body: Column(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Column(
-                children: <Widget>[
+
+        body: FutureBuilder<List<FriendList>>(
+          future: myFriends,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if(!isInit) {
+                for (var i = 0; i < snapshot.data!.length; i++) {
+                  selected.add(false);
+                  friendNameList.add(snapshot.data![i].friend.nickname);
+                  isInit = true;
+                }
+              }
+              return Column(
+                children: [
+                  // 이름 검색용 컨테이너
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    color: Colors.white,
+                    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: TextFormField(
                       cursorColor: Colors.grey,
                       keyboardType: TextInputType.name,
@@ -78,8 +107,12 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                       decoration: InputDecoration(
                         hintText: "이름을 입력하세요...",
                         fillColor: Colors.white,
-                        suffixIcon: IconButton(color: Colors.pink, icon: Icon(Icons.search), onPressed: () {}),
-                        contentPadding: EdgeInsets.only(left: 18, bottom: 5, top: 5, right: 5),
+                        suffixIcon: IconButton(
+                            color: Colors.pink,
+                            icon: Icon(Icons.search),
+                            onPressed: () {}),
+                        contentPadding: EdgeInsets.only(
+                            left: 18, bottom: 5, top: 5, right: 5),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide(
@@ -97,125 +130,124 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
 
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              alignment: Alignment.centerLeft,
-              child: selected.indexOf(true) == -1
-                  ? SizedBox.shrink()
-                  : Container(
-                      height: 100,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: selectedFriendName.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.pink,
-                                  radius: 25,
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.pink,
-                                      radius: 8,
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            selected[friendName.indexOf(selectedFriendName[index])] = false;
-                                            selectedFriendName.remove(selectedFriendName[index]);
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 14,
-                                          color: Colors.white,
+
+                  // 선택한 구성원 있을 시
+                  Visibility(
+                      visible: selected.indexOf(true) != -1,
+                      child: Container(
+                        color: Colors.white,
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: selectedFriends.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.pink,
+                                    radius: 25,
+                                    child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.pink,
+                                        radius: 8,
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selected[snapshot.data!.indexOf(selectedFriends[index])] = !selected[snapshot.data!.indexOf(selectedFriends[index])];
+                                              selectedFriends.remove(selectedFriends[index]);
+                                              count = count - 1 ;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.close,
+                                            size: 14,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(padding: EdgeInsets.only(bottom: 10), child: Text("${selectedFriendName[index]} ")),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-            ),
+                                Container(padding: EdgeInsets.only(bottom: 10), child: Text("${selectedFriends[index].friend.nickname} ")),
+                              ],
+                            );
+                          },
+                        ),
+                      )
+                  ),
 
-            Divider(height: 5, thickness: 5),
+                  Divider(height: 5, thickness: 5),
 
-            // 친구 목록 렌더링 컬럼 > 로우 > 이미지, 이름, 아이콘버튼
-            Expanded(
-              child: _search.text.length != 0
-                  ? buildSearchList()
-                  : Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      color: Colors.white,
-                      child: ListView.builder(
-                        itemCount: friendName.length, // 추후 친구목록 DB.length 로 수정
-                        itemBuilder: (BuildContext context, int index) {
-                          return Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.pink,
-                                  radius: 25,
+                  // 친구 목록 렌더링 컬럼 > 로우 > 이미지, 이름, 아이콘버튼
+
+                  Expanded(
+                    child: _search.text.length != 0 ? buildSearchList(snapshot) : Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.pink,
+                                    radius: 25,
+                                  ),
                                 ),
-                              ),
-                              Text("${friendName[index]}"),
-                              Expanded(child: Container()),
-                              IconButton(
-                                  onPressed: () {
-                                    // 선택한 친구 수 count
-                                    int count = 0;
-                                    for (int i = 0; i < friendName.length; i++) {
-                                      if (selected[i]) count++;
-                                    }
-
-                                    // 5명째에는 동작하지 않음
-                                    if (count == 4 && !selected[index]) {
-                                    } else {
-                                      setState(() {
-                                        if (!selected[index]) {
-                                          selected[index] = !selected[index];
-                                          selectedFriendName.add(friendName[index]);
-                                        } else {
-                                          selected[index] = !selected[index];
-                                          selectedFriendName.remove(friendName[index]);
-                                        }
-                                      });
-                                    }
-                                  },
-                                  icon: selected[index]
-                                      ? Icon(
-                                          Icons.check_circle_rounded,
-                                          color: Colors.pink,
-                                        )
-                                      : Icon(Icons.circle_outlined)),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-            ),
-          ],
+                                Text("${snapshot.data![index].friend.nickname}"),
+                                Expanded(child: Container()),
+                                IconButton(
+                                    onPressed: () {
+                                      // 미팅멤버 수 초과는 고르지 않음!
+                                      if (count == 4 && !selected[index]) {
+                                      } else {
+                                        setState(() {
+                                          if (!selected[index]) {
+                                            selected[index] = !selected[index];
+                                            selectedFriends.add(snapshot.data![index]);
+                                            count = count + 1;
+                                          } else {
+                                            selected[index] = !selected[index];
+                                            selectedFriends.remove(snapshot.data![index]);
+                                            count = count - 1;
+                                          }
+                                        });
+                                      }
+                                    },
+                                    icon: selected[index]
+                                        ? Icon(
+                                      Icons.check_circle_rounded,
+                                      color: Colors.pink,
+                                    )
+                                        : Icon(Icons.circle_outlined)),
+                              ],
+                            );
+                          },
+                        )),
+                  )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );
   }
 
-  buildSearchList() {
+  buildSearchList(AsyncSnapshot<List<FriendList>> snapshot) {
     List<String> searchResults = [];
-    for (String d in friendName) {
+    for (String d in friendNameList) {
       if (d.contains(_searchText)) {
         searchResults.add(d);
       }
@@ -237,21 +269,26 @@ class _MemberFomationScreenState extends State<MemberFomationScreen> {
             Expanded(child: Container()),
             IconButton(
                 onPressed: () {
-                  setState(() {
-                    if (!selected[friendName.indexOf(searchResults[index])]) {
-                      selected[friendName.indexOf(searchResults[index])] = !selected[friendName.indexOf(searchResults[index])];
-                      selectedFriendName.add(friendName[friendName.indexOf(searchResults[index])]);
-                    } else {
-                      selected[friendName.indexOf(searchResults[index])] = !selected[friendName.indexOf(searchResults[index])];
-                      selectedFriendName.remove(friendName[friendName.indexOf(searchResults[index])]);
-                    }
-                  });
+                  if (count == 4 && !selected[index]) {
+                  } else {
+                    setState(() {
+                      if (!selected[friendNameList.indexOf(searchResults[index])]) {
+                        selected[friendNameList.indexOf(searchResults[index])] = !selected[friendNameList.indexOf(searchResults[index])];
+                        selectedFriends.add(snapshot.data![friendNameList.indexOf(searchResults[index])]);
+                        count = count + 1;
+                      } else {
+                        selected[friendNameList.indexOf(searchResults[index])] = !selected[friendNameList.indexOf(searchResults[index])];
+                        selectedFriends.remove(snapshot.data![friendNameList.indexOf(searchResults[index])]);
+                        count = count - 1;
+                      }
+                    });
+                  }
                 },
-                icon: selected[friendName.indexOf(searchResults[index])]
+                icon: selected[friendNameList.indexOf(searchResults[index])]
                     ? Icon(
-                        Icons.check_circle_rounded,
-                        color: Colors.pink,
-                      )
+                  Icons.check_circle_rounded,
+                  color: Colors.pink,
+                )
                     : Icon(Icons.circle_outlined)),
           ],
         );
