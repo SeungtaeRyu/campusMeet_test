@@ -1,5 +1,3 @@
-
-
 class Tag {
   Tag({
     required this.id,

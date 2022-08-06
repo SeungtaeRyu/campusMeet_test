@@ -23,10 +23,11 @@ class _WritingAddFriendScreenState extends State<WritingAddFriendScreen> {
 
   // 선택된 친구 데이터 저장할 변수
   List<FriendList> selectedFriends = [];
+  List<FriendList> nullData = [];
 
   int myId = 0;
   List<int> selectedFriendId = []; // 친구 추가 아이콘 true인 친구 list, Navigator.pop에 담을 데이터
-  List<String> nullData = [];
+
 
   // 여기는 검색 엔진 구간
   final TextEditingController _search = TextEditingController();
@@ -68,9 +69,6 @@ class _WritingAddFriendScreenState extends State<WritingAddFriendScreen> {
               padding: EdgeInsets.only(right: 5),
               child: TextButton(
                   onPressed: () {
-                    // if(selectedFriends.length + 1 == widget.post.numOfMember) {
-                    //   Navigator.push(context, MaterialPageRoute(builder: (context) => MeetingRequest2(memberData: selectedFriends)));
-                    // }
                     if (count >= 1) {
                       Navigator.pop(context, selectedFriends);
                     }

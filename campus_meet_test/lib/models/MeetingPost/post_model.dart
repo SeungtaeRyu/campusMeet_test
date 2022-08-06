@@ -2,7 +2,7 @@
 //modifyPost도 이거 쓴다
 // 수정사항 있다!!!!!!!!!!!!!!!
 import '../Location/location_model.dart';
-import 'tag_model.dart';
+import '../Tag/tag_model.dart';
 
 class Post {
   Post({

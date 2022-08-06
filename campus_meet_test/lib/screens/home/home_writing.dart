@@ -1,6 +1,7 @@
+import 'package:campus_meet_test/controller/tag_controller.dart';
 import 'package:campus_meet_test/models/Friend/friend_list_model.dart';
 import 'package:campus_meet_test/models/Location/location_model.dart';
-import 'package:campus_meet_test/models/address_model.dart';
+import 'package:campus_meet_test/models/Tag/tag_model.dart';
 import 'package:campus_meet_test/widgets/popup_region_selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'home_writing_add_member.dart';
@@ -13,6 +14,8 @@ class WritingScreen extends StatefulWidget {
 }
 
 class _WritingScreenState extends State<WritingScreen> {
+  // 첫번째 빌드 확인여부
+  bool isInit = false;
 
   // 선택된 지역 변수
   List<Location> selectedLocation = [];
@@ -23,54 +26,16 @@ class _WritingScreenState extends State<WritingScreen> {
 
   List<FriendList> selectedFriends = []; // 멤버결성창에서 리턴될 데이터
 
+  // tag DB
+  late Future<List<Tag>> tags;
+  List<int> selectedTagIds = [];
 
-  List<String> firstAddress = [];
-  List<String> filteredFirstAddress = [];
-  List<bool> selectedFirstAddress = [];
-  List<bool> selectSecondAddress = [];
-
-  List<String> secondAddress = [];
-  List<bool> selectedSecondAddress = [];
-
-  // 키워드 DB
-  List<bool> selectedKeywords = [];
-  List<String> keywords = [
-    "인간 댕댕이",
-    "회색 아기 고양이",
-    "매력쟁이",
-    "건강미 뿜뿜",
-    "보기보다 동안",
-    "나름 귀여울지도",
-    "사람 냄새나는 스타일",
-    "카리스마 있는 편",
-    "센스 폭발",
-    "배꼽 도둑",
-    "틈새 드립러",
-    "분위기 메이커",
-    "부끄럼쟁이",
-    "리액션 부자",
-    "따뜻 다정",
-    "표현 서툰 츤데레",
-    "어색한건 못 참아",
-    "밥보단 술",
-    "술보단 밥",
-    "편하게 놀아요",
-    "술은 적당히",
-    "몸만 오세요",
-    "멈추지마 가보자고",
-    "분위기 캐리 부탁드립니다",
-    "시간 순삭 책임질게요",
-    "뚝딱이들"
-  ];
+  List<bool> selectedTags = [];
 
   @override
   void initState() {
     super.initState();
-
-    // selectedKeywords
-    for (int i = 0; i < keywords.length; i++) {
-      selectedKeywords.add(false);
-    }
+    tags = getAllTag();
   }
 
   @override
@@ -95,12 +60,19 @@ class _WritingScreenState extends State<WritingScreen> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
               child: ElevatedButton(
                 onPressed: () {
-                  // print("titleController.text : ${titleController.text}");
-                  // print("Location data: ${selectedLocation[0].id}");
-                  // print("member data: ${memberData}");
-                  // print("openChatLinkController.text : ${openChatLinkController.text}");
-                  // print("keywords 선택된 건 selectedKeywords의 true값");
-                  // print(selectedKeywords);
+                  if(titleController.text.length != 0 && selectedLocation.length != 0 && selectedFriends.length != 0 && openChatLinkController.text.length != 0 &&selectedTagIds.length != 0) {
+                    int myId = 0;
+                    List<int> selectedFriendsId = [myId];
+                    for(int i = 0; i < selectedFriends.length; i++) {
+                      selectedFriendsId.add(selectedFriends[i].friend.id);
+                    }
+
+                    print("titleController.text : ${titleController.text}");
+                    print("Location data: ${selectedLocation[0].id}");
+                    print("selectedFriendsId: ${selectedFriendsId}");
+                    print("openChatLinkController.text : ${openChatLinkController.text}");
+                    print("selectedTagsId: ${selectedTagIds}");
+                  }
                 },
                 child: Text(
                   "등록",
@@ -126,25 +98,42 @@ class _WritingScreenState extends State<WritingScreen> {
                 height: MediaQuery.of(context).size.height - Scaffold.of(context).appBarMaxHeight!,
                 color: Colors.white,
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      // 제목
-                      inputTitle(),
+                child: FutureBuilder<List<Tag>>(
+                    future: tags,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if(!isInit) {
+                          // selectedKeywords
+                          for (int i = 0; i < snapshot.data!.length; i++) {
+                            selectedTags.add(false);
+                          }
+                        }
+                        return SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              // 제목
+                              inputTitle(),
 
-                      // 지역
-                      inputAddress(),
+                              // 지역
+                              inputAddress(),
 
-                      // 참가자
-                      addMember(),
+                              // 참가자
+                              addMember(),
 
-                      // 오픈채팅 링크
-                      inputOpenChatLink(),
+                              // 오픈채팅 링크
+                              inputOpenChatLink(),
 
-                      // 키워드
-                      addKeywords(),
-                    ],
-                  ),
+                              // 키워드
+                              addKeywords(snapshot),
+                            ],
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                  }
                 ),
               );
             }
@@ -351,7 +340,7 @@ class _WritingScreenState extends State<WritingScreen> {
   }
 
   // 키워드 추가
-  Widget addKeywords() {
+  Widget addKeywords(AsyncSnapshot<List<Tag>> snapshot) {
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Column(
@@ -373,7 +362,7 @@ class _WritingScreenState extends State<WritingScreen> {
           Container(
             padding: EdgeInsets.only(bottom: 20),
             child: Text(
-              "(최대 7개까지 선택가능)",
+              "(최대 5개까지 선택가능)",
               style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
             ),
           ),
@@ -383,7 +372,7 @@ class _WritingScreenState extends State<WritingScreen> {
             runSpacing: 10,
             spacing: 10,
             children: List<Widget>.generate(
-              keywords.length,
+              snapshot.data!.length,
               (index) => Container(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -391,27 +380,33 @@ class _WritingScreenState extends State<WritingScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     elevation: 0,
-                    primary: selectedKeywords[index] ? Colors.pink : Colors.grey.shade200,
+                    primary: selectedTags[index] ? Colors.pink : Colors.grey.shade200,
                     padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   child: Text(
-                    "# ${keywords[index]}",
-                    style: TextStyle(fontSize: 13, color: selectedKeywords[index] ? Colors.white : Colors.grey.shade500),
+                    "# ${snapshot.data![index].text}",
+                    style: TextStyle(fontSize: 13, color: selectedTags[index] ? Colors.white : Colors.grey.shade500),
                   ),
                   onPressed: () {
                     // 현재 선택된 키워드 갯수 count
                     int count = 0;
-                    for (int i = 0; i < keywords.length; i++) {
-                      if (selectedKeywords[i]) count++;
+                    for (int i = 0; i < snapshot.data!.length; i++) {
+                      if (selectedTags[i]) count++;
                     }
 
-                    // 현재 선택된 키워드 갯수가 7개이고 비활성 키워드를 클릭했을 때는 아무반응없음
-                    if (count == 7 && !selectedKeywords[index]) {
+                    // 현재 선택된 키워드 갯수가 5개이고 비활성 키워드를 클릭했을 때는 아무반응없음
+                    if (count == 5 && !selectedTags[index]) {
                     } else {
                       setState(() {
-                        selectedKeywords[index] = !selectedKeywords[index];
+                        if (selectedTags[index]) {
+                          selectedTags[index] = false;
+                          selectedTagIds.remove(snapshot.data![index].id);
+                        } else {
+                          selectedTags[index] = true;
+                          selectedTagIds.add(snapshot.data![index].id);
+                        }
                       });
                     }
                   },
