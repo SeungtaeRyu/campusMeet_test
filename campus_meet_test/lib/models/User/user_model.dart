@@ -1,58 +1,117 @@
+import 'package:campus_meet_test/models/University/univ_model.dart';
+
 class User {
   User({
     required this.id,
     required this.email,
     required this.name,
-    required this.entryYear,
     required this.nickname,
+    required this.entryYear,
     required this.birthDate,
     required this.sex,
     required this.createdAt,
-    required this.introText,
+    required this.updatedAt,
     required this.univ,
     required this.department,
-    required this.profileImage,
+    required this.introText,
+    required this.character,
+    required this.hobby,
+    required this.ideal,
+    required this.profileImages,
   });
 
   int id;
   String email;
   String name;
-  int entryYear;
   String nickname;
+  int entryYear;
   DateTime birthDate;
   String sex;
   DateTime createdAt;
+  DateTime updatedAt;
+  University univ;
+  Department department;
   String introText;
-  String univ;
-  String department;
-  String profileImage;
+  String character;
+  String hobby;
+  String ideal;
+  List<ProfileImage> profileImages;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],
     email: json["email"],
     name: json["name"],
-    entryYear: json["entryYear"],
     nickname: json["nickname"],
+    entryYear: json["entryYear"],
     birthDate: DateTime.parse(json["birthDate"]),
     sex: json["sex"],
     createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
+    univ: University.fromJson(json["univ"]),
+    department: Department.fromJson(json["department"]),
     introText: json["introText"],
-    univ: json["univ"],
-    department: json["department"],
-    profileImage: json["profileImage"],
+    character: json["character"],
+    hobby: json["hobby"],
+    ideal: json["ideal"],
+    profileImages: List<ProfileImage>.from(json["profileImages"].map((x) => ProfileImage.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "email": email,
     "name": name,
-    "entryYear": entryYear,
     "nickname": nickname,
+    "entryYear": entryYear,
     "birthDate": "${birthDate.year.toString().padLeft(4, '0')}-${birthDate.month.toString().padLeft(2, '0')}-${birthDate.day.toString().padLeft(2, '0')}",
     "sex": sex,
     "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
+    "univ": univ.toJson(),
+    "department": department.toJson(),
     "introText": introText,
-    "univ": univ,
-    "department": department,
+    "character": character,
+    "hobby": hobby,
+    "ideal": ideal,
+    "profileImages": List<dynamic>.from(profileImages.map((x) => x.toJson())),
+  };
+}
+
+class ProfileImage {
+  ProfileImage({
+    required this.order,
+    required this.url,
+  });
+
+  int order;
+  String url;
+
+  factory ProfileImage.fromJson(Map<String, dynamic> json) => ProfileImage(
+    order: json["order"],
+    url: json["url"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "order": order,
+    "url": url,
+  };
+}
+
+class Department {
+  Department({
+    required this.id,
+    required this.name,
+  });
+
+  int id;
+  String name;
+
+  factory Department.fromJson(Map<String, dynamic> json) => Department(
+    id: json["id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
   };
 }
