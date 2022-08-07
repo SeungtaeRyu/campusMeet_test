@@ -50,102 +50,55 @@ class _NoticeScreenState extends State<NoticeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            elevation: 0.0,
-            title: Text('알림',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            bottom: TabBar(
-              indicatorColor: Colors.pink,
-              tabs: [
-                Container(
-                  height: MediaQuery.of(context).size.width * 0.1,
-                  child: Text(
-                    '활동 알림',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.width * 0.1,
-                  child: Text(
-                    '시스템 알림',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              ListView.separated(
-                itemCount: notices.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+      home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0.0,
+          title: Text('알림', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+        ),
+        body: ListView.separated(
+          itemCount: notices.length,
+          itemBuilder: (context, index) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(child: Text(notices[index].emoji)),
+                  Container(
+                    padding: EdgeInsets.only(left: 10),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                            child: Text(notices[index].emoji)),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                notices[index].title,
-                                style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              Padding(padding: EdgeInsets.only(top: 5)),
-                              Text(notices[index].header,
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                              Padding(padding: EdgeInsets.only(top: 5)),
-                              Text(
-                                notices[index].paragraph,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 12, color: Colors.black)),
-                              Padding(padding: EdgeInsets.only(top: 5)),
-                              Text(notices[index].date,
-                              style: TextStyle(fontSize: 12, color: Colors.grey))
-                            ],
-                          ),
-                        ),
+                        Text(notices[index].title, style: TextStyle(fontSize: 12, color: Colors.grey)),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        Text(notices[index].header, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        Text(notices[index].paragraph, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.black)),
+                        Padding(padding: EdgeInsets.only(top: 5)),
+                        Text(notices[index].date, style: TextStyle(fontSize: 12, color: Colors.grey))
                       ],
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider();
-                },
+                  ),
+                ],
               ),
-              Container(),
-            ],
-          ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
         ),
       ),
     );
