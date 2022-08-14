@@ -1,9 +1,10 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
+import 'package:campus_meet_test/models/User/find_user_by_id_model.dart';
 import 'package:flutter/material.dart';
 
-class RenderOtherPersonProfile extends StatelessWidget {
-  const RenderOtherPersonProfile({Key? key, required this.userId}) : super(key: key);
-  final int userId;
+class RenderUserDetailsMoreInfo extends StatelessWidget {
+  const RenderUserDetailsMoreInfo({Key? key, required this.searchedUser}) : super(key: key);
+  final FindUserById searchedUser;
 
   @override
   Widget build(BuildContext context) {

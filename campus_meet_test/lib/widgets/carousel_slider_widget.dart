@@ -1,10 +1,12 @@
 import 'package:campus_meet_test/common/custom_icons_icons.dart';
+import 'package:campus_meet_test/models/User/find_user_by_id_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:intl/intl.dart';
 
 class CarouselImage extends StatefulWidget {
-  const CarouselImage({Key? key, required this.userId}) : super(key: key);
-  final int userId;
+  const CarouselImage({Key? key, required this.searchedUser}) : super(key: key);
+  final FindUserById searchedUser;
 
 
   @override
@@ -65,15 +67,15 @@ class _CarouselImageState extends State<CarouselImage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("이름 ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, height: 1)),
-                    Text("(나이)", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1)),
+                    Text("${widget.searchedUser.name} ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, height: 1)),
+                    Text("(${int.parse(DateFormat('yyyy').format(DateTime.now())) - int.parse(DateFormat('yyyy').format(widget.searchedUser.birthDate)) + 1})", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1)),
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 5)),
                 Row(
                   children: [
-                    Text("ㅇㅇ대학교 ", style: TextStyle(fontSize: 16)),
-                    Text("00학번", style: TextStyle(fontSize: 16)),
+                    Text("${widget.searchedUser.univ.name} ", style: TextStyle(fontSize: 16)),
+                    Text("${widget.searchedUser.entryYear}학번", style: TextStyle(fontSize: 16)),
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 5)),

@@ -100,7 +100,7 @@ class _MemberPopupScreenState extends State<MemberPopupScreen> {
                                       print(snapshot.data![index].id);
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => PostMemberDetailsScreen(userId: snapshot.data![index].id)),
+                                        MaterialPageRoute(builder: (context) => RenderUserDetails(userId: snapshot.data![index].id)),
                                       );
                                     },
                                     icon: Icon(
