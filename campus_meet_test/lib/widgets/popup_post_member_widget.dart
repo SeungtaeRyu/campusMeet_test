@@ -97,6 +97,7 @@ class _MemberPopupScreenState extends State<MemberPopupScreen> {
                                     constraints: BoxConstraints(),
                                     onPressed: () {
                                       // 상대프로필 페이지로 이동
+                                      print(snapshot.data![index].id);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => PostMemberDetailsScreen(userId: snapshot.data![index].id)),
