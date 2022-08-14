@@ -16,7 +16,9 @@ class RenderUserDetails extends StatefulWidget {
 
 class _RenderUserDetailsState extends State<RenderUserDetails> {
   late Future<FindUserById> searchedUser;
-  final bool isAddInfo = false;
+
+  // 추후 본인 정보 로컬?에서 읽어올 때 추가 정보 입력했는지 여부로 true / false 하기
+  final bool isAddInfo = true;
 
   @override
   void initState() {
