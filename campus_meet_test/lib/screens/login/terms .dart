@@ -1,3 +1,4 @@
+import 'package:campus_meet_test/screens/login/signUp_confirmation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -257,14 +258,14 @@ class _State extends State<TermsPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignInPage()));
+                                builder: (context) => SignUpConfirmation()));
                         print("Validated");
                         // } else {
                         //   print("Not Validated");
                         // }
                       },
                       child: Text(
-                        '다음',
+                        '확인',
                         // style: TextStyle(
                         //   color: certificationNumber.text != ""
                         //       ? Colors.white

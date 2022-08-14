@@ -18,9 +18,10 @@ class MyMeetingScreen extends StatefulWidget {
 }
 
 class _MyMeetingScreenState extends State<MyMeetingScreen> {
-  bool myMeeting = false;
-  bool BmeetingPropose = false;
 
+  bool noExistMyMeeting = true; // 내가 속한 그룹이 작성한 미팅글 없니?
+  bool existRequestToMyMeeting = false; //내가속한 미팅에 상대팀 요청이있는경우
+bool existProposeToOtherMeeting = true; //남의 미팅에 내가속한 그룹이 요청한 경우
   List<Post> posts = [
     Post.fromJson({
       "id": 0,
@@ -133,20 +134,17 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   ),
                 ),
                 //홈화면에 있는 미팅들 중 내가 수락요청한 미팅
-                //                여기가 위 컨텐츠
+                //여기가 위 컨텐츠
                 Container(
-//                여기가 위 컨텐츠
                   child: viewPaddingTop > 21.0
                       ? Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    child: noMeetingMyPropose(),
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    child: existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyPropose() ,
                   )
                       : Container(
                       width: MediaQuery.of(context).size.width * 0.85,
-                      child: noMeetingMyProposeSE(),
-//                 child: existRequestMeeting(),
+                    child: existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyProposeSE() ,
                 )
-//                 child: existRequestMeeting(),
                 )],
             ),
           ),
@@ -159,11 +157,12 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                 0.5,
             padding: EdgeInsets.fromLTRB(20, width * 0.02, 20, 0),
             // color: Colors.,
-            child: myMeeting
-                ? BmeetingPropose
-                    ? existRequestMeeting()
-                    : existRequestMeeting()
-                : existRequestMeeting(),
+            // 1. 내가 속한 그룹이 없는 경우 :noMeetingPost  find All Meeting
+            //2. 내가 속한 그룹이 쓴 글이 있는데, 상대 팀 신청이 없는경우:noMeetingPropose
+            //3. 내가 속한 그룹이 쓴 글에 상대 팀 신청이 있는 경우: existRequestMeeting
+            //4. 상대팀 미팅에 내가속한 그룹 신청이 있는 경우 existRequestToMyMeeting //위팀
+            //내가 속한 미팅글이 있나
+            child: noExistMyMeeting ? noMeetingPost(): existRequestToMyMeeting ? existRequestMeeting() : noMeetingPropose() ,
           ),
         ],
       ),
@@ -457,8 +456,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             padding: EdgeInsets.only(top: width * 0.13),
             child: Center(
               child: Container(
-                  height: MediaQuery.of(context).size.width * 0.18,
-                  width: MediaQuery.of(context).size.width * 0.18,
+                  height: MediaQuery.of(context).size.width * 0.16,
+                  width: MediaQuery.of(context).size.width * 0.16,
                   child: Image.asset('images/미작성아이콘.png')),
             ), //캠퍼스밋이미지가져와
           ),
