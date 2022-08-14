@@ -3,7 +3,7 @@ import 'package:campus_meet_test/common/custom_icons_icons.dart';
 import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/MeetingPost/meeting_member_model.dart';
 import 'package:campus_meet_test/screens/home/home_meeting_request.dart';
-import 'package:campus_meet_test/screens/home/post_member_details.dart';
+import 'package:campus_meet_test/widgets/render_user_details.dart';
 import 'package:campus_meet_test/widgets/popup_post_member_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';

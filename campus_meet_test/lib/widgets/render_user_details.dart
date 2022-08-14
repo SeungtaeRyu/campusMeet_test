@@ -1,4 +1,6 @@
 import 'package:blur/blur.dart';
+import 'package:campus_meet_test/controller/user_controller.dart';
+import 'package:campus_meet_test/models/User/find_user_by_id_model.dart';
 import 'package:campus_meet_test/widgets/carousel_slider_widget.dart';
 import 'package:campus_meet_test/widgets/render_other_person_profile_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,16 @@ class PostMemberDetailsScreen extends StatefulWidget {
 }
 
 class _OtherPersonProfileScreenState extends State<PostMemberDetailsScreen> {
+  late Future<FindUserById> searchedUser;
   final bool isAddInfo = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    searchedUser = getUserById();
+  }
+
 
   @override
   Widget build(BuildContext context) {
