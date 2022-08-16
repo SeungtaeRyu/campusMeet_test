@@ -2,6 +2,7 @@ import 'package:campus_meet_test/models/MeetingPost/post_model.dart';
 import 'package:campus_meet_test/models/metting_post_model.dart';
 import 'package:campus_meet_test/screens/home/home_writing.dart';
 import 'package:campus_meet_test/screens/myMeeting/request_meeting_response.dart';
+import 'package:campus_meet_test/widgets/render_matching_post_card_widget.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
 import 'package:campus_meet_test/widgets/render_request_post_card_widget.dart';
 import 'package:campus_meet_test/widgets/render_request_post_card_SE_widget.dart';
@@ -21,7 +22,8 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
 
   bool noExistMyMeeting = true; // 내가 속한 그룹이 작성한 미팅글 없니?
   bool existRequestToMyMeeting = false; //내가속한 미팅에 상대팀 요청이있는경우
-bool existProposeToOtherMeeting = true; //남의 미팅에 내가속한 그룹이 요청한 경우
+  bool existProposeToOtherMeeting = true; //남의 미팅에 내가속한 그룹이 요청한 경우
+  bool existMatchingMeeting = true; // ㅁㅐ칭중인 미팅이 있는지
   List<Post> posts = [
     Post.fromJson({
       "id": 0,
@@ -139,11 +141,14 @@ bool existProposeToOtherMeeting = true; //남의 미팅에 내가속한 그룹�
                   child: viewPaddingTop > 21.0
                       ? Container(
                     width: MediaQuery.of(context).size.width * 0.95,
-                    child: existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyPropose() ,
+                    //existProposeToOtherMeeting true일때 meetingMyPropose()
+                    // child: existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyPropose() ,
+                    child: existProposeToOtherMeeting? meetingMatcing() : noMeetingMyPropose() ,
                   )
                       : Container(
                       width: MediaQuery.of(context).size.width * 0.85,
-                    child: existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyProposeSE() ,
+                    // child:  existProposeToOtherMeeting? meetingMyPropose() : noMeetingMyProposeSE() ,
+                    child: existProposeToOtherMeeting? meetingMatcing() : noMeetingMyPropose() ,
                 )
                 )],
             ),
@@ -203,7 +208,36 @@ bool existProposeToOtherMeeting = true; //남의 미팅에 내가속한 그룹�
               }),
         ));
   }
-
+  //매칭중인 미팅 있을때
+  Widget meetingMatcing() {
+    double width = MediaQuery.of(context).size.width;
+    double viewPaddingTop = MediaQuery.of(context).viewPadding.top;
+    return Container(
+        margin: EdgeInsets.only(top: width * 0.001),
+        height: (MediaQuery.of(context).size.height -
+            MediaQuery.of(context).viewPadding.top -
+            MediaQuery.of(context).size.width * 0.2) *
+            0.5 -
+            width * 0.19,
+        child: SizedBox(
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  child: viewPaddingTop > 21.0
+                      ? Container(
+                    width: MediaQuery.of(context).size.width * 0.85,
+                    child: MeetingMatchingPostCard(post: posts[index]),
+                  )
+                      : Container(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      child: MeetingMatchingPostCard(post: posts[index])),
+                );
+              }),
+        ));
+  }
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
     double width = MediaQuery.of(context).size.width;

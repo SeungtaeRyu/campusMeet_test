@@ -59,11 +59,6 @@ class _MemberPopupScreenState extends State<MemberPopupScreen> {
                                       child: Align(
                                         alignment: Alignment.bottomRight,
 
-                                        // 이 부분은 접속 여부인데 삭제될 수도?
-                                        child: CircleAvatar(
-                                          radius: 5,
-                                          backgroundColor: Colors.grey.shade500,
-                                        ),
                                       ),
                                     ),
                                   ),
