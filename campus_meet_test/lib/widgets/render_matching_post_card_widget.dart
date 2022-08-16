@@ -84,14 +84,14 @@ class _RenderRequestPostState extends State<MeetingMatchingPostCard> {
             ),
             Text(
               widget.post.title,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.035),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 5)),
+            Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.003)),
             Text(
               "${widget.post.location.stateName} ${widget.post.location.cityName} · ${widget.post.createdAt}",
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.028, color: Colors.grey.shade500),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 10)),
+            Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.018)),
             Wrap(
               children: [
                 Container(
@@ -102,7 +102,7 @@ class _RenderRequestPostState extends State<MeetingMatchingPostCard> {
                       if (snapshot.hasData) {
                         return Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          height: MediaQuery.of(context).size.width * 0.38,
+                          height: MediaQuery.of(context).size.width * 0.33,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
@@ -110,38 +110,38 @@ class _RenderRequestPostState extends State<MeetingMatchingPostCard> {
                               itemBuilder: (BuildContext context, int index){
                                 return Container(
                                   width: MediaQuery.of(context).size.width * 0.32,
-                                  height: MediaQuery.of(context).size.width * 0.2,
-                                 padding: EdgeInsets.fromLTRB(20, 0, 10, 1),
+                                  // height: MediaQuery.of(context).size.width * 0.16,
+                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 3),
                                  //     이름, 대학교, 학번 렌더링
-                                      child: Expanded(
-                                        child: Column(
-                                         // crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: MediaQuery.of(context).size.width * 0.42,
-                                              height: MediaQuery.of(context).size.width * 0.2,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.blue,
-                                                borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(10),
-                                                  topLeft: Radius.circular(10),
-                                                ),
+                                      child: Column(
+                                       // crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            // width: MediaQuery.of(context).size.width * 10,
+                                            height: MediaQuery.of(context).size.width * 0.24,
+
+                                            decoration: const BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(6),
+                                                topLeft: Radius.circular(6),
                                               ),
                                             ),
-                                            Container(),
-                                            Container(
-                                              child: Text(
-                                                "${snapshot.data![index].name}",
-                                              ),
+                                          ),
+                                          Container(),
+                                          Container(
+                                            child: Text(
+                                              "${snapshot.data![index].name}",
                                             ),
-                                            Container(
-                                              child: Text(
-                                                "${snapshot.data![index].univ} ${snapshot.data![index].entryYear}학번",
-                                                style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
-                                              ),
+                                          ),
+                                          Container(
+                                            child: Text(
+                                              "${snapshot.data![index].univ} ${snapshot.data![index].entryYear}학번",
+                                              style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                   margin: EdgeInsets.only(
                                       right: width * 0.01, left: width * 0.01),
@@ -191,9 +191,15 @@ class _RenderRequestPostState extends State<MeetingMatchingPostCard> {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
+            Padding(padding: EdgeInsets.only(bottom: 10)),
     //여기에 채팅 버튼
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.width * 0.072,
+            color: Colors.yellow,
+          )
           ],
+
         ),
       ),
     );

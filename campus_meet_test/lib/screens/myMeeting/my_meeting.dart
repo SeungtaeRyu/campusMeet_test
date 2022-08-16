@@ -219,7 +219,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             MediaQuery.of(context).size.width * 0.2) *
             0.5 -
             width * 0.19,
-        child: SizedBox(
+
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(top: width * 0.03, left: width * 0.03),
@@ -236,7 +236,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                       child: MeetingMatchingPostCard(post: posts[index])),
                 );
               }),
-        ));
+        );
   }
 //내가 신청한 미팅이 없을때 위에 들어가는 컨텐츠 사진 중앙에 정렬하도록 하세욥
   Widget noMeetingMyPropose() {
