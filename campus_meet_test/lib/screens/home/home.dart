@@ -4,7 +4,7 @@ import 'package:campus_meet_test/widgets/popup_region_selection_widget.dart';
 import 'package:campus_meet_test/widgets/render_post_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'home_filter.dart';
-import 'home_notice.dart';
+import 'home_alarm.dart';
 import 'home_search.dart';
 import 'home_writing.dart';
 
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NoticeScreen()),
+                  MaterialPageRoute(builder: (context) => AlarmScreen()),
                 );
               },
             ),

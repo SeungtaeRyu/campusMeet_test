@@ -1,14 +1,14 @@
 import 'package:campus_meet_test/models/notice_model.dart';
 import 'package:flutter/material.dart';
 
-class NoticeScreen extends StatefulWidget {
-  const NoticeScreen({Key? key}) : super(key: key);
+class AlarmScreen extends StatefulWidget {
+  const AlarmScreen({Key? key}) : super(key: key);
 
   @override
-  _NoticeScreenState createState() => _NoticeScreenState();
+  _AlarmScreenState createState() => _AlarmScreenState();
 }
 
-class _NoticeScreenState extends State<NoticeScreen> {
+class _AlarmScreenState extends State<AlarmScreen> {
   List<Notice> notices = [
     Notice.fromMap({
       'emoji': '💌',
